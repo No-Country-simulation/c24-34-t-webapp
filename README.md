@@ -17,3 +17,9 @@ LifeSwap es una web app que permite a los usuarios subir su rutina diaria y reci
 ```bash
 npm install
 ```
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[nestjs.com]: https://img.shields.io/badge/-NestJs-ea2845?style=flat-square&logo=nestjs&logoColor=white
+[NestJS-url]: https://nestjs.com/
