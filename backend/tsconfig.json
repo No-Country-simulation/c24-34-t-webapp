@@ -18,7 +18,8 @@
     "paths": {
       "@/src/*": ["src/*"],
       "@/common/*": ["src/common/*"],
-      "@/modules/*": ["src/modules/*"]
+      "@/modules/*": ["src/modules/*"],
+      "@/database/*": ["src/database/*"]
     },
     "types": ["vitest/globals"]
   },
