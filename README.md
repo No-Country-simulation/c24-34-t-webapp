@@ -14,8 +14,18 @@ LifeSwap es una web app que permite a los usuarios subir su rutina diaria y reci
 * [![NestJS][nestjs.com]][NestJS-url]
 
 ## 🚀 Primeros pasos
+### BackEnd
+> Node version: ```>=22.x```
+
+Crear el archivo ```.env``` usando como ejemplo el archivo ```.env.example```
+instalar pnpm globalmente usando el siguiente comando
 ```bash
-npm install
+npm install -g pnpm@9.14.2
+```
+
+Dentro del directorio ```backend``` ejecutar el siguiente comando
+```bash
+pnpm install
 ```
 
 <!-- MARKDOWN LINKS & IMAGES -->
