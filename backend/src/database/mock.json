@@ -1,0 +1,54 @@
+[
+  {
+    "category": "Ejercicio",
+    "subcategory": "Caminata",
+    "title": "Caminar 10,000 pasos diarios",
+    "description": "Caminar al menos 10,000 pasos al día para mejorar la salud cardiovascular, mantener un peso saludable y reducir el estrés. La caminata se hará en el parque central para aprovechar el aire fresco y despejar la mente.",
+    "goal": {
+      "period": "Diario",
+      "value": 10000,
+      "unit": "pasos"
+    },
+    "time_range": "mañana",
+    "time": "07:00"
+  },
+  {
+    "category": "Trabajo",
+    "subcategory": "Desarrollo de Software",
+    "title": "Estudiar nuevos Frameworks de programación",
+    "description": "Esta semana se estudiará el framework Next.js. Se revisará la documentación oficial (https://nextjs.org/docs), se verá el curso de Next.js en YouTube de 'Traversy Media' y se hará un pequeño proyecto de blog para aplicar lo aprendido.",
+    "goal": {
+      "period": "Semanal",
+      "value": 2,
+      "unit": "horas"
+    },
+    "time_range": "tarde",
+    "time": "17:00"
+  },
+  {
+    "category": "Cuidado y Salud",
+    "subcategory": "Cuidado Facial",
+    "title": "Rutina de skincare matutina",
+    "description": "Se utilizará la crema coreana 'Cosrx Advanced Snail 92 All in One Cream' para hidratar y reparar la piel. La rutina incluirá: limpieza con el gel 'CeraVe Hydrating Cleanser', aplicación del sérum de niacinamida 'The Ordinary' y protector solar 'Beauty of Joseon Relief Sun SPF 50+'.",
+    "goal": {
+      "period": "Diario",
+      "value": 40,
+      "unit": "minutos"
+    },
+    "time_range": "mañana",
+    "time": "07:30"
+  },
+  {
+    "category": "Hobbies",
+    "subcategory": "Lectura",
+    "title": "Lectura diaria para terminar el día",
+    "description": "Se leerá 'El nombre del viento' de Patrick Rothfuss, una novela de fantasía que sigue la historia de Kvothe, un joven con habilidades extraordinarias. La meta es avanzar al menos 30 páginas por sesión para terminarlo en un mes.",
+    "goal": {
+      "period": "Diario",
+      "value": 30,
+      "unit": "minutos"
+    },
+    "time_range": "noche",
+    "time": "21:00"
+  }
+]

@@ -36,6 +36,7 @@ erDiagram
         string time_range "Enum: mañana, tarde, noche"
         string time
         string subcategory_id FK
+        string routine_id FK
     }
 
     GOAL {
@@ -51,10 +52,17 @@ erDiagram
         string name
     }
 
-    CATEGORY ||--o{ SUBCATEGORY : "contiene"
-    SUBCATEGORY ||--o{ ACTIVITY : "clasifica"
-    ACTIVITY ||--|| GOAL : "posee"
-    UNIT ||--o{ GOAL : "define"
+    ROUTINE {
+        string id PK
+        string title
+        string description
+    }
+
+    CATEGORY ||--o{ SUBCATEGORY : "category_id"
+    SUBCATEGORY ||--o{ ACTIVITY : "subcategory_id"
+    ACTIVITY ||--|| GOAL : "activity_id"
+    UNIT ||--o{ GOAL : "unit_id"
+    ROUTINE ||--o{ ACTIVITY : "routine_id"
 ```
 
 ## 🚀 Primeros pasos

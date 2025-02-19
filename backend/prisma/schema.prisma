@@ -8,14 +8,6 @@ datasource db {
 }
 
 // ENUMS
-enum TimeRange {
-  MAÑANA
-  TARDE
-  NOCHE
-
-  @@map("time_range")
-}
-
 enum Period {
   DIARIO
   SEMANAL
@@ -24,59 +16,80 @@ enum Period {
   @@map("period")
 }
 
-// TABLAS
+enum TimeRange {
+  MAÑANA
+  TARDE
+  NOCHE
+
+  @@map("time_range")
+}
+
+// MODELS
 model Category {
-  id            String        @id @default(uuid())
-  name          String        @unique
+  id   String @id @default(uuid())
+  name String @unique
+
   subcategories Subcategory[]
 
   @@map("categories")
 }
 
 model Subcategory {
-  id         String     @id @default(uuid())
-  name       String     @unique
-  categoryId String     @map("category_id")
-  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  id         String @id @default(uuid())
+  name       String @unique
+  categoryId String @map("category_id")
+
+  category   Category   @relation(fields: [categoryId], references: [id])
   activities Activity[]
 
   @@map("subcategories")
 }
 
-model Unit {
-  id         String     @id @default(uuid())
-  name       String     @unique
-  activities Activity[]
-  Goal       Goal[]
-
-  @@map("units")
-}
-
 model Activity {
-  id            String      @id @default(uuid())
+  id            String    @id @default(uuid())
   title         String
   description   String
-  timeRange     TimeRange
+  timeRange     TimeRange @map("time_range")
   time          String
-  unitId        String
-  subcategoryId String
+  subcategoryId String    @map("subcategory_id")
+  routineId     String    @map("routine_id")
 
-  goal          Goal[]
-  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  Unit          Unit       @relation(fields: [unitId], references: [id])
+  subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+  routine     Routine     @relation(fields: [routineId], references: [id], onDelete: Cascade)
+
+  goals Goal[]
 
   @@map("activities")
 }
 
 model Goal {
-  id         String   @id @default(uuid())
+  id         String @id @default(uuid())
   period     Period
   value      Int
-  unitId     String
-  activityId String   @map("activity_id")
+  unitId     String @map("unit_id")
+  activityId String @map("activity_id")
 
-  unit       Unit     @relation(fields: [unitId], references: [id])
-  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  unit     Unit     @relation(fields: [unitId], references: [id])
+  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
 
   @@map("goals")
+}
+
+model Unit {
+  id    String @id @default(uuid())
+  name  String @unique
+
+  goals Goal[]
+
+  @@map("units")
+}
+
+model Routine {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+
+  activities  Activity[]
+
+  @@map("routines")
 }
