@@ -8,6 +8,8 @@ LifeSwap es una web app que permite a los usuarios subir su rutina diaria y reci
 ### FrontEnd
 
 * [![Angular][Angular.io]][Angular-url]
+* [![Tailwind][Tailwind]][Tailwind-Angular-url]
+* [![Angular CDK][Angular-CDK]][Angular-CDK-url]
 
 ### BackEnd
 
@@ -81,9 +83,35 @@ Dentro del directorio ```backend``` ejecutar el siguiente comando
 pnpm install
 ```
 
+### FrontEnd
+### Prerequisites
+* node.js: Version 20.x.x
+* npm: Version 10.2.x 
+#### You can verify your versions by running the following commands in your terminal:
+
+```bash
+node -v
+npm -v
+```
+### Installation
+### 1. Install dependencies.
+```bash
+npm install
+```
+### 2. Usage
+```bash
+ng serve
+```
+
 <!-- MARKDOWN LINKS & IMAGES -->
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io/
+[Tailwind]: https://img.shields.io/badge/-Tailwind%20CSS-%231a202c?style=for-the-badge&logo=tailwind-css
+[Tailwind-Angular-url]:https://tailwindcss.com/docs/installation/framework-guides/angular
+
+[Angular-CDK]: https://img.shields.io/badge/%20-Angular%20Material-blue?style=for-the-badge&logo=angular
+[Angular-CDK-url]:https://material.angular.io/cdk/categories
+
 [nestjs.com]: https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
 [NestJS-url]: https://nestjs.com/
 [postgresql.org]: https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white
