@@ -9,17 +9,17 @@ datasource db {
 
 // ENUMS
 enum Period {
-  DIARIO
-  SEMANAL
-  MENSUAL
+  DAILY
+  WEEKLY
+  MONTHLY
 
   @@map("period")
 }
 
 enum TimeRange {
-  MAÑANA
-  TARDE
-  NOCHE
+  MORNING
+  AFTERNOON
+  NIGHT
 
   @@map("time_range")
 }
