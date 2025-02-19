@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ENUMS
+enum Period {
+  DIARIO
+  SEMANAL
+  MENSUAL
+
+  @@map("period")
+}
+
+enum TimeRange {
+  MAÑANA
+  TARDE
+  NOCHE
+
+  @@map("time_range")
+}
+
+// MODELS
+model Category {
+  id   String @id @default(uuid())
+  name String @unique
+
+  subcategories Subcategory[]
+
+  @@map("categories")
+}
+
+model Subcategory {
+  id         String @id @default(uuid())
+  name       String @unique
+  categoryId String @map("category_id")
+
+  category   Category   @relation(fields: [categoryId], references: [id])
+  activities Activity[]
+
+  @@map("subcategories")
+}
+
+model Activity {
+  id            String    @id @default(uuid())
+  title         String
+  description   String
+  timeRange     TimeRange @map("time_range")
+  time          String
+  subcategoryId String    @map("subcategory_id")
+  routineId     String    @map("routine_id")
+
+  subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+  routine     Routine     @relation(fields: [routineId], references: [id], onDelete: Cascade)
+
+  goals Goal[]
+
+  @@map("activities")
+}
+
+model Goal {
+  id         String @id @default(uuid())
+  period     Period
+  value      Int
+  unitId     String @map("unit_id")
+  activityId String @map("activity_id")
+
+  unit     Unit     @relation(fields: [unitId], references: [id])
+  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@map("goals")
+}
+
+model Unit {
+  id    String @id @default(uuid())
+  name  String @unique
+
+  goals Goal[]
+
+  @@map("units")
+}
+
+model Routine {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+
+  activities  Activity[]
+
+  @@map("routines")
+}

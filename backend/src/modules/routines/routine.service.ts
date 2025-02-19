@@ -1,20 +1,36 @@
 import { Injectable } from "@nestjs/common";
 
+import { DbService } from "@/database/db.service";
+
 @Injectable()
 class RoutineService {
-  findAll() {
-    return [
-      {
-        id: 1,
-        name: "Morning Routine",
-        description: "A routine to start the day",
+  constructor(private dbService: DbService) {}
+
+  async findAll() {
+    const routines = await this.dbService.routine.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        activities: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            goals: true,
+            subcategory: {
+              select: {
+                id: true,
+                name: true,
+                category: true,
+              },
+            },
+          },
+        },
       },
-      {
-        id: 2,
-        name: "Evening Routine",
-        description: "A routine to end the day",
-      },
-    ];
+    });
+
+    return routines;
   }
 }
 
