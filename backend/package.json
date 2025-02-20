@@ -10,11 +10,10 @@
   },
   "keywords": [
     "typescript",
-    "nestjs",
-    "template"
+    "nestjs"
   ],
   "engines": {
-    "node": ">=22.x",
+    "node": ">=20.x",
     "pnpm": ">=9.x"
   },
   "packageManager": "pnpm@9.14.2",
