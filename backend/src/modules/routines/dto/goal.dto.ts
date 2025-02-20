@@ -1,7 +1,7 @@
 import { IsEnum, IsInt, IsUUID } from "class-validator";
 
 import { Period } from "../enums/enums";
-import { Period as PeriodType } from "../types/types";
+import { type Period as PeriodType } from "../types/types";
 
 class GoalDto {
   @IsUUID()

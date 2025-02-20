@@ -1,7 +1,7 @@
 import { IsEnum, IsString, IsUUID, Length } from "class-validator";
 
-import { TimeRange } from "../enums/enums";
-import { TimeRange as TimeRangeType } from "../types/types";
+import { TimeRange } from "@/modules/routines/enums/enums";
+import { type TimeRange as TimeRangeType } from "@/modules/routines/types/types";
 
 class ActivityDto {
   @IsUUID()

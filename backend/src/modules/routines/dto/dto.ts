@@ -1,5 +1,6 @@
 export { ActivityDto } from "./activity.dto";
 export { CategoryDto } from "./category.dto";
+export { CreateRoutineDto } from "./create.dto";
 export { FindAllRoutinesDto } from "./find-all.dto";
 export { GoalDto } from "./goal.dto";
 export { RoutineDto } from "./routine.dto";
