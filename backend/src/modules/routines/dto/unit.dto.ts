@@ -4,9 +4,9 @@ class UnitDto {
   @IsUUID()
   id!: string;
 
-  @IsString({ message: "Por favor ingrese un nombre valido" })
+  @IsString({ message: "Please enter a valid name" })
   @Length(2, 50, {
-    message: "El nombre tiene que tener entre 2 y 50 caracteres",
+    message: "The name must be between 2 and 50 characters long",
   })
   name!: string;
 }

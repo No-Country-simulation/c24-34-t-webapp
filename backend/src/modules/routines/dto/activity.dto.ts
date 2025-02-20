@@ -7,15 +7,15 @@ class ActivityDto {
   @IsUUID()
   id!: string;
 
-  @IsString({ message: "Por favor ingrese un nombre valido" })
+  @IsString({ message: "Please enter a valid name" })
   @Length(2, 50, {
-    message: "El nombre tiene que tener entre 2 y 50 caracteres",
+    message: "The name must be between 2 and 50 characters long",
   })
   title!: string;
 
-  @IsString({ message: "Por favor ingrese una descripción válida" })
+  @IsString({ message: "Please enter a valid description" })
   @Length(2, 500, {
-    message: "La descripción tiene que tener entre 2 y 500 caracteres",
+    message: "The description must be between 2 and 500 characters long",
   })
   description!: string;
 

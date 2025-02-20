@@ -4,15 +4,15 @@ class RoutineDto {
   @IsUUID()
   id!: string;
 
-  @IsString({ message: "Por favor ingrese un nombre válido" })
+  @IsString({ message: "Please enter a valid title" })
   @Length(2, 50, {
-    message: "El titulo tiene que tener entre 2 y 50 caracteres",
+    message: "The title must be between 2 and 50 characters long",
   })
   title!: string;
 
-  @IsString({ message: "Por favor ingrese una descripción válida" })
+  @IsString({ message: "Please enter a valid description" })
   @Length(2, 500, {
-    message: "La descripción tiene que tener entre 2 y 500 caracteres",
+    message: "The description must be between 2 and 500 characters long",
   })
   description!: string;
 }
