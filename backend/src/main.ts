@@ -5,6 +5,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from "@nestjs/platform-fastify";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
 
@@ -14,9 +15,39 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  app.setGlobalPrefix("api");
+  app.setGlobalPrefix("api/v1");
   const configService = app.get(ConfigService);
   const port = configService.get<string>("PORT", "3000");
+  const app_origin = configService.get<string>(
+    "FRONTEND_ORIGIN",
+    "http://localhost:8000",
+  );
+  const node_env = configService.get<string>("NODE_ENV", "PRODUCTION");
+
+  if (node_env !== "PRODUCTION") {
+    const config = new DocumentBuilder()
+      .setTitle("LifeSwap")
+      .setDescription("LifeSwap API")
+      .setVersion("1.0")
+      .addBearerAuth(
+        {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          name: "Authorization",
+          in: "header",
+        },
+        "JWT-auth",
+      )
+      .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup("doc", app, document);
+  }
+
+  app.enableCors({
+    origin: app_origin,
+  });
 
   await app.listen(port, "0.0.0.0");
 
