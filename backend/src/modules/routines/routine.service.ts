@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 
 import { DbService } from "@/database/db.service";
 
@@ -196,6 +200,14 @@ class RoutineService {
       description: newRoutine.description,
       activities: activitiesDto,
     };
+  }
+
+  async delete(id: string) {
+    const routine = await this.dbService.routine.findUnique({ where: { id } });
+    if (!routine) {
+      throw new BadRequestException("Routine not found");
+    }
+    await this.dbService.routine.delete({ where: { id } });
   }
 }
 

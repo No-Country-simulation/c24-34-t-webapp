@@ -1,7 +1,11 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -23,5 +27,14 @@ export class RoutineController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() data: CreateRoutineDto) {
     return this.routineService.create(data);
+  }
+
+  @Delete(":id")
+  @HttpCode(204)
+  async delete(@Param("id") id: string) {
+    if (!id) {
+      throw new BadRequestException("Routine not found");
+    }
+    await this.routineService.delete(id);
   }
 }
