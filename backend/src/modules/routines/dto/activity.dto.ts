@@ -1,4 +1,4 @@
-import { IsEnum, IsString, IsUUID, Length } from "class-validator";
+import { IsEnum, IsString, IsUUID, Length, Matches } from "class-validator";
 
 import { TimeRange } from "@/modules/routines/enums/enums";
 import { type TimeRange as TimeRangeType } from "@/modules/routines/types/types";
@@ -23,6 +23,9 @@ class ActivityDto {
   timeRange!: TimeRangeType;
 
   @IsString()
+  @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+    message: "Time must be in HH:MM format and between 00:00 and 23:59",
+  })
   time!: string;
 
   @IsUUID()
