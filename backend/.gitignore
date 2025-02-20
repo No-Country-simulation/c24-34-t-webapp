@@ -8,3 +8,6 @@ coverage/
 .vscode
 .nyc_output
 k6-results
+
+vercel.json
+.vercel
