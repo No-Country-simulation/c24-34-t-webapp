@@ -1,10 +1,10 @@
 # **LifeSwap**
 
-> Intercambia rutinas con extraños y experimenta nuevas formas de vivir.
+> Swap routines with strangers and experience new ways of living.
 
-LifeSwap es una web app que permite a los usuarios subir su rutina diaria y recibir aleatoriamente la rutina de otra persona para intentar seguirla por un día. El objetivo es fomentar la empatía, la exploración de hábitos y salir de la zona de confort a través de experiencias inesperadas.
+LifeSwap is a web app that allows users to upload their daily routine and randomly receive someone else's routine to follow for a day. The goal is to foster empathy, explore different habits, and step out of the comfort zone through unexpected experiences.
 
-## 💻 Tecnologías Usadas
+## 💻 Technologies
 ### FrontEnd
 
 * [![Angular][Angular.io]][Angular-url]
@@ -17,7 +17,7 @@ LifeSwap es una web app que permite a los usuarios subir su rutina diaria y reci
 * [![Prisma][prisma.io]][Prisma-url]
 * [![PostgreSQL][postgresql.org]][PostgreSQL-url]
 
-### Diagrama relacional de la Base de Datos
+### Relational Database Diagram
 ```mermaid
 erDiagram
     CATEGORY {
@@ -35,7 +35,7 @@ erDiagram
         string id PK
         string title
         string description
-        string time_range "Enum: mañana, tarde, noche"
+        string time_range "Enum: MORNING, AFTERNOON, NIGHT"
         string time
         string subcategory_id FK
         string routine_id FK
@@ -43,7 +43,7 @@ erDiagram
 
     GOAL {
         string id PK
-        string period "Enum: diario, semanal, mensual"
+        string period "Enum: DAILY, WEEKLY, MONTHLY"
         int value
         string unit_id FK
         string activity_id FK
@@ -69,18 +69,28 @@ erDiagram
 
 ## 🚀 Primeros pasos
 ### BackEnd
-> Node version: ```>=22.x```
+> Node version: ```>=20.x```
 
-Crear el archivo ```.env``` usando como ejemplo el archivo ```.env.example```
+Create the ```.env``` file using the ```.env.example``` file as a reference
 
-instalar pnpm globalmente usando el siguiente comando
+Install ```pnpm``` globally
 ```bash
 npm install -g pnpm@9.14.2
 ```
 
-Dentro del directorio ```backend``` ejecutar el siguiente comando
+Inside the ```backend``` directory, run the following command
 ```bash
 pnpm install
+```
+
+Add the ```seeds``` to the database
+```bash
+pnpm prisma:seed
+```
+
+Run the application
+```bash
+pnpm run dev
 ```
 
 ### FrontEnd
