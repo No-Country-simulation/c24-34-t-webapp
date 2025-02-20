@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { DbService } from "@/database/db.service";
 
@@ -72,6 +72,44 @@ class RoutineService {
   }
 
   async create(routine: CreateRoutineDto): Promise<FindAllRoutinesDto> {
+    await Promise.all(
+      routine.activities.map(async (activity, index) => {
+        const category = await this.dbService.category.findFirst({
+          where: {
+            name: activity.category,
+          },
+          select: {
+            name: true,
+            subcategories: true,
+          },
+        });
+
+        if (!category) {
+          throw new NotFoundException(`activities.${index}.category not found`);
+        }
+
+        const subcategory = category.subcategories.find(subcategory => {
+          return subcategory.name === activity.subcategory;
+        });
+
+        if (!subcategory) {
+          throw new NotFoundException(
+            `activities.${index}.subcategory not found in this category`,
+          );
+        }
+
+        const unit = await this.dbService.unit.findFirst({
+          where: {
+            name: activity.goal.unit,
+          },
+        });
+
+        if (!unit) {
+          throw new NotFoundException(`activities.${index}.unit not found`);
+        }
+      }),
+    );
+
     const newRoutine = await this.dbService.routine.create({
       data: {
         title: routine.title,
