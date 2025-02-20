@@ -1,5 +1,13 @@
-import { Controller, Get } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 
+import { CreateRoutineDto } from "./dto/dto";
 import { RoutineService } from "./routine.service";
 
 @Controller("routines")
@@ -9,5 +17,11 @@ export class RoutineController {
   @Get("")
   getUsers() {
     return this.routineService.findAll();
+  }
+
+  @Post("")
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  create(@Body() data: CreateRoutineDto) {
+    return this.routineService.create(data);
   }
 }
