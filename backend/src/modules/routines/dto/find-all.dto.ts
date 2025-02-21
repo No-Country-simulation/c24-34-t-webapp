@@ -4,7 +4,8 @@ import { IsString, ValidateNested } from "class-validator";
 
 import { ActivityDto } from "@/modules/activities/dto/dto";
 import { GoalDto } from "@/modules/goals/dto/dto";
-import { RoutineDto } from "@/modules/routines/dto/dto";
+
+import { RoutineDto } from "../dto/routine.dto";
 
 class FindAllGoalDto extends OmitType(GoalDto, [
   "unitId",
