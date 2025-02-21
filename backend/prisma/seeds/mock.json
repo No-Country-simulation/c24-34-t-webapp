@@ -1,0 +1,227 @@
+[
+  {
+    "title": "Morning Wellness Routine",
+    "description": "Start your day feeling fresh and energized with this simple routine.",
+    "activities": [
+      {
+        "title": "Morning Walk",
+        "description": "Take a brisk walk to wake up your body and mind.",
+        "time": "07:00",
+        "timeRange": "MORNING",
+        "category": "Sports",
+        "subcategory": "Walking",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 20
+        }
+      },
+      {
+        "title": "Hydration Boost",
+        "description": "Drink enough water to keep your body hydrated.",
+        "time": "07:30",
+        "timeRange": "MORNING",
+        "category": "Health",
+        "subcategory": "Hydration",
+        "goal": {
+          "unit": "liter",
+          "period": "DAILY",
+          "value": 2
+        }
+      },
+      {
+        "title": "Quick Yoga",
+        "description": "Stretch and relax your muscles with a short yoga session.",
+        "time": "08:00",
+        "timeRange": "MORNING",
+        "category": "Sports",
+        "subcategory": "Yoga",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 15
+        }
+      }
+    ]
+  },
+  {
+    "title": "Home Care Routine",
+    "description": "Keep your home clean and organized with these daily tasks.",
+    "activities": [
+      {
+        "title": "Kitchen Cleanup",
+        "description": "Wash the dishes and wipe down kitchen surfaces.",
+        "time": "09:00",
+        "timeRange": "MORNING",
+        "category": "Home",
+        "subcategory": "Cleaning",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 30
+        }
+      },
+      {
+        "title": "Laundry Time",
+        "description": "Sort, wash, and hang clothes to dry.",
+        "time": "10:00",
+        "timeRange": "MORNING",
+        "category": "Home",
+        "subcategory": "Laundry",
+        "goal": {
+          "unit": "time",
+          "period": "DAILY",
+          "value": 1
+        }
+      },
+      {
+        "title": "Home Decoration",
+        "description": "Rearrange or add decorative elements to enhance your living space.",
+        "time": "11:00",
+        "timeRange": "MORNING",
+        "category": "Home",
+        "subcategory": "Decoration",
+        "goal": {
+          "unit": "time",
+          "period": "WEEKLY",
+          "value": 1
+        }
+      }
+    ]
+  },
+  {
+    "title": "Fitness and Well-being",
+    "description": "Stay active and take care of your health with these activities.",
+    "activities": [
+      {
+        "title": "Strength Workout",
+        "description": "Perform a strength training workout to build muscle.",
+        "time": "18:00",
+        "timeRange": "NIGHT",
+        "category": "Sports",
+        "subcategory": "Workout",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 40
+        }
+      },
+      {
+        "title": "Healthy Nutrition",
+        "description": "Prepare and eat a nutritious meal.",
+        "time": "19:00",
+        "timeRange": "NIGHT",
+        "category": "Health",
+        "subcategory": "Nutrition",
+        "goal": {
+          "unit": "time",
+          "period": "DAILY",
+          "value": 1
+        }
+      },
+      {
+        "title": "Evening Meditation",
+        "description": "Relax and clear your mind before bedtime.",
+        "time": "21:00",
+        "timeRange": "NIGHT",
+        "category": "Health",
+        "subcategory": "Meditation",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 15
+        }
+      }
+    ]
+  },
+  {
+    "title": "Creative Evening Routine",
+    "description": "Unwind with creative hobbies and self-improvement activities.",
+    "activities": [
+      {
+        "title": "Reading Session",
+        "description": "Read a book or an article to expand your knowledge.",
+        "time": "19:30",
+        "timeRange": "NIGHT",
+        "category": "Hobbies",
+        "subcategory": "Reading",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 30
+        }
+      },
+      {
+        "title": "Painting Practice",
+        "description": "Express yourself creatively through painting.",
+        "time": "20:30",
+        "timeRange": "NIGHT",
+        "category": "Hobbies",
+        "subcategory": "Painting",
+        "goal": {
+          "unit": "minute",
+          "period": "WEEKLY",
+          "value": 90
+        }
+      },
+      {
+        "title": "Gaming Fun",
+        "description": "Enjoy a relaxing gaming session.",
+        "time": "21:30",
+        "timeRange": "NIGHT",
+        "category": "Hobbies",
+        "subcategory": "Video Games",
+        "goal": {
+          "unit": "minute",
+          "period": "DAILY",
+          "value": 45
+        }
+      }
+    ]
+  },
+  {
+    "title": "Weekend Sports Routine",
+    "description": "Engage in sports activities to stay fit and have fun.",
+    "activities": [
+      {
+        "title": "Soccer Practice",
+        "description": "Play soccer to improve your skills and stay active.",
+        "time": "10:00",
+        "timeRange": "MORNING",
+        "category": "Sports",
+        "subcategory": "Soccer",
+        "goal": {
+          "unit": "hour",
+          "period": "WEEKLY",
+          "value": 2
+        }
+      },
+      {
+        "title": "Stretching & Recovery",
+        "description": "Do stretching exercises to improve flexibility.",
+        "time": "12:00",
+        "timeRange": "AFTERNOON",
+        "category": "Sports",
+        "subcategory": "Yoga",
+        "goal": {
+          "unit": "minute",
+          "period": "WEEKLY",
+          "value": 30
+        }
+      },
+      {
+        "title": "Healthy Meal",
+        "description": "Prepare and eat a nutritious post-workout meal.",
+        "time": "13:00",
+        "timeRange": "AFTERNOON",
+        "category": "Health",
+        "subcategory": "Nutrition",
+        "goal": {
+          "unit": "time",
+          "period": "WEEKLY",
+          "value": 1
+        }
+      }
+    ]
+  }
+]
