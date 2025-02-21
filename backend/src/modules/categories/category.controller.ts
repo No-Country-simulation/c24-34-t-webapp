@@ -12,7 +12,7 @@ export class CategoryController {
   @Get("")
   @ApiOperation({ summary: "Find all categories" })
   @ApiOkResponse({ type: FindAllCategoriesDto, isArray: true })
-  getUsers() {
+  findAll() {
     return this.categoryService.findAll();
   }
 

@@ -7,6 +7,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
@@ -23,7 +24,7 @@ export class RoutineController {
   @Get("")
   @ApiOperation({ summary: "Find all routines" })
   @ApiOkResponse({ type: FindAllRoutinesDto, isArray: true })
-  getUsers() {
+  findAll() {
     return this.routineService.findAll();
   }
 
@@ -43,5 +44,12 @@ export class RoutineController {
       throw new BadRequestException("Routine not found");
     }
     await this.routineService.delete(id);
+  }
+
+  @Get("random")
+  @ApiOperation({ summary: "Get random routine" })
+  @ApiOkResponse({ type: FindAllRoutinesDto, isArray: false })
+  async findRandom(@Query("subcategory") subcategory: string) {
+    return this.routineService.findRandom({ subcategory });
   }
 }
