@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsUUID } from "class-validator";
 
-import { Period } from "../enums/enums";
-import { type Period as PeriodType } from "../types/types";
+import { Period } from "@/common/enums/enums";
+import { type Period as PeriodType } from "@/common/types/types";
 
 class GoalDto {
   @ApiProperty()

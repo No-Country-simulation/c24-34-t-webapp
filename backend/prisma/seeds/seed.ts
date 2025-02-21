@@ -24,7 +24,7 @@ async function main() {
         },
       ];
 
-      const units = ["minutes", "hours", "times", "liters"];
+      const units = ["minute", "hour", "time", "liter"];
 
       for (const categoryData of categories) {
         const category = await tx.category.create({

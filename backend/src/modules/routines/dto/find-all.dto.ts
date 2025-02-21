@@ -2,9 +2,10 @@ import { ApiProperty, OmitType } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsString, ValidateNested } from "class-validator";
 
-import { ActivityDto } from "./activity.dto";
-import { GoalDto } from "./goal.dto";
-import { RoutineDto } from "./routine.dto";
+import { ActivityDto } from "@/modules/activities/dto/dto";
+import { GoalDto } from "@/modules/goals/dto/dto";
+
+import { RoutineDto } from "../dto/routine.dto";
 
 class FindAllGoalDto extends OmitType(GoalDto, [
   "unitId",

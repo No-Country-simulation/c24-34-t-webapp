@@ -67,7 +67,7 @@ erDiagram
     ROUTINE ||--o{ ACTIVITY : "routine_id"
 ```
 
-## 🚀 Primeros pasos
+## 🚀 Getting Started
 ### BackEnd
 > Node version: ```>=20.x```
 
