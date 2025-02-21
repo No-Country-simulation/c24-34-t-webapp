@@ -1,0 +1,30 @@
+<h2 class="w-full text-center">{{ categoryName }}</h2>
+<div
+  class="flex flex-col p-4 m-4 gap-2 justify-center items-center bg-secondary rounded-xl"
+>
+  <div class="md:max-h-36 lg:max-h-full w-full flex flex-col">
+    <ul class="rounded-xl w-full space-y-2 overflow-auto">
+      @for (subcategory of subCategories; track subcategory; let i = $index) {
+      <li class="bg-text-bg rounded-md">
+        <button
+          class="cursor-pointer flex justify-between w-full p-4"
+        >
+          <div class="flex gap-2">
+            <img
+              class="w-4 h-6"
+              src="{{ getIcons(subcategory.name) }}"
+              alt="icon"
+            />
+            <span>{{ subcategory.name }}</span>
+          </div>
+
+          <fa-icon class="self-end" [icon]="faPlus"></fa-icon>
+        </button>
+      </li>
+      }
+    </ul>
+  </div>
+  <button class="w-fit text-text-bg px-8 py-2 rounded-3xl bg-primary">
+    Save
+  </button>
+</div>

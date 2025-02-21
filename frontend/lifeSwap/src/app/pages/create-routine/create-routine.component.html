@@ -1,0 +1,35 @@
+<div class="w-screen h-screen flex justify-center items-center">
+  <div
+    class="mx-2 rounded-xl bg-text-bg border-2 border-primary container md:w-8/12 lg:w-6/12 xl:w-4/12"
+  >
+    <div class="w-full">
+      <h1 class="text-center mt-4">Create new routine</h1>
+      <div class="overflow-auto">
+        <ul class="w-full flex gap-10 justify-center py-4">
+          @for (category of categories; track category.name; let i = $index) {
+          <li>
+            <button
+              (click)="storeValues(category)"
+              [ngClass]="getColorCategory(category.isActive)"
+              class="w-10 h-10 cursor-pointer rounded-3xl"
+            >
+              <fa-icon
+                class="text-xl"
+                tabindex="0"
+                [icon]="getIcon(category.name)"
+              ></fa-icon>
+            </button>
+          </li>
+          }
+        </ul>
+      </div>
+
+      @if (subcategories.length > 0) {
+      <app-sub-categories
+        [subCategories]="subcategories"
+        [categoryName]="categoryName"
+      ></app-sub-categories>
+      }
+    </div>
+  </div>
+</div>
