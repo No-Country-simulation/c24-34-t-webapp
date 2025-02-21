@@ -26,7 +26,8 @@
     "lint:fix": "eslint --ignore-path .gitignore . --ext .js,.mjs,cjs,.ts,.mts --fix",
     "lint:file": "eslint --ignore-path .gitignore",
     "postinstall": "npx prisma generate && npx prisma migrate deploy",
-    "prisma:seed": "pnpm tsx prisma/seeds/seed.ts"
+    "prisma:seed": "pnpm tsx prisma/seeds/seed.ts",
+    "prisma:seed-routines": "pnpm tsx prisma/seeds/routine.seed.ts"
   },
   "dependencies": {
     "@fastify/static": "6",

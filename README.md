@@ -87,6 +87,9 @@ Add the ```seeds``` to the database
 ```bash
 pnpm prisma:seed
 ```
+```bash
+pnpm prisma:seed-routines
+```
 
 Run the application
 ```bash

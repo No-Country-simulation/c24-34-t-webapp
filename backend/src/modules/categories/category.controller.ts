@@ -17,7 +17,7 @@ export class CategoryController {
   }
 
   @Get(":id")
-  @ApiOperation({ summary: "Find routine by id" })
+  @ApiOperation({ summary: "Find category by id" })
   @ApiOkResponse({ type: FindAllCategoriesDto, isArray: false })
   async delete(@Param("id") id: string) {
     if (!id) {
