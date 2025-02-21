@@ -209,6 +209,95 @@ class RoutineService {
     }
     await this.dbService.routine.delete({ where: { id } });
   }
+
+  async findRandom({
+    subcategory,
+  }: {
+    subcategory: string;
+  }): Promise<FindAllRoutinesDto> {
+    const subcategoryExists = await this.dbService.subcategory.findFirst({
+      where: {
+        name: subcategory,
+      },
+    });
+
+    if (!subcategoryExists) {
+      throw new NotFoundException("Subcategory not found");
+    }
+
+    const routines = await this.dbService.routine.findMany({
+      where: {
+        activities: {
+          some: {
+            subcategory: {
+              name: subcategory,
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        activities: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            time: true,
+            timeRange: true,
+            goals: {
+              select: {
+                id: true,
+                unit: true,
+                period: true,
+                value: true,
+              },
+            },
+            subcategory: {
+              select: {
+                id: true,
+                name: true,
+                category: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (routines.length === 0) {
+      throw new NotFoundException("No routines found");
+    }
+
+    const randomIndex = Math.floor(Math.random() * routines.length);
+    const randomRoutine = routines[randomIndex];
+
+    const activitiesDto = randomRoutine.activities.map(activity => {
+      return {
+        id: activity.id,
+        title: activity.title,
+        description: activity.description,
+        time: activity.time,
+        timeRange: activity.timeRange,
+        category: activity.subcategory.category.name,
+        subcategory: activity.subcategory.name,
+        goal: {
+          id: activity.goals[0]?.id,
+          unit: activity.goals[0]?.unit.name,
+          period: activity.goals[0]?.period,
+          value: activity.goals[0]?.value,
+        },
+      };
+    });
+
+    return {
+      id: randomRoutine.id,
+      title: randomRoutine.title,
+      description: randomRoutine.description,
+      activities: activitiesDto,
+    };
+  }
 }
 
 export { RoutineService };

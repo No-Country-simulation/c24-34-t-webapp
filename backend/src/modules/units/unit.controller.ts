@@ -11,7 +11,7 @@ export class UnitController {
   @Get("")
   @ApiOperation({ summary: "Find all units" })
   @ApiOkResponse({ type: String, isArray: true })
-  getUsers() {
+  findAll() {
     return this.unitService.findAll();
   }
 }
