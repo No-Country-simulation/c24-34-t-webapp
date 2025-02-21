@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, IsUUID, Length, Matches } from "class-validator";
 
-import { TimeRange } from "@/modules/routines/enums/enums";
-import { type TimeRange as TimeRangeType } from "@/modules/routines/types/types";
+import { TimeRange } from "@/common/enums/enums";
+import { type TimeRange as TimeRangeType } from "@/common/types/types";
 
 class ActivityDto {
   @ApiProperty()

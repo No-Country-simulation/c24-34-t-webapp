@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { LoggerModule } from "@/common/common.module";
 import { DbModule } from "@/database/db.module";
+import { CategoryModule } from "@/modules/categories/category.module";
 import { RoutineModule } from "@/modules/routines/routine.module";
 
 @Module({
@@ -11,6 +12,7 @@ import { RoutineModule } from "@/modules/routines/routine.module";
     LoggerModule,
     DbModule,
     RoutineModule,
+    CategoryModule,
   ],
 })
 export class AppModule {}
