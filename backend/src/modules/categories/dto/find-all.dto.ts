@@ -1,17 +1,20 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsUUID, Length } from "class-validator";
+import { ApiProperty, OmitType } from "@nestjs/swagger";
+import { Type } from "class-transformer";
+import { ValidateNested } from "class-validator";
 
-class FindAllCategoriesDto {
-  @ApiProperty()
-  @IsUUID()
-  id!: string;
+import { SubcategoryDto } from "@/modules/subcategories/dto/dto";
 
-  @ApiProperty()
-  @IsString({ message: "Please enter a valid name" })
-  @Length(2, 50, {
-    message: "The name must be between 2 and 50 characters long",
-  })
-  name!: string;
+import { CategoryDto } from "./category.dto";
+
+class FindAllSubCategoriesDto extends OmitType(SubcategoryDto, [
+  "categoryId",
+]) {}
+
+class FindAllCategoriesDto extends CategoryDto {
+  @ApiProperty({ type: () => [FindAllSubCategoriesDto] })
+  @ValidateNested({ each: true })
+  @Type(() => FindAllSubCategoriesDto)
+  subcategories!: FindAllSubCategoriesDto[];
 }
 
 export { FindAllCategoriesDto };
