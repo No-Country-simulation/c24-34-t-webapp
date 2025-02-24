@@ -58,7 +58,7 @@
         }
 
         <div
-          class="space-y-4 lg:space-y-4 md:flex md:space-y-0 md:space-x-1 lg:block"
+          class="md:flex lg:block"
         >
           <div class="flex items-center justify-between mr-0">
             <label class="font-semibold" for="goalPeriodInput"
@@ -66,7 +66,7 @@
             >
             <select
               id="goalPeriodInput"
-              class="focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] rounded-sm border-2 border-secondary"
+              class="lg:mb-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] rounded-sm border-2 border-secondary"
               name="period"
               ngModel
               #period="ngModel"
@@ -87,7 +87,7 @@
             >
             <select
               id="goalValueInput"
-              class="rounded-sm order-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] border-2 border-secondary"
+              class="lg:mb-2 rounded-sm order-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] border-2 border-secondary"
               name="unit"
               ngModel
               #unit="ngModel"
