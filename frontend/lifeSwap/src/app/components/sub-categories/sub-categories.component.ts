@@ -36,6 +36,7 @@ export class SubCategoriesComponent {
 
   openDialog(name_subcategory: string) {
     const dialogRef = this.dialog.open(ModalConfigurationActivityComponent, {
+      data: {name_subcategory},
       minWidth: '320px',
       //disable closing the dialog with the escape key and by clicking outside  of it
       disableClose: true,
@@ -44,7 +45,6 @@ export class SubCategoriesComponent {
     dialogRef.closed.subscribe((result) => {
       const typedResult = result as Activity;
       typedResult.category = this.categoryName;
-      typedResult.subcategory = name_subcategory;
       this.routine.activities.unshift(typedResult);
     });
   }

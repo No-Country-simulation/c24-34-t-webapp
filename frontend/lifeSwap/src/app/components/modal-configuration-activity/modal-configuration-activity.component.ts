@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { DialogRef } from '@angular/cdk/dialog';
+import {Component, Inject} from '@angular/core';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
@@ -46,7 +46,8 @@ export class ModalConfigurationActivityComponent {
     },
   };
 
-  constructor(private dialogRef: DialogRef<CreateActivityDTO>) {}
+  constructor(private dialogRef: DialogRef<CreateActivityDTO>,
+              @Inject(DIALOG_DATA) public data: {name_subcategory: string}) {}
 
   ngOnInit() {
     //set values to display in the select inputs
@@ -85,9 +86,9 @@ export class ModalConfigurationActivityComponent {
       },
       timeRange: value.timeRange,
       time: value.time,
-      //these values are set in the subcategory component
+      //this value are set in the subcategory component
       category: '',
-      subcategory: '',
+      subcategory: this.data.name_subcategory,
     };
   }
 }

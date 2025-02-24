@@ -7,11 +7,10 @@
       <div class="flex items-center justify-between">
         <input
           id="ativityInput"
-          placeholder="Name your activity"
           class="p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
           name="title"
-          ngModel
-          #title="ngModel"
+          [(ngModel)] = "data.name_subcategory"
+          #title=ngModel
           type="text"
           minlength="2"
           maxlength="50"
