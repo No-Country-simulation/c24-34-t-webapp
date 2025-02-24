@@ -1,0 +1,165 @@
+<div
+  class="w-11/12 p-4 m-auto rounded-lg lg:w-full lg:h-fit xl:h-fit md:p-2 lg:p-4 bg-secondary"
+>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="flex flex-col gap-4">
+      <!--container title and close button-->
+      <div class="flex items-center justify-between">
+        <input
+          id="ativityInput"
+          placeholder="Name your activity"
+          class="p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+          name="title"
+          ngModel
+          #title="ngModel"
+          type="text"
+          minlength="2"
+          maxlength="50"
+          required
+        />
+        <button
+          class="bg-[#D9D9D9] w-7 h-7 cursor-pointer flex justify-center items-center"
+          (click)="close()"
+        >
+          <fa-icon class="px-2 py-1 text-xl" [icon]="faXmark"></fa-icon>
+        </button>
+      </div>
+      <!-- manage error input-->
+      @if (title.invalid && (title.dirty || title.touched)){
+      <div class="text-sm w-fit text-red-400 font-semibold">
+        The activity title must be between 2 and 50 characters long
+        <fa-icon [icon]="faCircleExclamation"></fa-icon>
+      </div>
+      }
+      <!--container configuration activity except activity name, close button and save button-->
+      <div class="p-2 space-y-4 rounded-lg lg:p-4 bg-text-bg">
+        <div class="flex flex-col rounded-xl bg-secondary">
+          <label class="p-2 font-semibold text-center" for="descriptionInput"
+            >Description</label
+          >
+          <textarea
+            id="descriptionInput"
+            class="p-4 resize-none md:h-12 lg:h-full focus:rounded-md focus:border-2 focus:border-primary focus:outline-0"
+            placeholder="add a brief description of your activity"
+            name="description"
+            ngModel
+            #description="ngModel"
+            minlength="2"
+            maxlength="500"
+            required
+          ></textarea>
+        </div>
+
+        @if (description.invalid && (description.dirty || description.touched)){
+        <div class="w-fit text-sm text-red-400 font-semibold">
+          The description must be between 2 and 500 characters long
+          <fa-icon [icon]="faCircleExclamation"></fa-icon>
+        </div>
+        }
+
+        <div
+          class="space-y-4 lg:space-y-4 md:flex md:space-y-0 md:space-x-1 lg:block"
+        >
+          <div class="flex items-center justify-between mr-0">
+            <label class="font-semibold" for="goalPeriodInput"
+              >Goal Period</label
+            >
+            <select
+              id="goalPeriodInput"
+              class="focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] rounded-sm border-2 border-secondary"
+              name="period"
+              ngModel
+              #period="ngModel"
+              required
+            >
+              @for (goalPeriod of goal_periods; track goalPeriod; let i =
+              $index) {
+              <option>{{ goalPeriod | uppercase }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="flex items-center justify-between gap-1 mr-0 lg:gap-4">
+            <label
+              class="font-semibold md:ml-2 lg:ml-0 lg:mr-20"
+              for="goalValueInput"
+              >Goal Value</label
+            >
+            <select
+              id="goalValueInput"
+              class="rounded-sm order-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] border-2 border-secondary"
+              name="unit"
+              ngModel
+              #unit="ngModel"
+              required
+            >
+              @for (unit of goal_unites; track unit; let i = $index) {
+              <option>{{ unit | uppercase }}</option>
+              }
+            </select>
+
+            <input
+              placeholder="ex:10000"
+              class="rounded-sm focus:border-primary focus:outline-0 border-2 border-secondary min-w-[6rem] md:max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] order-1"
+              type="number"
+              name="value"
+              ngModel
+              #value="ngModel"
+              required
+            />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <label for="timeRangeInput" class="font-semibold md:ml-2 lg:ml-0"
+              >Time Range</label
+            >
+            <select
+              id="timeRangeInput"
+              class="order-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] rounded-sm border-2 border-secondary"
+              name="timeRange"
+              ngModel
+              #timeRange="ngModel"
+              required
+            >
+              @for (item of time_ranges; track item; let i = $index) {
+              <option>{{ item | uppercase }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <label class="font-semibold" for="timeNowInput">Time</label>
+          <input
+            id="timeNowInput"
+            type="time"
+            class="border-2 rounded-sm focus:border-primary focus:outline-0 border-secondary"
+            min="09:00"
+            max="18:00"
+            name="time"
+            [(ngModel)]="timeNow"
+          />
+        </div>
+      </div>
+
+      <button
+        class="px-10 py-1 m-auto md:mb-1 rounded-2xl focus:bg-teal-900 focus:font-semibold w-fit"
+        [disabled]="f.invalid"
+        [ngClass]="
+          f.valid
+            ? 'text-text-bg bg-primary cursor-pointer'
+            : 'bg-gray-400 text-black'
+        "
+      >
+        Save
+      </button>
+
+      @if(f.invalid) {
+      <div class="text-sm text-center text-red-400 font-semibold">
+        all fields are required
+        <fa-icon [icon]="faCircleExclamation"></fa-icon>
+      </div>
+      }
+    </div>
+  </form>
+</div>
