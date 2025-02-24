@@ -1,11 +1,11 @@
 import {
-  faPersonRunning,
+  faGamepad,
   faHeart,
   faHouse,
-  faGamepad,
+  faPersonRunning,
 } from '@fortawesome/free-solid-svg-icons';
 
-const ICON_PATH = 'svg/';
+const ICON_PATH = 'icons/svg/';
 
 export const Icon_mapping: { [key: string]: string } = {
   Walking: `${ICON_PATH}walking.svg`,

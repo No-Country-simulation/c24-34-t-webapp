@@ -1,11 +1,11 @@
-<div class="w-screen h-screen flex justify-center items-center">
+<div class="flex items-center justify-center w-screen h-screen">
   <div
-    class="mx-2 rounded-xl bg-text-bg border-2 border-primary container md:w-8/12 lg:w-6/12 xl:w-4/12"
+    class="container mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-6/12 xl:w-4/12"
   >
     <div class="w-full">
-      <h1 class="text-center mt-4">Create new routine</h1>
+      <h1 class="mt-4 text-center">Create new routine</h1>
       <div class="overflow-auto">
-        <ul class="w-full flex gap-10 justify-center py-4">
+        <ul class="flex justify-center w-full gap-10 py-4">
           @for (category of categories; track category.name; let i = $index) {
           <li>
             <button

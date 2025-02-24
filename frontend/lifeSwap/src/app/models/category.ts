@@ -8,5 +8,4 @@ export interface Category {
 export interface Subcategory {
   id: string;
   name: string;
-  goalUnit?: string[];
 }

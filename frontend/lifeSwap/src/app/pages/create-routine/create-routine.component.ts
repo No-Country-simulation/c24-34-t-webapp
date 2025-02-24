@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Category, Subcategory } from '../../../models/category';
+import { Category, Subcategory } from '../../models/category';
 import { SubCategoriesComponent } from '../../components/sub-categories/sub-categories.component';
-import { icon_categories } from '../../../models/icon_mapping';
+import { icon_categories } from '../../models/icon_mapping';
 import { CategoriesService } from '../../services/categories.service';
 
 @Component({
@@ -15,8 +15,8 @@ import { CategoriesService } from '../../services/categories.service';
 export class CreateRoutineComponent implements OnInit {
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
-  nameIcon: string = '';
-  categoryName: string = '';
+  //Default value when the component is rendered
+  categoryName: string = 'Sports';
 
   constructor(private categoriesService: CategoriesService) {}
 
@@ -34,7 +34,7 @@ export class CreateRoutineComponent implements OnInit {
 
     //allows only one active category
     this.categories.forEach((cat) => {
-      cat.isActive === true ? cat.isActive = false : cat.isActive;
+      cat.isActive === true ? (cat.isActive = false) : cat.isActive;
       if (cat.name === category.name) {
         cat.isActive = true;
         //store category name and the subcategories of the selected category because the rendering happens outside the current scope.
@@ -61,9 +61,11 @@ export class CreateRoutineComponent implements OnInit {
   getCategories(): void {
     this.categoriesService.getAllCategories().subscribe((data) => {
       this.categories = data;
-      //set initial values when rendering the component
-      this.categories[0].isActive = true;
-      this.addSubCategories(this.categories[0].subcategories);
+      if (this.categories.length > 0) {
+        //set the active category when the component is rendering
+        this.categories[0].isActive = true;
+        this.addSubCategories(this.categories[0].subcategories);
+      }
     });
   }
 }
