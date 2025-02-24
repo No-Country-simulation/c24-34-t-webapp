@@ -3,7 +3,7 @@
   class="flex flex-col p-4 m-4 gap-2 justify-center items-center bg-secondary rounded-xl"
 >
   <div class="md:max-h-36 lg:max-h-full w-full flex flex-col">
-    <ul class="rounded-xl w-full space-y-2 overflow-auto">
+    <ul class="flex flex-col gap-2 rounded-xl w-full overflow-auto">
       @for (subcategory of subCategories; track subcategory; let i = $index) {
       <li class="bg-text-bg rounded-md">
         <button
