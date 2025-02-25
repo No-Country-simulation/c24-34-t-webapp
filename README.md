@@ -20,6 +20,14 @@ LifeSwap is a web app that allows users to upload their daily routine and random
 ### Relational Database Diagram
 ```mermaid
 erDiagram
+    USER {
+        string id PK
+        string username
+        string password
+        string created_at
+        string updated_at
+    }
+
     CATEGORY {
         string id PK
         string name
@@ -58,6 +66,7 @@ erDiagram
         string id PK
         string title
         string description
+        string user_id
     }
 
     CATEGORY ||--o{ SUBCATEGORY : "category_id"
@@ -65,6 +74,7 @@ erDiagram
     ACTIVITY ||--|| GOAL : "activity_id"
     UNIT ||--o{ GOAL : "unit_id"
     ROUTINE ||--o{ ACTIVITY : "routine_id"
+    USER ||--o{ ROUTINE : "user_id"
 ```
 
 ## 🚀 Getting Started
