@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsString, IsUUID, Length, Matches } from "class-validator";
 
 class UserDto {
+  @ApiProperty()
   @IsUUID()
   id!: string;
 
