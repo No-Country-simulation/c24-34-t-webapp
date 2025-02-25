@@ -6,6 +6,7 @@ import { DbModule } from "@/database/db.module";
 import { CategoryModule } from "@/modules/categories/category.module";
 import { RoutineModule } from "@/modules/routines/routine.module";
 import { UnitModule } from "@/modules/units/unit.module";
+import { UserModule } from "@/modules/users/user.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UnitModule } from "@/modules/units/unit.module";
     RoutineModule,
     CategoryModule,
     UnitModule,
+    UserModule,
   ],
 })
 export class AppModule {}
