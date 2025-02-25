@@ -3,25 +3,51 @@ import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Category, Subcategory } from '../../models/category';
 import { SubCategoriesComponent } from '../../components/sub-categories/sub-categories.component';
-import { icon_categories } from '../../models/icon_mapping';
+import { icon_categories } from '../../models/icon_sub_categories';
 import { CategoriesService } from '../../services/categories.service';
+import { BtnDisplayList } from '../../components/btn-display-list/btn-display-list';
+import { CreateActivityDTO, CreateRoutineDTO } from '../../models/routine';
+import { RoutinesService } from '../../services/routines.service';
 
 @Component({
   selector: 'app-create-routine',
-  imports: [FontAwesomeModule, CommonModule, SubCategoriesComponent],
+  imports: [
+    FontAwesomeModule,
+    CommonModule,
+    SubCategoriesComponent,
+    BtnDisplayList,
+  ],
   templateUrl: './create-routine.component.html',
   standalone: true,
 })
 export class CreateRoutineComponent implements OnInit {
-  categories: Category[] = [];
-  subcategories: Subcategory[] = [];
   //Default value when the component is rendered
   categoryName: string = 'Sports';
+  categories: Category[] = [];
+  subcategories: Subcategory[] = [];
+  routine: CreateRoutineDTO = {
+    title: '',
+    description: '',
+    activities: [],
+  };
 
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(
+    private categoriesService: CategoriesService,
+    private routineService: RoutinesService
+  ) {}
 
   ngOnInit() {
     this.getCategories();
+  }
+  getCategories(): void {
+    this.categoriesService.getAllCategories().subscribe((data) => {
+      this.categories = data;
+      if (this.categories.length > 0) {
+        //set the active category when the component is rendering
+        this.categories[0].isActive = true;
+        this.addSubCategories(this.categories[0].subcategories);
+      }
+    });
   }
 
   addSubCategories(subcategories: Subcategory[]): void {
@@ -58,14 +84,19 @@ export class CreateRoutineComponent implements OnInit {
     return icon_categories[name];
   }
 
-  getCategories(): void {
-    this.categoriesService.getAllCategories().subscribe((data) => {
-      this.categories = data;
-      if (this.categories.length > 0) {
-        //set the active category when the component is rendering
-        this.categories[0].isActive = true;
-        this.addSubCategories(this.categories[0].subcategories);
-      }
-    });
+  saveRoutine(): void {
+    //TODO create design to manage title and description routine
+    this.routine.title = 'routine title';
+    this.routine.description = 'routine description';
+    if (this.routine.title != '') {
+      this.routineService
+        .create(this.routine)
+        .subscribe((routineCreated) => {});
+    }
+  }
+
+  addActivities(activity: CreateActivityDTO) {
+    activity.category = this.categoryName;
+    this.routine.activities.unshift(activity);
   }
 }
