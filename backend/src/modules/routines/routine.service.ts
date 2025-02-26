@@ -19,6 +19,7 @@ class RoutineService {
         id: true,
         title: true,
         description: true,
+        userId: true,
         activities: {
           select: {
             id: true,
@@ -69,6 +70,7 @@ class RoutineService {
         id: routine.id,
         title: routine.title,
         description: routine.description,
+        userId: routine.userId,
         activities: activitiesDto,
       };
     });
@@ -77,6 +79,22 @@ class RoutineService {
   }
 
   async create(routine: CreateRoutineDto): Promise<FindAllRoutinesDto> {
+    let user;
+    if (!routine.userId) {
+      user = await this.dbService.user.findFirst();
+    }
+    if (routine.userId) {
+      user = await this.dbService.user.findUnique({
+        where: {
+          id: routine.userId,
+        },
+      });
+    }
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
     await Promise.all(
       routine.activities.map(async (activity, index) => {
         const category = await this.dbService.category.findFirst({
@@ -119,6 +137,7 @@ class RoutineService {
       data: {
         title: routine.title,
         description: routine.description,
+        userId: user.id,
         activities: {
           create: routine.activities.map(activity => {
             return {
@@ -150,6 +169,7 @@ class RoutineService {
         id: true,
         title: true,
         description: true,
+        userId: true,
         activities: {
           select: {
             id: true,
@@ -199,6 +219,7 @@ class RoutineService {
       id: newRoutine.id,
       title: newRoutine.title,
       description: newRoutine.description,
+      userId: newRoutine.userId,
       activities: activitiesDto,
     };
   }
@@ -229,6 +250,7 @@ class RoutineService {
           id: true,
           title: true,
           description: true,
+          userId: true,
           activities: {
             select: {
               id: true,
@@ -282,6 +304,7 @@ class RoutineService {
           id: true,
           title: true,
           description: true,
+          userId: true,
           activities: {
             select: {
               id: true,
@@ -335,6 +358,7 @@ class RoutineService {
           id: true,
           title: true,
           description: true,
+          userId: true,
           activities: {
             select: {
               id: true,
@@ -407,6 +431,7 @@ class RoutineService {
           id: true,
           title: true,
           description: true,
+          userId: true,
           activities: {
             select: {
               id: true,
@@ -488,6 +513,7 @@ class RoutineService {
           id: true,
           title: true,
           description: true,
+          userId: true,
           activities: {
             select: {
               id: true,
@@ -545,6 +571,7 @@ class RoutineService {
       id: randomRoutine.id,
       title: randomRoutine.title,
       description: randomRoutine.description,
+      userId: randomRoutine.userId,
       activities: activitiesDto,
     };
   }

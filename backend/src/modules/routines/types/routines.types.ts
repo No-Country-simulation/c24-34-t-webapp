@@ -4,6 +4,7 @@ type Routine = {
   id: string;
   title: string;
   description: string;
+  userId: string;
   activities: {
     id: string;
     title: string;

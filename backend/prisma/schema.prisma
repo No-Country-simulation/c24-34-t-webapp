@@ -34,6 +34,8 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  routines Routine[]
+
   @@map("users")
 }
 
@@ -100,8 +102,11 @@ model Routine {
   id          String @id @default(uuid())
   title       String
   description String
+  userId      String @map("user_id")
 
   activities Activity[]
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("routines")
 }
