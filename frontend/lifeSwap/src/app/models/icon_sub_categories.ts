@@ -7,7 +7,7 @@ import {
 
 const ICON_PATH = 'icons/svg/';
 
-export const Icon_mapping: { [key: string]: string } = {
+export const Icon_sub_categories: { [key: string]: string } = {
   Walking: `${ICON_PATH}walking.svg`,
   Workout: `${ICON_PATH}workout.svg`,
   Soccer: `${ICON_PATH}soccer.svg`,

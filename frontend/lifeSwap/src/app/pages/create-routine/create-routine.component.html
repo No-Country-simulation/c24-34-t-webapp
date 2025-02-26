@@ -4,6 +4,8 @@
   >
     <div class="w-full">
       <h1 class="mt-4 text-center">Create new routine</h1>
+
+      <!--type of categories -->
       <div class="overflow-auto">
         <ul class="flex justify-center w-full gap-10 py-4">
           @for (category of categories; track category.name; let i = $index) {
@@ -24,12 +26,23 @@
         </ul>
       </div>
 
+      <h2 class="w-full text-center">{{ categoryName }}</h2>
+
+      <!--subcategories of the category selected-->
       @if (subcategories.length > 0) {
       <app-sub-categories
         [subCategories]="subcategories"
-        [categoryName]="categoryName"
+        (sendActivity)="addActivities($event)"
       ></app-sub-categories>
       }
+      <div class="w-full flex justify-center p-2">
+        <button
+          (click)="saveRoutine()"
+          class="m-auto focus:bg-teal-900 focus:font-semibold font-semibold cursor-pointer w-fit text-text-bg px-8 py-1 rounded-3xl bg-primary"
+        >
+          Save
+        </button>
+      </div>
     </div>
   </div>
 </div>
