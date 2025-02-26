@@ -11,7 +11,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from "@nestjs/swagger";
 
 import { CreateRoutineDto, FindAllRoutinesDto } from "./dto/dto";
 import { RoutineService } from "./routine.service";
@@ -47,9 +52,31 @@ export class RoutineController {
   }
 
   @Get("random")
+  @ApiQuery({
+    name: "keyword",
+    required: false,
+    type: String,
+    description: "Filter by keyword",
+  })
+  @ApiQuery({
+    name: "category",
+    required: false,
+    type: String,
+    description: "Filter by category",
+  })
+  @ApiQuery({
+    name: "subcategory",
+    required: false,
+    type: String,
+    description: "Filter by subcategory",
+  })
   @ApiOperation({ summary: "Get random routine" })
   @ApiOkResponse({ type: FindAllRoutinesDto, isArray: false })
-  async findRandom(@Query("subcategory") subcategory: string) {
-    return this.routineService.findRandom({ subcategory });
+  async findRandom(
+    @Query("keyword") keyword: string | undefined,
+    @Query("category") category: string | undefined,
+    @Query("subcategory") subcategory: string | undefined,
+  ) {
+    return this.routineService.findRandom({ subcategory, keyword, category });
   }
 }
