@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsUUID, Length } from "class-validator";
+import { IsOptional, IsString, IsUUID, Length } from "class-validator";
 
 class RoutineDto {
   @ApiProperty()
@@ -19,6 +19,11 @@ class RoutineDto {
     message: "The description must be between 2 and 500 characters long",
   })
   description!: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsUUID()
+  userId!: string;
 }
 
 export { RoutineDto };

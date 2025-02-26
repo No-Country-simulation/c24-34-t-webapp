@@ -9,13 +9,13 @@ import { UserService } from "./user.service";
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get(":id")
-  @ApiOperation({ summary: "Find user by id" })
+  @Get(":email")
+  @ApiOperation({ summary: "Find user by email" })
   @ApiOkResponse({ type: UserDto, isArray: false })
-  findById(@Param("id") id: string) {
-    if (!id) {
+  findByEmail(@Param("email") email: string) {
+    if (!email) {
       throw new BadRequestException("User not found");
     }
-    return this.userService.findByEmail(id);
+    return this.userService.findByEmail(email);
   }
 }
