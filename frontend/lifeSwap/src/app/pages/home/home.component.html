@@ -1,0 +1,72 @@
+<div class="flex items-center justify-center w-screen h-screen">
+  <div
+    class="container w-full pt-2 mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-5/12"
+  >
+    <div class="w-full">
+      <h1 class="text-center">Find a Routine</h1>
+
+      <!--add search-->
+      <div class="overflow-auto"></div>
+
+      <h2 class="w-full my-4 text-center">Mi Routine</h2>
+
+      <!--user routine activities-->
+      @if (activities.length > 0) {
+      <div
+        class="flex flex-col items-center justify-center gap-2 p-4 mb-0 bg-secondary rounded-xl"
+      >
+        <div class="flex flex-col w-full md:max-h-80">
+          <ul class="flex flex-col w-full gap-2 overflow-auto rounded-xl">
+            @for (activity of activities; track activity; let i = $index) {
+            <li class="rounded-md bg-text-bg">
+              <btn-display-list
+                [name]="activity.subcategory"
+                [iconTypeButtonName]="faAngleDown"
+              >
+                <div
+                  class="grid items-center justify-center w-full grid-cols-2 gap-1 mx-2 ml-5 text-sm font-semibold lg:flex lg:justify-end"
+                >
+                  <div
+                    class="flex items-center justify-center w-full h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+                  >
+                    <p class="">
+                      {{ activity.goal.period | titlecase }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+                  >
+                    <p class="">
+                      {{ activity.time }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+                  >
+                    <p class="">
+                      {{ activity.goal.value }}
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+                  >
+                    <p class="">
+                      {{ activity.goal.unit | titlecase }}
+                    </p>
+                  </div>
+                </div>
+              </btn-display-list>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<!-- agregar el acordion en el boton
+(click)="openAccordion()"
+-->

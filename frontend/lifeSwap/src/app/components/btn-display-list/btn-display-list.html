@@ -1,8 +1,8 @@
-<button class="cursor-pointer flex justify-between w-full p-4">
-  <div class="flex gap-2">
+<button class="flex items-center justify-between w-full p-4 cursor-pointer">
+  <div class="flex items-center gap-2 min-w-24">
     <img class="w-4 h-6" src="{{ getIcons(name) }}" alt="icon" />
     <span>{{ name }}</span>
   </div>
   <ng-content></ng-content>
-  <fa-icon class="self-end" [icon]="iconTypeButtonName"></fa-icon>
+  <fa-icon [icon]="iconTypeButtonName"></fa-icon>
 </button>
