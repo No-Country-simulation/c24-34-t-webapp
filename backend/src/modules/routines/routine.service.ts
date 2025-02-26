@@ -7,6 +7,7 @@ import {
 import { DbService } from "@/database/db.service";
 
 import { CreateRoutineDto, FindAllRoutinesDto } from "./dto/dto";
+import { Routine } from "./types/routines.types";
 
 @Injectable()
 class RoutineService {
@@ -212,59 +213,308 @@ class RoutineService {
 
   async findRandom({
     subcategory,
+    keyword,
+    category,
   }: {
-    subcategory: string;
+    subcategory: string | undefined;
+    keyword: string | undefined;
+    category: string | undefined;
   }): Promise<FindAllRoutinesDto> {
-    const subcategoryExists = await this.dbService.subcategory.findFirst({
-      where: {
-        name: subcategory,
-      },
-    });
+    let routines: Routine[] = [];
 
-    if (!subcategoryExists) {
-      throw new NotFoundException("Subcategory not found");
+    if (!subcategory && !keyword && !category) {
+      routines = await this.dbService.routine.findMany({
+        take: 30,
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          activities: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              time: true,
+              timeRange: true,
+              goals: {
+                select: {
+                  id: true,
+                  unit: true,
+                  period: true,
+                  value: true,
+                },
+              },
+              subcategory: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      });
     }
 
-    const routines = await this.dbService.routine.findMany({
-      where: {
-        activities: {
-          some: {
-            subcategory: {
-              name: subcategory,
-            },
-          },
+    if (subcategory && !category) {
+      const subcategoryExists = await this.dbService.subcategory.findFirst({
+        where: {
+          name: subcategory,
         },
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        activities: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            time: true,
-            timeRange: true,
-            goals: {
-              select: {
-                id: true,
-                unit: true,
-                period: true,
-                value: true,
-              },
-            },
-            subcategory: {
-              select: {
-                id: true,
-                name: true,
-                category: true,
+      });
+
+      if (!subcategoryExists) {
+        throw new NotFoundException("Subcategory not found");
+      }
+
+      routines = await this.dbService.routine.findMany({
+        where: {
+          activities: {
+            some: {
+              subcategory: {
+                name: subcategory,
               },
             },
           },
         },
-      },
-    });
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          activities: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              time: true,
+              timeRange: true,
+              goals: {
+                select: {
+                  id: true,
+                  unit: true,
+                  period: true,
+                  value: true,
+                },
+              },
+              subcategory: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    if (category && !subcategory) {
+      const categoryExists = await this.dbService.category.findFirst({
+        where: {
+          name: category,
+        },
+      });
+
+      if (!categoryExists) {
+        throw new NotFoundException("Category not found");
+      }
+
+      routines = await this.dbService.routine.findMany({
+        where: {
+          activities: {
+            some: {
+              subcategory: {
+                category: { name: category },
+              },
+            },
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          activities: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              time: true,
+              timeRange: true,
+              goals: {
+                select: {
+                  id: true,
+                  unit: true,
+                  period: true,
+                  value: true,
+                },
+              },
+              subcategory: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    if (category && subcategory) {
+      const categoryExists = await this.dbService.category.findFirst({
+        where: {
+          name: category,
+        },
+      });
+
+      if (!categoryExists) {
+        throw new NotFoundException("Category not found");
+      }
+
+      const subcategoryExists = await this.dbService.subcategory.findFirst({
+        where: {
+          name: subcategory,
+        },
+      });
+
+      if (!subcategoryExists) {
+        throw new NotFoundException("Subcategory not found");
+      }
+
+      routines = await this.dbService.routine.findMany({
+        where: {
+          activities: {
+            some: {
+              OR: [
+                {
+                  subcategory: {
+                    category: { name: category },
+                  },
+                },
+                {
+                  subcategory: {
+                    name: subcategory,
+                  },
+                },
+              ],
+            },
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          activities: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              time: true,
+              timeRange: true,
+              goals: {
+                select: {
+                  id: true,
+                  unit: true,
+                  period: true,
+                  value: true,
+                },
+              },
+              subcategory: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    if (keyword && routines.length > 0) {
+      const lowerKeyword = keyword.toLowerCase();
+
+      routines = routines.filter(routine => {
+        return (
+          routine.title.toLowerCase().includes(lowerKeyword) ||
+          routine.description.toLowerCase().includes(lowerKeyword) ||
+          routine.activities.some(activity => {
+            return (
+              activity.title.toLowerCase().includes(lowerKeyword) ||
+              activity.description.toLowerCase().includes(lowerKeyword)
+            );
+          })
+        );
+      });
+    }
+
+    if (keyword && !subcategory && !category) {
+      routines = await this.dbService.routine.findMany({
+        where: {
+          OR: [
+            {
+              title: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+            {
+              description: {
+                contains: keyword,
+                mode: "insensitive",
+              },
+            },
+            {
+              activities: {
+                some: {
+                  title: {
+                    contains: keyword,
+                    mode: "insensitive",
+                  },
+                  description: {
+                    contains: keyword,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            },
+          ],
+        },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          activities: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              time: true,
+              timeRange: true,
+              goals: {
+                select: {
+                  id: true,
+                  unit: true,
+                  period: true,
+                  value: true,
+                },
+              },
+              subcategory: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
 
     if (routines.length === 0) {
       throw new NotFoundException("No routines found");

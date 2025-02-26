@@ -29,6 +29,7 @@
     ],
     "node/no-unpublished-import": "off",
     "no-process-exit": "off",
+    "@typescript-eslint/consistent-type-definitions":"off",
     "@typescript-eslint/restrict-template-expressions": [
       "error",
       { "allowNumber": true }
