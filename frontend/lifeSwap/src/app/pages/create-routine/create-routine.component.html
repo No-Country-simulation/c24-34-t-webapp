@@ -12,13 +12,17 @@
           <li>
             <button
               (click)="storeValues(category)"
-              [ngClass]="getColorCategory(category.isActive)"
-              class="w-10 h-10 cursor-pointer rounded-3xl"
+              [ngClass]="
+                category.isActive
+                  ? colorBtn['active']
+                  : colorBtn['inActive']
+              "
+              class="border border-primary w-10 h-10 rounded-3xl"
             >
               <fa-icon
                 class="text-xl"
                 tabindex="0"
-                [icon]="getIcon(category.name)"
+                [icon]="icon_categories[category.name]"
               ></fa-icon>
             </button>
           </li>
@@ -35,13 +39,24 @@
         (sendActivity)="addActivities($event)"
       ></app-sub-categories>
       }
-      <div class="flex justify-center w-full p-2 -mt-4 bg-secondary rounded-b-xl">
+      <div
+        class="flex flex-col justify-center w-full p-2 -mt-2 bg-secondary rounded-b-xl"
+      >
         <button
           (click)="saveRoutine()"
-          class="px-8 py-1 m-auto font-semibold cursor-pointer focus:bg-teal-900 focus:font-semibold w-fit text-text-bg rounded-3xl bg-primary"
+          class="px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+          [disabled]="routine.activities.length == 0"
+          [ngClass]="
+            routine.activities.length > 0
+              ? colorBtn['active']
+              : colorBtn['disabled']
+          "
         >
           Save
         </button>
+        @if(routine.activities.length == 0) {
+        <app-error-message> Add at least one activity </app-error-message>
+        }
       </div>
     </div>
   </div>

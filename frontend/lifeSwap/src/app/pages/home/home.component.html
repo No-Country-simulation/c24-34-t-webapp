@@ -15,51 +15,88 @@
       <div
         class="flex flex-col items-center justify-center gap-2 p-4 mb-0 bg-secondary rounded-xl"
       >
-        <div class="flex flex-col w-full md:max-h-80">
-          <ul class="flex flex-col w-full gap-2 overflow-auto rounded-xl">
-            @for (activity of activities; track activity; let i = $index) {
-            <li class="rounded-md bg-text-bg">
-              <btn-display-list
-                [name]="activity.subcategory"
-                [iconTypeButtonName]="faAngleDown"
-              >
-                <div
-                  class="grid items-center justify-center w-full grid-cols-2 gap-1 mx-2 ml-5 text-sm font-semibold lg:flex lg:justify-end"
-                >
-                  <div
-                    class="flex items-center justify-center w-full h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
-                  >
-                    <p class="">
-                      {{ activity.goal.period | titlecase }}
-                    </p>
-                  </div>
+        <div class="flex flex-col w-full md:max-h-96">
+          <ul>
+            <!--the accordion allows the user to see more information about the routine-->
+            <cdk-accordion
+              class="flex flex-col w-full gap-2 overflow-auto rounded-xl"
+            >
+              @for (activity of activities; track activity; let i = $index) {
 
-                  <div
-                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+              <li class="rounded-md bg-text-bg">
+                <cdk-accordion-item #accordionItem="cdkAccordionItem">
+                  <btn-display-list
+                    [name]="activity.subcategory"
+                    [iconTypeButtonName]="
+                      accordionItem.expanded
+                        ? general_icons['faAngleUp']
+                        : general_icons['faAngleDown']
+                    "
+                    (click)="accordionItem.toggle()"
+                    [color]="accordionItem.expanded ? 'active' : 'default'"
                   >
-                    <p class="">
-                      {{ activity.time }}
-                    </p>
-                  </div>
+                    <div
+                      class="grid items-center justify-center w-full grid-cols-2 gap-1 mx-2 ml-5 text-sm font-semibold lg:flex lg:justify-end"
+                    >
+                      <div
+                        class="flex items-center justify-center w-full h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
+                      >
+                        <p class="">
+                          {{ activity.goal.period | titlecase }}
+                        </p>
+                      </div>
 
+                      <div
+                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
+                      >
+                        <p class="">
+                          {{ activity.time }}
+                        </p>
+                      </div>
+
+                      <div
+                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
+                      >
+                        <p class="">
+                          {{ activity.goal.value }}
+                        </p>
+                      </div>
+                      <div
+                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
+                      >
+                        <p class="">
+                          {{ activity.goal.unit | titlecase }}
+                        </p>
+                      </div>
+                    </div>
+                  </btn-display-list>
+                </cdk-accordion-item>
+                @if (accordionItem.expanded) {
+                <div class="flex flex-col gap-4 p-4">
                   <div
-                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
+                    class="flex flex-col items-center gap-2 md:flex md:flex-row justify-between"
                   >
-                    <p class="">
-                      {{ activity.goal.value }}
+                    <p
+                      class="w-fit order-2 md:order-1 px-4 rounded-xl font-semibold border border-primary"
+                    >
+                      Description
+                    </p>
+                    <p
+                      class="w-fit order-1 md:order-2 px-4 rounded-xl font-semibold border border-primary"
+                    >
+                      Activity:
+                      <span class="font-normal">{{ activity.title }}</span>
                     </p>
                   </div>
-                  <div
-                    class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12 border-primary text-primary"
-                  >
-                    <p class="">
-                      {{ activity.goal.unit | titlecase }}
-                    </p>
-                  </div>
+                  <p class="order-3 md:order-3 font-light pl-1">
+                    {{ activity.description }}
+                  </p>
                 </div>
-              </btn-display-list>
-            </li>
-            }
+                }
+              </li>
+
+              }
+            </cdk-accordion>
           </ul>
         </div>
       </div>
@@ -67,6 +104,3 @@
     </div>
   </div>
 </div>
-<!-- agregar el acordion en el boton
-(click)="openAccordion()"
--->
