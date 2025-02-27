@@ -83,7 +83,7 @@ export class CreateRoutineComponent implements OnInit {
       this.routineService
         .create(this.routine)
         .subscribe((routineCreated) => {
-          this.router.navigate([''])
+          this.router.navigate(['home/',routineCreated.id])
         });
     }
   }
