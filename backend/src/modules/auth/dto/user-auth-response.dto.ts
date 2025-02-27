@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
-import { UserDto } from "@/modules/users/dto/user.dto";
+import { FindUserRoutinesDto } from "@/modules/users/dto/find-user-routines.dto";
 
-class UserAuthResponse extends UserDto {
+class UserAuthResponse extends FindUserRoutinesDto {
   @ApiProperty()
   @IsString()
   accessToken!: string;

@@ -10,7 +10,7 @@ import * as bcrypt from "bcrypt";
 import { DbService } from "@/database/db.service";
 import { type UserSignUpDto } from "@/modules/auth/dto/dto";
 
-import { UserDto } from "./dto/dto";
+import { FindUserRoutinesDto, UserDto } from "./dto/dto";
 
 @Injectable()
 class UserService {
@@ -37,6 +37,85 @@ class UserService {
     }
 
     return user;
+  }
+
+  async findById(id: string): Promise<FindUserRoutinesDto> {
+    const user = await this.dbService.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        routines: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            userId: true,
+            activities: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                time: true,
+                timeRange: true,
+                goals: {
+                  select: {
+                    id: true,
+                    unit: true,
+                    period: true,
+                    value: true,
+                  },
+                },
+                subcategory: {
+                  select: {
+                    id: true,
+                    name: true,
+                    category: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    const { routines, ...userData } = user;
+
+    const routinesDto = routines.map(routine => {
+      const activitiesDto = routine.activities.map(activity => {
+        return {
+          id: activity.id,
+          title: activity.title,
+          description: activity.description,
+          time: activity.time,
+          timeRange: activity.timeRange,
+          category: activity.subcategory.category.name,
+          subcategory: activity.subcategory.name,
+          goal: {
+            id: activity.goals[0]?.id,
+            unit: activity.goals[0]?.unit.name,
+            period: activity.goals[0]?.period,
+            value: activity.goals[0]?.value,
+          },
+        };
+      });
+
+      return {
+        id: routine.id,
+        title: routine.title,
+        description: routine.description,
+        userId: routine.userId,
+        activities: activitiesDto,
+      };
+    });
+
+    return { ...userData, routines: routinesDto };
   }
 
   async createUser({

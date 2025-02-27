@@ -17,7 +17,7 @@ import {
 
 import { AuthGuard } from "@/common/guards/guards";
 import { type AuthTokenRequest } from "@/common/types/types";
-import { UserDto } from "@/modules/users/dto/user.dto";
+import { FindUserRoutinesDto } from "@/modules/users/dto/find-user-routines.dto";
 
 import { AuthService } from "./auth.service";
 import { UserAuthResponse, UserSignInDto, UserSignUpDto } from "./dto/dto";
@@ -31,10 +31,10 @@ class AuthController {
   @ApiBearerAuth("JWT-auth")
   @Get("verify-token")
   @ApiOperation({ summary: "Verify access token" })
-  @ApiOkResponse({ type: UserDto, isArray: false })
+  @ApiOkResponse({ type: FindUserRoutinesDto, isArray: false })
   verifyToken(@Request() req: AuthTokenRequest) {
     const user = req.user;
-    return { ...user };
+    return this.authService.verifyToken(user.id);
   }
 
   @Post("sign-up")
