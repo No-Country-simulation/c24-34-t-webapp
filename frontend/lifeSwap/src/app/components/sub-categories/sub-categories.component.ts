@@ -3,9 +3,9 @@ import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ModalConfigurationActivityComponent } from '../modal-configuration-activity/modal-configuration-activity.component';
 import { Subcategory } from '../../models/category';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Activity } from '../../models/routine';
 import { BtnDisplayList } from '../btn-display-list/btn-display-list';
+import { general_icons } from '../../models/icon_sub_categories';
 
 @Component({
   selector: 'app-sub-categories',
@@ -19,12 +19,12 @@ import { BtnDisplayList } from '../btn-display-list/btn-display-list';
   standalone: true,
 })
 export class SubCategoriesComponent {
-  faPlus = faPlus;
+  constructor(private dialog: Dialog) {}
+
   //obtaining these values because they are outside the scope
   @Input() subCategories: Subcategory[] = [];
   @Output() sendActivity = new EventEmitter<Activity>();
-
-  constructor(private dialog: Dialog) {}
+  general_icons = general_icons;
 
   openDialog(name_subcategory: string) {
     const dialogRef = this.dialog.open(ModalConfigurationActivityComponent, {

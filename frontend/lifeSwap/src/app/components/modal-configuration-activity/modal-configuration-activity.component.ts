@@ -1,5 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
+import { Component, Inject } from '@angular/core';
+import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
@@ -7,22 +7,26 @@ import {
   GOAL_UNITS,
   TIME_RANGE,
 } from '../../models/TIME_RANGE_ENUM';
-import {
-  faXmark,
-  faCircleExclamation,
-} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateActivityDTO } from '../../models/routine';
+import { Color_btn } from '../../models/color_btn';
+import { ErrorMessageComponent } from '../error-message/error-message.component';
+import {general_icons} from '../../models/icon_sub_categories';
 
 @Component({
   selector: 'app-modal-configuration-activity',
-  imports: [FontAwesomeModule, CommonModule, FormsModule],
+  imports: [
+    FontAwesomeModule,
+    CommonModule,
+    FormsModule,
+    ErrorMessageComponent,
+  ],
   templateUrl: './modal-configuration-activity.component.html',
   standalone: true,
 })
 export class ModalConfigurationActivityComponent {
-  faXmark = faXmark;
-  faCircleExclamation = faCircleExclamation;
+  colorBtn = Color_btn;
+  general_icons = general_icons;
   time_ranges: TIME_RANGE[] = [];
   goal_periods: GOAL_PERIOD[] = [];
   goal_unites: GOAL_UNITS[] = [];
@@ -46,8 +50,10 @@ export class ModalConfigurationActivityComponent {
     },
   };
 
-  constructor(private dialogRef: DialogRef<CreateActivityDTO>,
-              @Inject(DIALOG_DATA) public data: {name_subcategory: string}) {}
+  constructor(
+    private dialogRef: DialogRef<CreateActivityDTO>,
+    @Inject(DIALOG_DATA) public data: { name_subcategory: string }
+  ) {}
 
   ngOnInit() {
     //set values to display in the select inputs

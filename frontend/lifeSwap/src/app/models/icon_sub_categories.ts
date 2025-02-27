@@ -3,6 +3,10 @@ import {
   faHeart,
   faHouse,
   faPersonRunning,
+  faAngleDown,
+  faAngleUp,
+  faPlus,
+  faCircleExclamation, faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 const ICON_PATH = 'icons/svg/';
@@ -28,10 +32,16 @@ export const Icon_sub_categories: { [key: string]: string } = {
   Painting: `${ICON_PATH}painting.svg`,
   Singing: `${ICON_PATH}singing.svg`,
 };
-
 export const icon_categories: { [key: string]: any } = {
   Sports: faPersonRunning,
   Health: faHeart,
   Home: faHouse,
   Hobbies: faGamepad,
+};
+export const general_icons: { [key: string]: any } = {
+  faAngleDown: faAngleDown,
+  faAngleUp: faAngleUp,
+  faPlus: faPlus,
+  faCircleExclamation: faCircleExclamation,
+  faXmark: faXmark,
 };

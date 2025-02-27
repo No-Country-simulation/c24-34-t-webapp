@@ -5,9 +5,10 @@ import { Category, Subcategory } from '../../models/category';
 import { SubCategoriesComponent } from '../../components/sub-categories/sub-categories.component';
 import { icon_categories } from '../../models/icon_sub_categories';
 import { CategoriesService } from '../../services/categories.service';
-import { BtnDisplayList } from '../../components/btn-display-list/btn-display-list';
 import { CreateActivityDTO, CreateRoutineDTO } from '../../models/routine';
 import { RoutinesService } from '../../services/routines.service';
+import { Color_btn } from '../../models/color_btn';
+import { ErrorMessageComponent } from '../../components/error-message/error-message.component';
 
 @Component({
   selector: 'app-create-routine',
@@ -15,12 +16,14 @@ import { RoutinesService } from '../../services/routines.service';
     FontAwesomeModule,
     CommonModule,
     SubCategoriesComponent,
-    BtnDisplayList,
+    ErrorMessageComponent,
   ],
   templateUrl: './create-routine.component.html',
   standalone: true,
 })
 export class CreateRoutineComponent implements OnInit {
+  icon_categories = icon_categories;
+  colorBtn = Color_btn;
   //Default value when the component is rendered
   categoryName: string = 'Sports';
   categories: Category[] = [];
@@ -68,20 +71,6 @@ export class CreateRoutineComponent implements OnInit {
         this.addSubCategories(category.subcategories);
       }
     });
-  }
-  // get tailwind classes for an active or inactive category
-  getColorCategory(isActive: boolean = false) {
-    return {
-      'bg-primary': isActive === true,
-      'text-text-bg': isActive === true,
-
-      'bg-secondary': isActive === false,
-      'text-primary': isActive === false,
-    };
-  }
-
-  getIcon(name: string): string {
-    return icon_categories[name];
   }
 
   saveRoutine(): void {

@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: CreateRoutineComponent,
   },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent
   }
 ];
