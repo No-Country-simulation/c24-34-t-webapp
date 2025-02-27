@@ -9,6 +9,7 @@ import { CreateActivityDTO, CreateRoutineDTO } from '../../models/routine';
 import { RoutinesService } from '../../services/routines.service';
 import { Color_btn } from '../../models/color_btn';
 import { ErrorMessageComponent } from '../../components/error-message/error-message.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-routine',
@@ -36,7 +37,8 @@ export class CreateRoutineComponent implements OnInit {
 
   constructor(
     private categoriesService: CategoriesService,
-    private routineService: RoutinesService
+    private routineService: RoutinesService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -80,7 +82,9 @@ export class CreateRoutineComponent implements OnInit {
     if (this.routine.title != '') {
       this.routineService
         .create(this.routine)
-        .subscribe((routineCreated) => {});
+        .subscribe((routineCreated) => {
+          this.router.navigate([''])
+        });
     }
   }
 

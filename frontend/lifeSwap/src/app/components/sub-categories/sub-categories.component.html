@@ -3,7 +3,7 @@
 >
   <div class="flex flex-col w-full md:max-h-36 lg:max-h-full">
     <ul class="flex flex-col w-full gap-2 overflow-auto rounded-xl">
-      @for (subCategory of subCategories; track subCategory; let i = $index) {
+      @for (subCategory of subCategories; track subCategory.id; let i = $index) {
       <li class="rounded-md">
         <btn-display-list
           (click)="openDialog(subCategory.name)"
