@@ -8,7 +8,16 @@ import {
   faPlus,
   faCircleExclamation,
   faXmark,
-  faMagnifyingGlass, faSpinner
+  faMagnifyingGlass,
+  faSpinner,
+  faAngleRight,
+  faChevronLeft,
+  faUser,
+  faEnvelope,
+  faLock,
+  faEyeSlash,
+  faEye
+
 } from '@fortawesome/free-solid-svg-icons';
 
 const ICON_PATH = 'icons/svg/';
@@ -49,4 +58,15 @@ export const get_icons: { [key: string]: any } = {
   faXmark: faXmark,
   faMagnifyingGlass: faMagnifyingGlass,
   faSpinner: faSpinner,
+
+  //user
+  'userSignIn':`${ICON_PATH}sign-in-icon.svg`,
+  faAngleRight:faAngleRight,
+  faChevronLeft:faChevronLeft,
+  faUser:faUser,
+  faEnvelope:faEnvelope,
+  faLock:faLock,
+  faEyeSlash:faEyeSlash,
+  faEye:faEye
+
 };
