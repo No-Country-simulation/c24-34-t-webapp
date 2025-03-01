@@ -5,7 +5,7 @@ import { Subcategory } from '../../models/category';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Activity } from '../../models/routine';
 import { BtnDisplayList } from '../btn-display-list/btn-display-list';
-import { general_icons } from '../../models/icon_sub_categories';
+import { get_icons } from '../../models/get_icons';
 
 @Component({
   selector: 'app-sub-categories',
@@ -24,7 +24,7 @@ export class SubCategoriesComponent {
   //obtaining these values because they are outside the scope
   @Input() subCategories: Subcategory[] = [];
   @Output() sendActivity = new EventEmitter<Activity>();
-  general_icons = general_icons;
+  general_icons = get_icons;
 
   openDialog(name_subcategory: string) {
     const dialogRef = this.dialog.open(ModalConfigurationActivityComponent, {

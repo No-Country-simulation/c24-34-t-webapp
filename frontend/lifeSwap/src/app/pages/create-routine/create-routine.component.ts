@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Category, Subcategory } from '../../models/category';
 import { SubCategoriesComponent } from '../../components/sub-categories/sub-categories.component';
-import { icon_categories } from '../../models/icon_sub_categories';
+import { get_icons } from '../../models/get_icons';
 import { CategoriesService } from '../../services/categories.service';
 import { CreateActivityDTO, CreateRoutineDTO } from '../../models/routine';
 import { RoutinesService } from '../../services/routines.service';
@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class CreateRoutineComponent implements OnInit {
-  icon_categories = icon_categories;
+  icon_categories = get_icons;
   colorBtn = Color_btn;
   //Default value when the component is rendered
   categoryName: string = 'Sports';

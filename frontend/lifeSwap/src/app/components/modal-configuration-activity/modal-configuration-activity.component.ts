@@ -11,7 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateActivityDTO } from '../../models/routine';
 import { Color_btn } from '../../models/color_btn';
 import { ErrorMessageComponent } from '../error-message/error-message.component';
-import {general_icons} from '../../models/icon_sub_categories';
+import {get_icons} from '../../models/get_icons';
 
 @Component({
   selector: 'app-modal-configuration-activity',
@@ -26,7 +26,7 @@ import {general_icons} from '../../models/icon_sub_categories';
 })
 export class ModalConfigurationActivityComponent {
   colorBtn = Color_btn;
-  general_icons = general_icons;
+  general_icons = get_icons;
   time_ranges: TIME_RANGE[] = [];
   goal_periods: GOAL_PERIOD[] = [];
   goal_unites: GOAL_UNITS[] = [];

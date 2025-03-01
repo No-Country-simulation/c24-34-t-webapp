@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { general_icons } from '../../models/icon_sub_categories';
+import { get_icons } from '../../models/get_icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -9,5 +9,5 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   templateUrl: './error-message.component.html',
 })
 export class ErrorMessageComponent {
-  general_icons = general_icons;
+  general_icons = get_icons;
 }

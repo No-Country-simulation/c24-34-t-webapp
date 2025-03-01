@@ -6,12 +6,15 @@ import {
   faAngleDown,
   faAngleUp,
   faPlus,
-  faCircleExclamation, faXmark,
+  faCircleExclamation,
+  faXmark,
+  faMagnifyingGlass, faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 const ICON_PATH = 'icons/svg/';
 
-export const Icon_sub_categories: { [key: string]: string } = {
+export const get_icons: { [key: string]: any } = {
+  //subcategories icons
   Walking: `${ICON_PATH}walking.svg`,
   Workout: `${ICON_PATH}workout.svg`,
   Soccer: `${ICON_PATH}soccer.svg`,
@@ -31,17 +34,19 @@ export const Icon_sub_categories: { [key: string]: string } = {
   'Video Games': `${ICON_PATH}video_games.svg`,
   Painting: `${ICON_PATH}painting.svg`,
   Singing: `${ICON_PATH}singing.svg`,
-};
-export const icon_categories: { [key: string]: any } = {
+
+  //category icons
   Sports: faPersonRunning,
   Health: faHeart,
   Home: faHouse,
   Hobbies: faGamepad,
-};
-export const general_icons: { [key: string]: any } = {
+
+  //general icons
   faAngleDown: faAngleDown,
   faAngleUp: faAngleUp,
   faPlus: faPlus,
   faCircleExclamation: faCircleExclamation,
   faXmark: faXmark,
+  faMagnifyingGlass: faMagnifyingGlass,
+  faSpinner: faSpinner,
 };
