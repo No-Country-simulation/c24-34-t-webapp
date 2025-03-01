@@ -5,15 +5,17 @@
     <div class="w-full">
       <h1 class="text-center">Find a Routine</h1>
 
-      <!--add search-->
-      <div class="overflow-auto"></div>
+      <!--Filter-->
+      <app-filter
+        (sendActivitiesFiltered)="setActivitiesFiltered($event)"
+      ></app-filter>
 
       <h2 class="w-full my-4 text-center">Mi Routine</h2>
 
       <!--user routine activities-->
       @if (activities.length > 0) {
       <div
-        class="flex flex-col items-center justify-center gap-2 p-4 mb-0 bg-secondary rounded-xl"
+        class="flex flex-col items-center justify-center gap-2 p-4 mb-0 min-h-56 bg-secondary rounded-xl"
       >
         <div class="flex flex-col w-full md:max-h-96">
           <ul>
@@ -70,31 +72,30 @@
                       </div>
                     </div>
                   </btn-display-list>
-                </cdk-accordion-item>
-                @if (accordionItem.expanded) {
-                <div class="flex flex-col gap-4 p-4">
-                  <div
-                    class="flex flex-col items-center gap-2 md:flex md:flex-row justify-between"
-                  >
-                    <p
-                      class="w-fit order-2 md:order-1 px-4 rounded-xl font-semibold border border-primary"
+                  @if (accordionItem.expanded) {
+                  <div class="flex flex-col gap-4 p-4">
+                    <div
+                      class="flex flex-col items-center justify-between gap-2 md:flex md:flex-row"
                     >
-                      Description
-                    </p>
-                    <p
-                      class="w-fit order-1 md:order-2 px-4 rounded-xl font-semibold border border-primary"
-                    >
-                      Activity:
-                      <span class="font-normal">{{ activity.title }}</span>
+                      <p
+                        class="order-2 px-4 font-semibold border w-fit md:order-1 rounded-xl border-primary"
+                      >
+                        Description
+                      </p>
+                      <p
+                        class="order-1 px-4 font-semibold border w-fit md:order-2 rounded-xl border-primary"
+                      >
+                        Activity:
+                        <span class="font-normal">{{ activity.title }}</span>
+                      </p>
+                    </div>
+                    <p class="order-3 pl-1 font-light md:order-3">
+                      {{ activity.description }}
                     </p>
                   </div>
-                  <p class="order-3 md:order-3 font-light pl-1">
-                    {{ activity.description }}
-                  </p>
-                </div>
-                }
+                  }
+                </cdk-accordion-item>
               </li>
-
               }
             </cdk-accordion>
           </ul>

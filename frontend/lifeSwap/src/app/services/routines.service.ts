@@ -13,8 +13,7 @@ export class RoutinesService {
     return this.http.post<Routine>(`${environment.url}routines`, routine);
   }
 
-  //agregar el endpoint que busca de acuerdo a id del usuario
-  getRoutinesByUser(){
-    return this.http.get<Routine[]>(`${environment.url}routines`);
+  getRoutineRandomBySubCategory(subCategoryName: string) {
+    return this.http.get<Routine>(`${environment.url}routines/random?subcategory=${subCategoryName}`);
   }
 }
