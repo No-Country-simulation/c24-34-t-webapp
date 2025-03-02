@@ -1,6 +1,82 @@
-<p>login works!</p>
-<button
-(click)="logIn(signInData)">
-    login
-</button>
+<div class="flex items-center justify-center w-screen h-screen">
+  <div
+    class="flex flex-col items-center m-2 overflow-auto border-2 lg:min-h-80 min-h-120 md:w-6/12 lg:w-4/12 xl:w-4/12 rounded-xl bg-text-bg border-primary"
+  >
+    <div class="mb-16 md:mb-9">
+      <img
+        class="lg:-mt-[3rem] -mt-20"
+        [src]="get_icons['userSignInBg']"
+        alt="sign in background icon"
+      />
+      <img
+        class="w-14 md:w-20 md:-mt-[5rem] -mt-[3.5rem] m-auto"
+        [src]="get_icons['userSignIn']"
+        alt="sign in icon"
+      />
+    </div>
 
+    <div class="flex justify-between w-full mb-4 font-medium full text-text-bg">
+        <div class="flex gap-4 p-2 pl-10 font-bold rounded-r-full bg-primary">
+            <p>Sign In</p>
+            <fa-icon class="px-2 border-2 rounded-full border-text-bg" [icon]="get_icons['faChevronLeft']"></fa-icon>
+        </div>
+        <div class="flex p-2 pr-6 rounded-l-full bg-primary">
+            <fa-icon class="px-2 border-2 rounded-full border-text-bg" [icon]="get_icons['faAngleRight']"></fa-icon>
+        </div>
+    </div>
+
+    <!--container form an section sing up-->
+    <div class="flex flex-col justify-between gap-4 grow">
+      <form
+        class="flex flex-col gap-2 grow text-text-bg"
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm"
+      >
+        <div class="flex gap-2 p-2 rounded-md bg-primary">
+          <fa-icon [icon]="get_icons['faEnvelope']"></fa-icon>
+          <input
+            placeholder="Enter your email"
+            class="w-full"
+            type="email"
+            name="email"
+            ngModel
+            #email="ngModel"
+          />
+        </div>
+
+        <div class="flex gap-2 p-2 rounded-md bg-primary">
+          <fa-icon [icon]="get_icons['faLock']"></fa-icon>
+          <input
+            placeholder="Enter your password"
+            class="w-full"
+            type="password"
+            name="password"
+            ngModel
+            #password="ngModel"
+          />
+          <fa-icon [icon]="get_icons['faEyeSlash']"></fa-icon>
+        </div>
+
+        <button
+          class="self-center px-8 py-1 mt-10 font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+          [ngClass]="color_btn['active']"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <div class="py-6">
+        <div class="flex gap-2">
+          <img src="/icons/svg/line-sign-in.svg" alt="" />
+          <div>or</div>
+          <img src="/icons/svg/line-sign-in.svg" alt="" />
+        </div>
+
+        <div class="flex justify-center gap-2">
+          <p class="font-semibold">Don't have an account?</p>
+          <a class="text-blue-600">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

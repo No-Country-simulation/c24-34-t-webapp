@@ -61,6 +61,7 @@ export const get_icons: { [key: string]: any } = {
 
   //user
   'userSignIn':`${ICON_PATH}sign-in-icon.svg`,
+  'userSignInBg':`${ICON_PATH}bg-green-sign-in.svg`,
   faAngleRight:faAngleRight,
   faChevronLeft:faChevronLeft,
   faUser:faUser,
@@ -68,5 +69,4 @@ export const get_icons: { [key: string]: any } = {
   faLock:faLock,
   faEyeSlash:faEyeSlash,
   faEye:faEye
-
 };

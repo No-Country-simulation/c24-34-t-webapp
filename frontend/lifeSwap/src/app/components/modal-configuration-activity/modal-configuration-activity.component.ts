@@ -71,7 +71,7 @@ export class ModalConfigurationActivityComponent {
 
   onSubmit(f: NgForm): void {
     this.storeActivityValue(f.value);
-    /*when saving the activity, the dialog closes to allow the user configure another activity
+    /*after saving the activity, the dialog closes to allow the user configure another activity
     and sends the activity configured to be used later for saving the routine*/
     this.dialogRef.close(this.activity);
   }
