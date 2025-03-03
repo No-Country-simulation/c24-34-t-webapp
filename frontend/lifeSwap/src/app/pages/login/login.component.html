@@ -1,6 +1,6 @@
 <div class="flex items-center justify-center w-screen h-screen">
   <div
-    class="flex flex-col items-center m-2 overflow-auto border-2 lg:min-h-80 min-h-120 md:w-6/12 lg:w-4/12 xl:w-4/12 rounded-xl bg-text-bg border-primary"
+    class="flex flex-col items-center m-2 overflow-auto border-2 lg:min-h-80 lg:w-4/12 xl:w-4/12 rounded-xl bg-text-bg border-primary"
   >
     <div class="mb-16 md:mb-9">
       <img
@@ -15,20 +15,12 @@
       />
     </div>
 
-    <div class="flex justify-between w-full mb-4 font-medium full text-text-bg">
-        <div class="flex gap-4 p-2 pl-10 font-bold rounded-r-full bg-primary">
-            <p>Sign In</p>
-            <fa-icon class="px-2 border-2 rounded-full border-text-bg" [icon]="get_icons['faChevronLeft']"></fa-icon>
-        </div>
-        <div class="flex p-2 pr-6 rounded-l-full bg-primary">
-            <fa-icon class="px-2 border-2 rounded-full border-text-bg" [icon]="get_icons['faAngleRight']"></fa-icon>
-        </div>
-    </div>
+
 
     <!--container form an section sing up-->
-    <div class="flex flex-col justify-between gap-4 grow">
+    <div class="my-4 flex flex-col justify-between gap-4 ">
       <form
-        class="flex flex-col gap-2 grow text-text-bg"
+        class="flex justify-end flex-col gap-2 grow text-text-bg"
         (ngSubmit)="onSubmit(f)"
         #f="ngForm"
       >
@@ -58,14 +50,14 @@
         </div>
 
         <button
-          class="self-center px-8 py-1 mt-10 font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+          class="lg:mt-6 self-center px-8 py-1  font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
           [ngClass]="color_btn['active']"
         >
           Sign In
         </button>
       </form>
 
-      <div class="py-6">
+      <div class="py-6 hidden lg:block">
         <div class="flex gap-2">
           <img src="/icons/svg/line-sign-in.svg" alt="" />
           <div>or</div>
@@ -78,5 +70,14 @@
         </div>
       </div>
     </div>
+
+    <div class="lg:hidden flex justify-end w-full mb-4 font-medium full text-text-bg">
+      <div class="flex gap-4 p-2 pr-10 rounded-l-full text-primary border border-primary bg-text-bg">
+
+        <fa-icon class="px-2 border-2 rounded-full text-text-bg bg-primary border-primary" [icon]="get_icons['faAngleRight']"></fa-icon>
+        <p>Sign Up</p>
+      </div>
+    </div>
   </div>
+
 </div>
