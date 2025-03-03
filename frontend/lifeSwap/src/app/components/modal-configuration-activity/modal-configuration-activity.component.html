@@ -43,14 +43,14 @@
             ngModel
             #description="ngModel"
             minlength="2"
-            maxlength="500"
+            maxlength="100"
             required
           ></textarea>
         </div>
 
         @if (description.invalid && (description.dirty || description.touched)){
         <app-error-message>
-          The description must be between 2 and 500 characters long
+          The description must be between 2 and 100 characters long
         </app-error-message>
         }
 
