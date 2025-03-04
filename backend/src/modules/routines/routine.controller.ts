@@ -38,6 +38,10 @@ export class RoutineController {
   @ApiOkResponse({ type: FindAllRoutinesDto, isArray: false })
   @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() data: CreateRoutineDto) {
+    if (!data.userId) {
+      throw new BadRequestException("User not found");
+    }
+
     return this.routineService.create(data);
   }
 

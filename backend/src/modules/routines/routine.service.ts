@@ -79,17 +79,14 @@ class RoutineService {
   }
 
   async create(routine: CreateRoutineDto): Promise<FindAllRoutinesDto> {
-    let user;
-    if (!routine.userId) {
-      user = await this.dbService.user.findFirst();
-    }
-    if (routine.userId) {
-      user = await this.dbService.user.findUnique({
-        where: {
-          id: routine.userId,
-        },
-      });
-    }
+    const user = await this.dbService.user.findUnique({
+      where: {
+        id: routine.userId,
+      },
+      select: {
+        id: true,
+      },
+    });
 
     if (!user) {
       throw new NotFoundException("User not found");

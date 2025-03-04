@@ -18,8 +18,8 @@ class ActivityDto {
 
   @ApiProperty()
   @IsString({ message: "Please enter a valid description" })
-  @Length(2, 500, {
-    message: "The description must be between 2 and 500 characters long",
+  @Length(2, 100, {
+    message: "The description must be between 2 and 100 characters long",
   })
   description!: string;
 

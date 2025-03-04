@@ -5,17 +5,17 @@ class UserSignUpDto {
   @ApiProperty()
   @IsString({ message: "Please enter a valid name" })
   @Length(6, 12, {
-    message: "The name must be between 6 and 12 characters long",
+    message: "The username must be between 6 and 12 characters long",
   })
   @Matches(/^\S+$/, {
-    message: "The name must be a single word without spaces",
+    message: "The username must be a single word without spaces",
   })
   username!: string;
 
   @ApiProperty()
   @IsEmail({}, { message: "Please enter a valid email" })
-  @Length(6, 320, {
-    message: "The name must be between 6 and 320 characters long",
+  @Length(6, 50, {
+    message: "The email must be between 6 and 50 characters long",
   })
   email!: string;
 

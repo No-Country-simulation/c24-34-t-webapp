@@ -4,8 +4,8 @@ import { IsEmail, IsString, Length, Matches } from "class-validator";
 class UserSignInDto {
   @ApiProperty()
   @IsEmail({}, { message: "Please enter a valid email" })
-  @Length(6, 320, {
-    message: "The name must be between 6 and 320 characters long",
+  @Length(6, 50, {
+    message: "The email must be between 6 and 50 characters long",
   })
   email!: string;
 
