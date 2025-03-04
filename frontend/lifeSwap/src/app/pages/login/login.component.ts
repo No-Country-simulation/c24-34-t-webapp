@@ -36,7 +36,7 @@ export class LoginComponent {
     if (f.valid){
       const { email, password } = f.value;
       const signInData:SignIn = {
-        email:email,
+        email:email.toLowerCase(),
         password:password
       }
       this.logIn(signInData)
@@ -63,6 +63,11 @@ export class LoginComponent {
           this.status = 'badRequest';
           //no open dialog, this error is maneged by form-message-error component
         }
+        else if(err.status === 401) {
+          //set status to Unauthorized when there is an error with credentials
+          this.status = 'unauthorized';
+          //no open dialog, this error is maneged by form-message-error component
+        }
         else if (err.status === 404){
           //set status to notFound when a 404 error occurs
           this.status = "notFound";
@@ -84,5 +89,9 @@ export class LoginComponent {
       backdropClass: 'bg-gray-50/90',
       disableClose: true
     })
+  }
+
+  setStatus() {
+    this.status ="init";
   }
 }
