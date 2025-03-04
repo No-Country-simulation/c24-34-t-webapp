@@ -12,6 +12,8 @@ import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ModelMessagesComponent } from '../model-messages/model-messages.component';
 import { Activity } from '../../models/routine';
 import {SearchComponent} from '../search/search.component';
+import {RequestStatus} from '../../models/request-status.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -28,6 +30,7 @@ import {SearchComponent} from '../search/search.component';
   standalone: true,
 })
 export class FilterComponent {
+  status:RequestStatus = "init";
   isOpen = false;
   general_icons = get_icons;
   colorBtn = Color_btn;
@@ -58,7 +61,8 @@ to display it at the end of the X-axis. */
   constructor(
     private categoryService: CategoriesService,
     private routineService: RoutinesService,
-    private dialog: Dialog
+    private dialog: Dialog,
+    private router:Router
   ) {}
 
   ngOnInit() {
@@ -66,50 +70,73 @@ to display it at the end of the X-axis. */
   }
 
   getCategories() {
-    return this.categoryService.getAllCategories().subscribe((result) => {
-      this.categories = result;
+    //set status to loading while waiting for the backend response
+    this.status = "loading";
+    //open a dialog with a message about the pending status
+    this.openDialog();
+
+    this.categoryService.getAllCategories().subscribe({
+      next:(result) => {
+        this.status = "success";
+        //close the dialog when the backend request is successful
+        this.dialog.closeAll();
+
+        this.categories = result;
+      },
+      error:(err) => {
+        //close the pending dialog when the backend request fails
+        this.dialog.closeAll();
+        if (err.status === 404){
+          //set status to notFound when a 404 error occurs
+          this.status = "notFound"
+          //open a dialog with a message about the 404 error
+          this.openDialog();
+           //navigate to the login component when there is a 404 error
+          this.router.navigate(['/login']);
+        }
+    }
+    })
+  }
+
+  getRoutineRandomBySubcategory(subcategory: string) {
+    //set status to loading while waiting for the backend response
+    this.status = "loading";
+    //open a dialog with a message about the pending status
+    this.openDialog();
+
+    this.routineService.getRandomRoutine(subcategory).subscribe({
+      next:(routine) => {
+        this.status = "success";
+        //close the dialog when the backend request is successful
+        this.dialog.closeAll();
+        //send activities to the home component
+        this.sendActivitiesFilteredHandler(routine.activities);
+      },
+      error: (err) => {
+        //close the pending dialog when the backend request fails
+        this.dialog.closeAll();
+
+        if (err.status === 404){
+          //set status to notFound when a 404 error occurs
+          this.status = "notFound";
+          //open a dialog with a message about the 404 error
+          this.openDialog();
+        }
+      }
     });
   }
 
-  getRoutineRandom(name: string) {
-    //reset values to default
-    this.message = 'Looking for a random routine';
-    this.loading = true;
-    //in case whe the response status is pending show the dialog
-    if (this.loading) {
-      this.openDialog();
-    }
-    this.routineService.getRoutineRandomBySubCategory(name).subscribe(
-      (routine) => {
-        if (routine.id != '') {
-          setTimeout(() => {
-            this.dialog.closeAll();
-          }, 1000);
-          //the response status is not pending
-          this.loading = false;
-          //send activities to home component
-          this.sendActivitiesFilteredHandler(routine.activities);
-        }
-      },
-      (error) => {
-        //show the dialog with the error message
-        this.message = error.error.message;
-        setTimeout(() => {
-          this.dialog.closeAll();
-        }, 2000);
-        this.openDialog();
-      }
-    );
-  }
   openDialog() {
     this.dialog.open(ModelMessagesComponent, {
-      //send message to the component using the modal
-      data: this.message,
+      //send status to the Model Messages component
+      data: {
+        status: this.status
+      },
       minWidth: '320px',
       backdropClass: 'bg-gray-50/90',
     });
   }
-  //send activities to home component
+  //send activities to the home component
   sendActivitiesFilteredHandler(activities: Activity[]) {
     this.sendActivitiesFiltered.emit(activities);
   }

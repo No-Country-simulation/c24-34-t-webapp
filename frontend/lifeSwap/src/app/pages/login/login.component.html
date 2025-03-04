@@ -33,6 +33,7 @@
             name="email"
             ngModel
             #email="ngModel"
+            required
           />
         </div>
 
@@ -45,16 +46,24 @@
             name="password"
             ngModel
             #password="ngModel"
+            required
           />
           <fa-icon [icon]="get_icons['faEyeSlash']"></fa-icon>
         </div>
 
         <button
           class="lg:mt-6 self-center px-8 py-1  font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-          [ngClass]="color_btn['active']"
+          [ngClass]="f.valid ? color_btn['active'] : color_btn['disabled']"
+          [disabled]="f.invalid"
         >
           Sign In
         </button>
+        @if (f.invalid) {
+          <app-form-error-message>all fields are required</app-form-error-message>
+        }
+        @if (f.valid && status === 'badRequest' && f.dirty) {
+          <app-form-error-message>Credentials are invalid</app-form-error-message>
+        }
       </form>
 
       <div class="py-6 hidden lg:block">

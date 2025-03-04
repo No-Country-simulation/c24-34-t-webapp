@@ -1,7 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {get_icons} from '../../models/get_icons';
-import {DIALOG_DATA} from '@angular/cdk/dialog';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
+import {RequestStatus} from '../../models/request-status.model';
 @Component({
   selector: 'app-model-messages',
   imports: [
@@ -12,8 +13,13 @@ import {DIALOG_DATA} from '@angular/cdk/dialog';
 })
 export class ModelMessagesComponent {
   constructor(
-    @Inject(DIALOG_DATA) public data: { message: string }) {
+    @Inject(DIALOG_DATA) public data: { status: RequestStatus },
+    private dialogRef:DialogRef) {
   }
   get_icons = get_icons;
+
+ close() {
+   this.dialogRef.close()
+ }
 
 }

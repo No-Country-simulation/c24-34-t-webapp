@@ -2,6 +2,7 @@ export interface Routine {
   id: string;
   title: string;
   description: string;
+  userId: string,
   activities: Activity[];
 }
 
