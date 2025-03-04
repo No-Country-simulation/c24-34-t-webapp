@@ -17,7 +17,7 @@ class AuthService {
     userData,
   }: {
     userData: UserSignInDto;
-  }): Promise<UserAuthResponse> {
+  }): Promise<Omit<UserAuthResponse, "routines">> {
     const user = await this.userService.comparePassword(userData);
 
     const accessToken = await this.jwtService.signAsync({
@@ -32,7 +32,7 @@ class AuthService {
     userData,
   }: {
     userData: UserSignUpDto;
-  }): Promise<UserAuthResponse> {
+  }): Promise<Omit<UserAuthResponse, "routines">> {
     const user = await this.userService.createUser({ userData });
 
     const accessToken = await this.jwtService.signAsync({

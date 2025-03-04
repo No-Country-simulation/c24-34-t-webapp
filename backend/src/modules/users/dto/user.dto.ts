@@ -1,5 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString, IsUUID, Length, Matches } from "class-validator";
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Length,
+  Matches,
+} from "class-validator";
 
 class UserDto {
   @ApiProperty()
@@ -22,6 +29,11 @@ class UserDto {
     message: "The name must be between 6 and 320 characters long",
   })
   email!: string;
+
+  @ApiProperty()
+  @IsUUID()
+  @IsOptional()
+  assignedRoutine?: string | null;
 }
 
 export { UserDto };

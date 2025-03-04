@@ -8,20 +8,28 @@ import {
   Param,
   Post,
   Query,
+  Request,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
 import {
+  ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiQuery,
   ApiTags,
 } from "@nestjs/swagger";
 
+import { AuthGuard } from "@/src/common/guards/guards";
+import { type AuthTokenRequest } from "@/src/common/types/types";
+
 import { CreateRoutineDto, FindAllRoutinesDto } from "./dto/dto";
 import { RoutineService } from "./routine.service";
 
 @ApiTags("routines")
+@ApiBearerAuth("JWT-auth")
+@UseGuards(AuthGuard)
 @Controller("routines")
 export class RoutineController {
   constructor(private routineService: RoutineService) {}
@@ -37,22 +45,20 @@ export class RoutineController {
   @ApiOperation({ summary: "Create new routine" })
   @ApiOkResponse({ type: FindAllRoutinesDto, isArray: false })
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  create(@Body() data: CreateRoutineDto) {
-    if (!data.userId) {
-      throw new BadRequestException("User not found");
-    }
-
-    return this.routineService.create(data);
+  create(@Body() data: CreateRoutineDto, @Request() req: AuthTokenRequest) {
+    const user = req.user;
+    return this.routineService.create({ routine: data, user });
   }
 
   @Delete(":id")
   @ApiOperation({ summary: "Delete routine by id" })
   @HttpCode(204)
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id") id: string, @Request() req: AuthTokenRequest) {
     if (!id) {
       throw new BadRequestException("Routine not found");
     }
-    await this.routineService.delete(id);
+    const user = req.user;
+    await this.routineService.delete({ id, user });
   }
 
   @Get("random")
@@ -80,7 +86,14 @@ export class RoutineController {
     @Query("keyword") keyword: string | undefined,
     @Query("category") category: string | undefined,
     @Query("subcategory") subcategory: string | undefined,
+    @Request() req: AuthTokenRequest,
   ) {
-    return this.routineService.findRandom({ subcategory, keyword, category });
+    const user = req.user;
+    return this.routineService.findRandom({
+      user,
+      subcategory,
+      keyword,
+      category,
+    });
   }
 }

@@ -17,7 +17,8 @@ import {
 
 import { AuthGuard } from "@/common/guards/guards";
 import { type AuthTokenRequest } from "@/common/types/types";
-import { UserDto } from "@/modules/users/dto/user.dto";
+import { RoutineService } from "@/modules/routines/routine.service";
+import { UserRoutinesDto } from "@/modules/users/dto/dto";
 
 import { AuthService } from "./auth.service";
 import { UserAuthResponse, UserSignInDto, UserSignUpDto } from "./dto/dto";
@@ -25,16 +26,26 @@ import { UserAuthResponse, UserSignInDto, UserSignUpDto } from "./dto/dto";
 @ApiTags("auth")
 @Controller("auth")
 class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private routineService: RoutineService,
+  ) {}
 
   @UseGuards(AuthGuard)
   @ApiBearerAuth("JWT-auth")
   @Get("verify-token")
   @ApiOperation({ summary: "Verify access token" })
-  @ApiOkResponse({ type: UserDto, isArray: false })
-  verifyToken(@Request() req: AuthTokenRequest) {
+  @ApiOkResponse({ type: UserRoutinesDto, isArray: false })
+  async verifyToken(@Request() req: AuthTokenRequest) {
     const user = req.user;
-    return { ...user };
+    let routines = await this.routineService.findByUserId(user.id);
+    if (user.assignedRoutine) {
+      routines = [
+        ...routines,
+        await this.routineService.findById(user.assignedRoutine),
+      ];
+    }
+    return { ...user, routines };
   }
 
   @Post("sign-up")
@@ -42,17 +53,33 @@ class AuthController {
   @ApiOkResponse({ type: UserAuthResponse, isArray: false })
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async signUp(@Body() userData: UserSignUpDto) {
-    return this.authService.signUp({
+    const user = await this.authService.signUp({
       userData,
     });
+    let routines = await this.routineService.findByUserId(user.id);
+    if (user.assignedRoutine) {
+      routines = [
+        ...routines,
+        await this.routineService.findById(user.assignedRoutine),
+      ];
+    }
+    return { ...user, routines };
   }
 
   @Post("sign-in")
   @ApiOperation({ summary: "User Sign In" })
   @ApiOkResponse({ type: UserAuthResponse, isArray: false })
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  signIn(@Body() userData: UserSignInDto) {
-    return this.authService.signIn({ userData });
+  async signIn(@Body() userData: UserSignInDto) {
+    const user = await this.authService.signIn({ userData });
+    let routines = await this.routineService.findByUserId(user.id);
+    if (user.assignedRoutine) {
+      routines = [
+        ...routines,
+        await this.routineService.findById(user.assignedRoutine),
+      ];
+    }
+    return { ...user, routines };
   }
 }
 
