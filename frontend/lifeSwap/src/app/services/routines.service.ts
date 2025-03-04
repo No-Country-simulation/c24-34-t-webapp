@@ -14,7 +14,18 @@ export class RoutinesService {
   }
 
   //get a random routine by a subcategory and keyword(description or title)
-  getRandomRoutine(queryValue: string) {
-    return this.http.get<Routine>(`${environment.url}routines/random?subcategory=${queryValue}`);
+  getRandomRoutine(subCategory: string, category:string, keyWord: string) {
+    if (subCategory !== '') {
+      return this.http.get<Routine>(`${environment.url}routines/random?subcategory=${subCategory}`);
+    }
+    else if(category !== '') {
+      return this.http.get<Routine>(`${environment.url}routines/random?category=${category}`);
+    }else{
+      return this.http.get<Routine>(`${environment.url}routines/random?keyword=${keyWord}`);
+    }
+  }
+
+  getRoutines() {
+    return this.http.get<Routine[]>(`${environment.url}routines`);
   }
 }

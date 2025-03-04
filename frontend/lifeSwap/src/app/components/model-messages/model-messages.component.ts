@@ -13,7 +13,8 @@ import {RequestStatus} from '../../models/request-status.model';
 })
 export class ModelMessagesComponent {
   constructor(
-    @Inject(DIALOG_DATA) public data: { status: RequestStatus },
+    @Inject(DIALOG_DATA) public data: { status: RequestStatus,
+      customMessage: string},
     private dialogRef:DialogRef) {
   }
   get_icons = get_icons;

@@ -1,11 +1,25 @@
 <div
   class="w-11/12 p-2 m-auto mt-4 rounded-lg md:flex md:justify-between md:gap-4 md:items-center bg-secondary"
 >
-  <!--filter by subcategory keyword
-  this component will also be used when the user filter by category-->
-  <app-search class="w-full"></app-search>
+  <!--filter by description or title routine-->
 
-  <!--filter by category-->
+  <div
+    class="w-full flex justify-center gap-2 px-2 py-2 mb-2 text-sm rounded-md cursor-pointer md:mb-0 bg-text-bg"
+  >
+    <fa-icon class="text-primary" [icon]="general_icons['faMagnifyingGlass']">
+    </fa-icon>
+    <input
+      (keydown)="onkeydown($event, keyWord)"
+      type="text"
+      ngModel
+      #keyWord="ngModel"
+      value="keyWord"
+      class="w-28 focus:outline-0"
+      placeholder="Description/title"
+    />
+  </div>
+
+  <!--filter by subcategory of the selected category-->
   <button
     class="bg-text-bg w-full cursor-pointer flex justify-around font-semibold px-2 py-1.5 rounded-md"
     (click)="isOpen = !isOpen"
@@ -33,54 +47,72 @@
       <div class="w-full p-2 pt-3 rounded-xl bg-secondary">
         <cdk-accordion>
           @for (category of categories; track category.id; let i = $index) {
-          <cdk-accordion-item #accordionItem="cdkAccordionItem">
-            <button
-              [ngClass]="
+            <cdk-accordion-item #accordionItem="cdkAccordionItem">
+              <button
+                [ngClass]="
                 accordionItem.expanded
                   ? colorBtn['active']
                   : colorBtn['inActive']
               "
-              class="flex w-full gap-1 px-3 py-1 mb-2 font-semibold border rounded-md border-text-bg"
-              (click)="accordionItem.toggle()"
-            >
-              <fa-icon
-                class="text-left min-w-6"
-                [icon]="general_icons[category.name]"
-              ></fa-icon>
-              <span
-                class="text-left min-w-20"
-                [ngClass]="
+                class="flex w-full gap-1 px-3 py-1 mb-2 font-semibold border rounded-md border-text-bg"
+                (click)="accordionItem.toggle()"
+              >
+                <fa-icon
+                  class="text-left min-w-6"
+                  [icon]="general_icons[category.name]"
+                ></fa-icon>
+                <span
+                  class="text-left min-w-20"
+                  [ngClass]="
                   accordionItem.expanded ? 'text-text-bg' : 'text-black'
                 "
                 >{{ category.name }}</span
-              >
-              <fa-icon
-                class="text-right min-w-6"
-                [ngClass]="
+                >
+                <fa-icon
+                  class="text-right min-w-6"
+                  [ngClass]="
                   accordionItem.expanded ? 'text-text-bg' : 'text-black'
                 "
-                [icon]="
+                  [icon]="
                   accordionItem.expanded
                     ? general_icons['faAngleUp']
                     : general_icons['faAngleDown']
                 "
-              >
-              </fa-icon>
-            </button>
-            @if (accordionItem.expanded) {
-              <!--filter by subcategory keyword-->
-              <app-search></app-search>
-              @for (subcategory of
-            category.subcategories; track subcategory.id; let i= $index) {
-            <button
-              class="flex justify-center w-full gap-1 p-1 mt-2 mb-2 font-normal border rounded-md cursor-pointer border-text-bg"
-              (click)="getRoutineRandomBySubcategory(subcategory.name); isOpen = !isOpen"
-            >
-              {{ subcategory.name }}
-            </button>
+                >
+                </fa-icon>
+              </button>
+              @if (accordionItem.expanded) {
+                <!--filter by subcategory keyword-->
+                <div
+                  class="flex justify-center gap-2 px-2 py-2 mb-2 text-sm rounded-md cursor-pointer md:mb-0 bg-text-bg"
+                >
+                  <fa-icon class="text-primary" [icon]="general_icons['faMagnifyingGlass']">
+                  </fa-icon>
+                  <input
+                    (keydown)="filterSubcategories($event,keyWord.value, category.subcategories)"
+                    type="text"
+                    ngModel
+                    #keyWord="ngModel"
+                    value="keyWord"
+                    class="w-28 focus:outline-0"
+                    placeholder="subcategory"
+                  />
+                </div>
+                <!--/filter by subcategory keyword-->
 
-            } }
-          </cdk-accordion-item>
+                  <!--display subcategories by keyword or selected subcategory-->
+                @for (subcategory of
+                  keyWord.value !== '' && subcategoriesFiltered.length > 0 ? subcategoriesFiltered : category.subcategories; track subcategory.id; let i = $index) {
+                  <button
+                    class="flex justify-center w-full gap-1 p-1 mt-2 mb-2 font-normal border rounded-md cursor-pointer border-text-bg"
+                    (click)="getRoutineRandom(subcategory.name,'',''); isOpen = !isOpen"
+                  >
+                    {{ subcategory.name }}
+                  </button>
+
+                }
+              }
+            </cdk-accordion-item>
           }
         </cdk-accordion>
       </div>

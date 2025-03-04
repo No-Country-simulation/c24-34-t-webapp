@@ -4,16 +4,18 @@
   class="mt-1 focus:outline-0 w-full text-right p-1">
     <fa-icon class="cursor-pointer px-2 py-1 bg-secondary" [icon]="get_icons['faXmark']"></fa-icon>
   </button>
-  <div class="grow justify-center flex flex-col gap-2 items-center">
-    @if (data.status === "notFound") {
-      <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>
-      <p>Server error</p>
-    }
+  <div class="px-4 grow justify-center flex flex-col gap-2 items-center">
     @if (data.status === "loading") {
       <fa-icon class="text-4xl" [icon]="get_icons['faSpinner']"></fa-icon>
       <p>Wait response...</p>
     }
-
+    @if (data.status === 'notFound' && data.customMessage !== ''){
+      <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>
+      <p>{{data.customMessage}}</p>
+    }@else if(data.status === "notFound") {
+      <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>
+      <p>Server error</p>
+    }
   </div>
 
 </div>
