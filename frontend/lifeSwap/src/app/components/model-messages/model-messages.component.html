@@ -1,4 +1,19 @@
 <div class="flex flex-col items-center justify-center w-full gap-4 border rounded-lg border-primary bg-text-bg h-72">
-  <fa-icon class="text-4xl" [icon]="get_icons['faSpinner']"></fa-icon>
-  <p>{{data}}</p>
+  <button
+  (click)="close()"
+  class="mt-1 focus:outline-0 w-full text-right p-1">
+    <fa-icon class="cursor-pointer px-2 py-1 bg-secondary" [icon]="get_icons['faXmark']"></fa-icon>
+  </button>
+  <div class="grow justify-center flex flex-col gap-2 items-center">
+    @if (data.status === "notFound") {
+      <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>
+      <p>Server error</p>
+    }
+    @if (data.status === "loading") {
+      <fa-icon class="text-4xl" [icon]="get_icons['faSpinner']"></fa-icon>
+      <p>Wait response...</p>
+    }
+
+  </div>
+
 </div>

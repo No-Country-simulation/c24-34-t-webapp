@@ -8,6 +8,7 @@ import {User} from '../models/User';
   providedIn: 'root'
 })
 export class UsersService {
+  userID: string = '';
 
   constructor(private http:HttpClient) {}
 

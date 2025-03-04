@@ -13,7 +13,8 @@ export class RoutinesService {
     return this.http.post<Routine>(`${environment.url}routines`, routine);
   }
 
-  getRoutineRandomBySubCategory(subCategoryName: string) {
-    return this.http.get<Routine>(`${environment.url}routines/random?subcategory=${subCategoryName}`);
+  //get a random routine by a subcategory and keyword(description or title)
+  getRandomRoutine(queryValue: string) {
+    return this.http.get<Routine>(`${environment.url}routines/random?subcategory=${queryValue}`);
   }
 }

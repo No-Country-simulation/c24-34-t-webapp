@@ -10,7 +10,7 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateActivityDTO } from '../../models/routine';
 import { Color_btn } from '../../models/color_btn';
-import { ErrorMessageComponent } from '../error-message/error-message.component';
+import { FormErrorMessageComponent } from '../form-error-message/form-error-message.component';
 import {get_icons} from '../../models/get_icons';
 
 @Component({
@@ -19,7 +19,7 @@ import {get_icons} from '../../models/get_icons';
     FontAwesomeModule,
     CommonModule,
     FormsModule,
-    ErrorMessageComponent,
+    FormErrorMessageComponent,
   ],
   templateUrl: './modal-configuration-activity.component.html',
   standalone: true,
@@ -70,10 +70,12 @@ export class ModalConfigurationActivityComponent {
   }
 
   onSubmit(f: NgForm): void {
-    this.storeActivityValue(f.value);
-    /*when saving the activity, the dialog closes to allow the user configure another activity
-    and sends the activity configured to be used later for saving the routine*/
-    this.dialogRef.close(this.activity);
+    if (f.valid) {
+      this.storeActivityValue(f.value);
+      /*after saving the activity, the dialog closes to allow the user configure another activity
+      and sends the activity configured to be used later for saving the routine*/
+      this.dialogRef.close(this.activity);
+    }
   }
 
   close(): void {

@@ -8,8 +8,12 @@ import { CategoriesService } from '../../services/categories.service';
 import { CreateActivityDTO, CreateRoutineDTO } from '../../models/routine';
 import { RoutinesService } from '../../services/routines.service';
 import { Color_btn } from '../../models/color_btn';
-import { ErrorMessageComponent } from '../../components/error-message/error-message.component';
+import { FormErrorMessageComponent } from '../../components/form-error-message/form-error-message.component';
 import { Router } from '@angular/router';
+import { RequestStatus } from '../../models/request-status.model';
+import {ModelMessagesComponent} from '../../components/model-messages/model-messages.component';
+import {Dialog} from '@angular/cdk/dialog';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-create-routine',
@@ -17,7 +21,7 @@ import { Router } from '@angular/router';
     FontAwesomeModule,
     CommonModule,
     SubCategoriesComponent,
-    ErrorMessageComponent,
+    FormErrorMessageComponent,
   ],
   templateUrl: './create-routine.component.html',
   standalone: true,
@@ -29,34 +33,66 @@ export class CreateRoutineComponent implements OnInit {
   categoryName: string = 'Sports';
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
+  status:RequestStatus='init';
   routine: CreateRoutineDTO = {
+    userId: '',
     title: '',
     description: '',
     activities: [],
   };
-
   constructor(
     private categoriesService: CategoriesService,
     private routineService: RoutinesService,
     private router: Router,
+    private dialog: Dialog,
+    private usersService: UsersService,
   ) {}
 
   ngOnInit() {
     this.getCategories();
   }
+
   getCategories(): void {
-    this.categoriesService.getAllCategories().subscribe((data) => {
-      this.categories = data;
-      if (this.categories.length > 0) {
-        //set the active category when the component is rendering
-        this.categories[0].isActive = true;
-        this.addSubCategories(this.categories[0].subcategories);
+    //set status to loading while waiting for the backend response
+    this.status = 'loading';
+    //open a dialog with a message about the pending status
+    this.openDialog();
+
+    this.categoriesService.getAllCategories().subscribe({
+      next:(result) => {
+        if (result.length > 0) {
+          this.status = "success"
+          //close the dialog when the backend request is successful
+          this.dialog.closeAll();
+
+          this.categories = result;
+          //set the active category when the component is rendering
+          this.categories[0].isActive = true;
+          this.addSubCategories(this.categories[0].subcategories);
+        }
+    },
+      error:(err) => {
+        //close the pending dialog when the backend request fails
+        this.dialog.closeAll();
+        if (err.status === 404){
+          //set status to notFound when a 404 error occurs
+          this.status = "notFound";
+          //open a dialog with a message about the 404 error
+          this.openDialog();
+          //navigate to the login component when there is a 404 error
+          this.router.navigate(['/login']);
+        }
       }
-    });
+    })
   }
 
   addSubCategories(subcategories: Subcategory[]): void {
     this.subcategories.push(...subcategories);
+  }
+
+  addActivities(activity: CreateActivityDTO) {
+    activity.category = this.categoryName;
+    this.routine.activities.unshift(activity);
   }
 
   storeValues(category: Category): void {
@@ -76,20 +112,43 @@ export class CreateRoutineComponent implements OnInit {
   }
 
   saveRoutine(): void {
+
+    //set status to loading while waiting for the backend response
+    this.status = "loading";
     //TODO create design to manage title and description routine
+    this.routine.userId = this.usersService.userID;
     this.routine.title = 'routine title';
     this.routine.description = 'routine description';
+    //TODO cambiar por si form es valido
     if (this.routine.title != '') {
-      this.routineService
-        .create(this.routine)
-        .subscribe((routineCreated) => {
+      this.routineService.create(this.routine).subscribe({
+        next:(routineCreated) => {
+          this.status = 'success'
           this.router.navigate(['home/',routineCreated.id])
-        });
+        },
+        error:(err) => {
+          if (err.status === 404){
+            //set status to notFound when a 404 error occurs
+            this.status = "notFound"
+            //open a dialog with a message about the 404 error
+            this.openDialog();
+            //navigate to the login component when there is a 404 error
+            this.router.navigate(['/login']);
+          }
+        }
+      })
     }
   }
-
-  addActivities(activity: CreateActivityDTO) {
-    activity.category = this.categoryName;
-    this.routine.activities.unshift(activity);
+  openDialog() {
+    this.dialog.open(ModelMessagesComponent,{
+      //send status to the Model Messages component
+      data: {
+        status: this.status
+      },
+      minWidth: '320px',
+      backdropClass: 'bg-gray-50/90',
+      disableClose: true
+    })
   }
+
 }

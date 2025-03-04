@@ -2,32 +2,87 @@ import { Component } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import { Router } from '@angular/router';
 import {SignIn} from '../../models/User';
+import { get_icons } from '../../models/get_icons';
+import { CommonModule } from '@angular/common';
+import { Color_btn } from '../../models/color_btn';
+import { FormsModule, NgForm } from '@angular/forms';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import { RequestStatus } from '../../models/request-status.model';
+import {FormErrorMessageComponent} from '../../components/form-error-message/form-error-message.component';
+import { ModelMessagesComponent } from '../../components/model-messages/model-messages.component';
+import {Dialog} from '@angular/cdk/dialog';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [CommonModule, FormsModule, FaIconComponent, FormErrorMessageComponent],
   standalone: true,
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  //TODO es para probar ya que aun no hare el login
-  signInData: SignIn = {
-    email : 'rosanneclopez@gmail.com',
-    password: 'C@l@st3._.'
-  }
+  get_icons = get_icons;
+  color_btn = Color_btn
+  status: RequestStatus = 'init';
+  isVisible:boolean = false;
+
 
   constructor(private authService: AuthService,
-              private routes:Router) {
+              private routes:Router,
+              private dialog: Dialog,
+              private usersService: UsersService) {
   }
-  ngOnInit(){}
 
-  //TODO email and password come from login form
+  onSubmit(f: NgForm) {
+    if (f.valid){
+      const { email, password } = f.value;
+      const signInData:SignIn = {
+        email:email,
+        password:password
+      }
+      this.logIn(signInData)
+    }
+  }
+
   logIn(signInData: SignIn){
-    this.authService.signIn(this.signInData).subscribe(dataUser =>
-    {
-      //TODO en caso de exito
-      this.routes.navigate(['home/',dataUser.email]);
+    //set status to loading while waiting for the backend response
+    this.status='loading';
+
+    this.authService.signIn(signInData).subscribe({
+      next: (dataUser) => {
+        this.status = 'success';
+
+        //save userID in the user service to be used in other components.
+        this.usersService.userID = dataUser.id;
+
+        //navigate to the home component with the user's email to display their routines
+        this.routes.navigate(['home/',dataUser.email]);
+      },
+      error:(err) => {
+        if (err.status === 400){
+          //set status to badRequest when there is an error with credentials
+          this.status = 'badRequest';
+          //no open dialog, this error is maneged by form-message-error component
+        }
+        else if (err.status === 404){
+          //set status to notFound when a 404 error occurs
+          this.status = "notFound";
+          //open a dialog with a message about the 404 error
+          this.openDialog();
+          //navigate to the login component when there is a 404 error
+          this.routes.navigate(["/login"])
+        }
+      }
+    });
+  }
+  openDialog() {
+    this.dialog.open(ModelMessagesComponent,{
+      //send status to the Model Messages component
+      data: {
+        status: this.status
+      },
+      minWidth: '320px',
+      backdropClass: 'bg-gray-50/90',
+      disableClose: true
     })
   }
-
 }
