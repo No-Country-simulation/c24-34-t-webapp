@@ -28,7 +28,7 @@
           <fa-icon [icon]="get_icons['faEnvelope']"></fa-icon>
           <input
             placeholder="Enter your email"
-            class="w-full"
+            class="focus:outline-0 w-full"
             type="email"
             name="email"
             ngModel
@@ -41,14 +41,16 @@
           <fa-icon [icon]="get_icons['faLock']"></fa-icon>
           <input
             placeholder="Enter your password"
-            class="w-full"
-            type="password"
+            class="focus:outline-0 w-full"
+            [type]="isVisible ? 'text' : 'password'"
             name="password"
             ngModel
             #password="ngModel"
             required
           />
-          <fa-icon [icon]="get_icons['faEyeSlash']"></fa-icon>
+          <button class="h-6 w-6 cursor-pointer" (click)="isVisible = !isVisible">
+            <fa-icon [icon]="isVisible ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
+          </button>
         </div>
 
         <button
@@ -66,7 +68,7 @@
         }
       </form>
 
-      <div class="py-6 hidden lg:block">
+     <!--<div class="py-6 hidden lg:block">
         <div class="flex gap-2">
           <img src="/icons/svg/line-sign-in.svg" alt="" />
           <div>or</div>
@@ -77,16 +79,18 @@
           <p class="font-semibold">Don't have an account?</p>
           <a class="text-blue-600">Sign Up</a>
         </div>
-      </div>
+      </div>-->
+
     </div>
 
-    <div class="lg:hidden flex justify-end w-full mb-4 font-medium full text-text-bg">
+    <!--<div class="lg:hidden flex justify-end w-full mb-4 font-medium full text-text-bg">
       <div class="flex gap-4 p-2 pr-10 rounded-l-full text-primary border border-primary bg-text-bg">
 
         <fa-icon class="px-2 border-2 rounded-full text-text-bg bg-primary border-primary" [icon]="get_icons['faAngleRight']"></fa-icon>
         <p>Sign Up</p>
       </div>
-    </div>
+    </div>-->
+
   </div>
 
 </div>

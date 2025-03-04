@@ -101,6 +101,13 @@
           </ul>
         </div>
       </div>
+      } @else {
+        <app-form-error-message>Yo have not created a Routine</app-form-error-message>
+      <a
+        [routerLink]="'/create-routine'"
+        [ngClass]="colorBtn['active']"
+        class="flex justify-center my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+      >Create a Routine</a>
       }
     </div>
   </div>

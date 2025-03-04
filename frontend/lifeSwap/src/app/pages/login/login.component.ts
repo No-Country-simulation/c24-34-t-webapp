@@ -23,6 +23,8 @@ export class LoginComponent {
   get_icons = get_icons;
   color_btn = Color_btn
   status: RequestStatus = 'init';
+  isVisible:boolean = false;
+
 
   constructor(private authService: AuthService,
               private routes:Router,
