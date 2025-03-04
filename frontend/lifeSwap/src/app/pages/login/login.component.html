@@ -48,7 +48,9 @@
             #password="ngModel"
             required
           />
-          <button class="h-6 w-6 cursor-pointer" (click)="isVisible = !isVisible">
+          <button
+            type="button"
+            class="h-6 w-6 cursor-pointer" (click)="isVisible = !isVisible">
             <fa-icon [icon]="isVisible ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
           </button>
         </div>
