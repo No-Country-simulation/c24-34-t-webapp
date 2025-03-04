@@ -1,21 +1,52 @@
 import { BadRequestException, Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
-import { UserDto } from "./dto/dto";
+import { RoutineService } from "@/modules/routines/routine.service";
+
+import { UserRoutinesDto } from "./dto/dto";
 import { UserService } from "./user.service";
 
 @ApiTags("users")
 @Controller("users")
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private routineService: RoutineService,
+  ) {}
 
-  @Get(":email")
-  @ApiOperation({ summary: "Find user by email" })
-  @ApiOkResponse({ type: UserDto, isArray: false })
-  findByEmail(@Param("email") email: string) {
+  @Get("email/:email")
+  @ApiOperation({ summary: "Find user by email and retrieve linked routines" })
+  @ApiOkResponse({ type: UserRoutinesDto, isArray: false })
+  async findByEmail(@Param("email") email: string) {
     if (!email) {
       throw new BadRequestException("User not found");
     }
-    return this.userService.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
+    let routines = await this.routineService.findByUserId(user.id);
+    if (user.assignedRoutine) {
+      routines = [
+        ...routines,
+        await this.routineService.findById(user.assignedRoutine),
+      ];
+    }
+    return { ...user, routines };
+  }
+
+  @Get(":id")
+  @ApiOperation({ summary: "Find a user by id and retrieve linked routines" })
+  @ApiOkResponse({ type: UserRoutinesDto, isArray: false })
+  async findById(@Param("id") id: string) {
+    if (!id) {
+      throw new BadRequestException("User not found");
+    }
+    const user = await this.userService.findById(id);
+    let routines = await this.routineService.findByUserId(user.id);
+    if (user.assignedRoutine) {
+      routines = [
+        ...routines,
+        await this.routineService.findById(user.assignedRoutine),
+      ];
+    }
+    return { ...user, routines };
   }
 }

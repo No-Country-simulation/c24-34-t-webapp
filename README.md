@@ -25,6 +25,7 @@ erDiagram
         string username
         string email
         string password
+        string assigned_routine
         string created_at
         string updated_at
     }

@@ -10,7 +10,7 @@ import * as bcrypt from "bcrypt";
 import { DbService } from "@/database/db.service";
 import { type UserSignUpDto } from "@/modules/auth/dto/dto";
 
-import { UserDto } from "./dto/dto";
+import { UserDto, UserRoutinesDto } from "./dto/dto";
 
 @Injectable()
 class UserService {
@@ -26,10 +26,23 @@ class UserService {
     this.saltRounds = Number.parseInt(saltRounds, 10);
   }
 
-  async findByEmail(email: string): Promise<UserDto> {
+  async findByEmail(email: string): Promise<Omit<UserRoutinesDto, "routines">> {
     const user = await this.dbService.user.findUnique({
       where: { email },
-      select: { id: true, username: true, email: true },
+      select: { id: true, username: true, email: true, assignedRoutine: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    return user;
+  }
+
+  async findById(id: string): Promise<Omit<UserRoutinesDto, "routines">> {
+    const user = await this.dbService.user.findUnique({
+      where: { id },
+      select: { id: true, username: true, email: true, assignedRoutine: true },
     });
 
     if (!user) {

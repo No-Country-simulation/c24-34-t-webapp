@@ -2,10 +2,14 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from "@nestjs/common";
 
+import { ROUTINE_SELECT } from "@/common/constants/constants";
+import { mapToRoutineDto } from "@/common/helpers/helpers";
 import { DbService } from "@/database/db.service";
 
+import { UserDto } from "../users/dto/dto";
 import { CreateRoutineDto, FindAllRoutinesDto } from "./dto/dto";
 import { Routine } from "./types/routines.types";
 
@@ -15,83 +19,47 @@ class RoutineService {
 
   async findAll(): Promise<FindAllRoutinesDto[]> {
     const routines = await this.dbService.routine.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        userId: true,
-        activities: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            time: true,
-            timeRange: true,
-            goals: {
-              select: {
-                id: true,
-                unit: true,
-                period: true,
-                value: true,
-              },
-            },
-            subcategory: {
-              select: {
-                id: true,
-                name: true,
-                category: true,
-              },
-            },
-          },
-        },
-      },
+      select: ROUTINE_SELECT,
     });
 
     const routinesDto = routines.map(routine => {
-      const activitiesDto = routine.activities.map(activity => {
-        return {
-          id: activity.id,
-          title: activity.title,
-          description: activity.description,
-          time: activity.time,
-          timeRange: activity.timeRange,
-          category: activity.subcategory.category.name,
-          subcategory: activity.subcategory.name,
-          goal: {
-            id: activity.goals[0]?.id,
-            unit: activity.goals[0]?.unit.name,
-            period: activity.goals[0]?.period,
-            value: activity.goals[0]?.value,
-          },
-        };
-      });
-
-      return {
-        id: routine.id,
-        title: routine.title,
-        description: routine.description,
-        userId: routine.userId,
-        activities: activitiesDto,
-      };
+      return mapToRoutineDto(routine);
     });
 
     return routinesDto;
   }
 
-  async create(routine: CreateRoutineDto): Promise<FindAllRoutinesDto> {
-    const user = await this.dbService.user.findUnique({
-      where: {
-        id: routine.userId,
-      },
-      select: {
-        id: true,
-      },
+  async findById(id: string): Promise<FindAllRoutinesDto> {
+    const routine = await this.dbService.routine.findUnique({
+      where: { id: id },
+      select: ROUTINE_SELECT,
     });
-
-    if (!user) {
-      throw new NotFoundException("User not found");
+    if (!routine) {
+      throw new NotFoundException("Routine not found");
     }
 
+    return mapToRoutineDto(routine);
+  }
+
+  async findByUserId(userId: string): Promise<FindAllRoutinesDto[]> {
+    const routines = await this.dbService.routine.findMany({
+      where: { userId: userId },
+      select: ROUTINE_SELECT,
+    });
+    if (routines.length === 0) {
+      return [];
+    }
+
+    return routines.map(routine => mapToRoutineDto(routine));
+  }
+
+  async create({
+    routine,
+    user,
+  }: {
+    routine: CreateRoutineDto;
+    user: UserDto;
+  }): Promise<FindAllRoutinesDto> {
     await Promise.all(
       routine.activities.map(async (activity, index) => {
         const category = await this.dbService.category.findFirst({
@@ -162,78 +130,40 @@ class RoutineService {
           }),
         },
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        userId: true,
-        activities: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            time: true,
-            timeRange: true,
-            goals: {
-              select: {
-                id: true,
-                unit: true,
-                period: true,
-                value: true,
-              },
-            },
-            subcategory: {
-              select: {
-                id: true,
-                name: true,
-                category: true,
-              },
-            },
-          },
-        },
-      },
+      select: ROUTINE_SELECT,
     });
 
-    const activitiesDto = newRoutine.activities.map(activity => {
-      return {
-        id: activity.id,
-        title: activity.title,
-        description: activity.description,
-        time: activity.time,
-        timeRange: activity.timeRange,
-        category: activity.subcategory.category.name,
-        subcategory: activity.subcategory.name,
-        goal: {
-          id: activity.goals[0]?.id,
-          unit: activity.goals[0]?.unit.name,
-          period: activity.goals[0]?.period,
-          value: activity.goals[0]?.value,
-        },
-      };
+    await this.dbService.user.update({
+      where: { id: user.id },
+      data: { assignedRoutine: newRoutine.id },
     });
 
-    return {
-      id: newRoutine.id,
-      title: newRoutine.title,
-      description: newRoutine.description,
-      userId: newRoutine.userId,
-      activities: activitiesDto,
-    };
+    return mapToRoutineDto(newRoutine);
   }
 
-  async delete(id: string) {
-    const routine = await this.dbService.routine.findUnique({ where: { id } });
+  async delete({ id, user }: { id: string; user: UserDto }): Promise<void> {
+    const routine = await this.dbService.routine.findUnique({
+      where: { id },
+      select: { userId: true },
+    });
     if (!routine) {
       throw new BadRequestException("Routine not found");
     }
+
+    if (routine.userId !== user.id) {
+      throw new UnauthorizedException("Unauthorized user");
+    }
+
     await this.dbService.routine.delete({ where: { id } });
   }
 
   async findRandom({
+    user,
     subcategory,
     keyword,
     category,
   }: {
+    user: UserDto;
     subcategory: string | undefined;
     keyword: string | undefined;
     category: string | undefined;
@@ -243,36 +173,7 @@ class RoutineService {
     if (!subcategory && !keyword && !category) {
       routines = await this.dbService.routine.findMany({
         take: 30,
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          userId: true,
-          activities: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              time: true,
-              timeRange: true,
-              goals: {
-                select: {
-                  id: true,
-                  unit: true,
-                  period: true,
-                  value: true,
-                },
-              },
-              subcategory: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                },
-              },
-            },
-          },
-        },
+        select: ROUTINE_SELECT,
       });
     }
 
@@ -297,36 +198,7 @@ class RoutineService {
             },
           },
         },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          userId: true,
-          activities: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              time: true,
-              timeRange: true,
-              goals: {
-                select: {
-                  id: true,
-                  unit: true,
-                  period: true,
-                  value: true,
-                },
-              },
-              subcategory: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                },
-              },
-            },
-          },
-        },
+        select: ROUTINE_SELECT,
       });
     }
 
@@ -351,36 +223,7 @@ class RoutineService {
             },
           },
         },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          userId: true,
-          activities: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              time: true,
-              timeRange: true,
-              goals: {
-                select: {
-                  id: true,
-                  unit: true,
-                  period: true,
-                  value: true,
-                },
-              },
-              subcategory: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                },
-              },
-            },
-          },
-        },
+        select: ROUTINE_SELECT,
       });
     }
 
@@ -424,36 +267,7 @@ class RoutineService {
             },
           },
         },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          userId: true,
-          activities: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              time: true,
-              timeRange: true,
-              goals: {
-                select: {
-                  id: true,
-                  unit: true,
-                  period: true,
-                  value: true,
-                },
-              },
-              subcategory: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                },
-              },
-            },
-          },
-        },
+        select: ROUTINE_SELECT,
       });
     }
 
@@ -506,36 +320,7 @@ class RoutineService {
             },
           ],
         },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          userId: true,
-          activities: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              time: true,
-              timeRange: true,
-              goals: {
-                select: {
-                  id: true,
-                  unit: true,
-                  period: true,
-                  value: true,
-                },
-              },
-              subcategory: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                },
-              },
-            },
-          },
-        },
+        select: ROUTINE_SELECT,
       });
     }
 
@@ -546,31 +331,12 @@ class RoutineService {
     const randomIndex = Math.floor(Math.random() * routines.length);
     const randomRoutine = routines[randomIndex];
 
-    const activitiesDto = randomRoutine.activities.map(activity => {
-      return {
-        id: activity.id,
-        title: activity.title,
-        description: activity.description,
-        time: activity.time,
-        timeRange: activity.timeRange,
-        category: activity.subcategory.category.name,
-        subcategory: activity.subcategory.name,
-        goal: {
-          id: activity.goals[0]?.id,
-          unit: activity.goals[0]?.unit.name,
-          period: activity.goals[0]?.period,
-          value: activity.goals[0]?.value,
-        },
-      };
+    await this.dbService.user.update({
+      where: { id: user.id },
+      data: { assignedRoutine: randomRoutine.id },
     });
 
-    return {
-      id: randomRoutine.id,
-      title: randomRoutine.title,
-      description: randomRoutine.description,
-      userId: randomRoutine.userId,
-      activities: activitiesDto,
-    };
+    return mapToRoutineDto(randomRoutine);
   }
 }
 
