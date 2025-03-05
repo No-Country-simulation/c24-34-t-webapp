@@ -13,15 +13,15 @@
       class="grow overflow-auto"
       [isFilter]="isFilter"
       [userInformation]="userInformation"
-      (activitiesRoutine)="setActivitiesFiltered($event)"
+      (activitiesRoutine)="setActivities($event)"
     ></app-routines-list>
 
-    } @if (userInformation.routines.length > 0) {
+    } @else if (userInformation.routines.length > 0) {
     <!--user routine activities-->
     <app-activities-list
       [isFilter]="isFilter"
       [activities]="activities"
-      (activitiesEmpty)="setActivitiesFiltered($event)"
+      (activitiesEmpty)="setActivities($event)"
     ></app-activities-list>
 
     } @else {

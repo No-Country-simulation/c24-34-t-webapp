@@ -1,8 +1,10 @@
-@if(isFilter && activities.length > 0){
+
 <div
   class="grow overflow-auto flex flex-col items-center justify-center gap-2 p-4 mb-0  bg-secondary rounded-xl"
 >
+
   <div class="md:max-h-56 lg:max-h-fit gap-3 flex flex-col w-full">
+    @if(isFilter && activities.length > 0){
       <h2 class="order-1 font-serif font-semibold text-lg text-center pb-2">
         Routine random selected by filter
       </h2>
@@ -13,9 +15,11 @@
       >
         Start this routine
       </button>
+    }
       <button class="cursor-pointer text-blue-600 underline font-semibold m-auto px-8 order-4 w-fit"
          (click)="displayUserRoutines()">Go to my routines</button>
-    
+
+
     <ul class="order-2">
       <!--the accordion allows the user to see more information about the routine-->
       <cdk-accordion
@@ -99,4 +103,4 @@
     </ul>
   </div>
 </div>
-}
+

@@ -92,4 +92,9 @@ export class HomeComponent {
     this.isFilter = true;
     this.activities = activities;
   }
+  //activities when the user use the filter
+  setActivities(activities: Activity[]) {
+    this.isFilter = false;
+    this.activities = activities;
+  }
 }

@@ -48,11 +48,11 @@ export class LoginComponent {
   logIn(signInData: SignIn){
     //set status to loading while waiting for the backend response
     this.status='loading';
-
+    this.openDialog();
     this.authService.signIn(signInData).subscribe({
       next: (dataUser) => {
         this.status = 'success';
-
+        this.dialog.closeAll();
         //save the user's token in cookies
         this.tokenService.saveToken(dataUser.accessToken);
         //save the user's id in cookies
