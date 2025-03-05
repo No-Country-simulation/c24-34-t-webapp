@@ -1,0 +1,33 @@
+<ul class="py-2 bg-secondary flex flex-col w-full gap-2 rounded-xl">
+  <div class="px-1 gap-1 flex justify-center items-center">
+    <h1 class="pt-1 text-center px-5">
+      Hi <span class="font-bold">{{ userInformation.username }}!</span>
+      <span class="font-serif text-sm md:text-lg">
+        here you can see your routines,
+        <span class="font-semibold"
+          >click a routine to see more details.</span
+        ></span
+      >
+    </h1>
+  </div>
+  @if (userInformation.id != ''){ @for (routine of userInformation.routines;
+  track routine.id; let i = $index) {
+  <li class="shadow-xl mx-4 rounded-xl bg-text-bg">
+    <button
+      (click)="sendActivitiesRoutineHandler(routine.activities)"
+      type="button"
+      class="shadow-xl rounded-xl w-full cursor-pointer flex flex-col gap-4 p-4"
+    >
+      <div class="rounded-lg shadow-sm shadow-primary flex flex-col">
+        <p class="shadow-sm p-4 text-left">
+          <span class="font-semibold">Name:</span> {{ routine.title }}
+        </p>
+        <p class="shadow-sm p-4 text-left">
+          <span class="font-semibold">Description:</span>
+          {{ routine.description }}
+        </p>
+      </div>
+    </button>
+  </li>
+  } }
+</ul>

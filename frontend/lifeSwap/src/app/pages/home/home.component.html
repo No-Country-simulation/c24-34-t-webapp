@@ -1,151 +1,39 @@
-<div class="py-4 box-border flex items-center justify-center w-screen h-screen">
+<div class="py-1 box-border flex items-center justify-center w-screen h-screen">
   <div
-    class="flex flex-col justify-around py-2 box-border h-full md:h-fit lg:h-full overflow-auto container w-full pt-2 mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-6/12"
+    class="gap-3 flex flex-col justify-around pt-2 box-border lg:h-140 container w-full mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-6/12"
+    [ngClass]="isFilter ? 'h-fit' : 'h-full'"
   >
+    <!--Filter-->
+    <app-filter (sendActivitiesFiltered)="setActivitiesFiltered($event)">
+    </app-filter>
 
-<!--filter and title find a routine-->
-<div class="mb-4">
-  <h1 class="font-serif font-semibold text-lg text-center">
-    Find a Routine
-  </h1>
-  <!--Filter-->
-  <app-filter (sendActivitiesFiltered)="setActivitiesFiltered($event)">
-  </app-filter>
-</div>
-@if (activities.length == 0) {
-<!-- user routines-->
-<ul class="py-2 bg-secondary flex flex-col w-full gap-2 rounded-xl">
-  <div class="px-1 gap-1 flex justify-center items-center">
-    <h1 class="text-center px-5">
-      Hi <span class="font-bold">{{ userInformation.username }}!</span>
-      <span class="font-serif text-sm md:text-lg">
-        here you can see your routines,
-        <span class="font-semibold"
-          >click a routine to see more details.</span
-        ></span
-      >
-    </h1>
-  </div>
-  @if (userInformation.id != ''){ @for (routine of userInformation.routines;
-  track routine.id; let i = $index) {
-  <li class="shadow-xl mx-4 rounded-xl bg-text-bg">
-    <button
-    (click)="showRoutineActivities(routine)"
-      type="button"
-      class="shadow-xl rounded-xl w-full cursor-pointer flex flex-col gap-4 p-4"
-    >
-      <div class="rounded-lg shadow-sm shadow-primary flex flex-col">
-        <p class="shadow-sm p-4 text-left">
-          <span class="font-semibold">Name:</span> {{ routine.title }}
-        </p>
-        <p class="shadow-sm p-4 text-left">
-          <span class="font-semibold">Description:</span>
-          {{ routine.description }}
-        </p>
-      </div>
-    </button>
-  </li>
-  } }
-</ul>
-  }
+    <!-- user routines-->
+    @if (activities.length === 0) {
+    <app-routines-list
+      class="grow overflow-auto"
+      [isFilter]="isFilter"
+      [userInformation]="userInformation"
+      (activitiesRoutine)="setActivitiesFiltered($event)"
+    ></app-routines-list>
+
+    } @if (userInformation.routines.length > 0) {
     <!--user routine activities-->
-      @if (activities.length > 0) {
-      <div
-        class="flex flex-col items-center justify-center gap-2 p-4 mb-0 min-h-56 bg-secondary rounded-xl"
-      >
-        <div class="flex flex-col w-full md:max-h-96">
-          <ul>
-      <!--the accordion allows the user to see more information about the routine-->
-      <cdk-accordion
-              class="flex flex-col w-full gap-2 overflow-auto rounded-xl"
-            >
-              @for (activity of activities; track activity; let i = $index) {
+    <app-activities-list
+      [isFilter]="isFilter"
+      [activities]="activities"
+      (activitiesEmpty)="setActivitiesFiltered($event)"
+    ></app-activities-list>
 
-              <li class="rounded-md bg-text-bg">
-                <cdk-accordion-item #accordionItem="cdkAccordionItem">
-                  <btn-display-list
-                    [name]="activity.subcategory"
-                    [iconTypeButtonName]="
-                      accordionItem.expanded
-                        ? general_icons['faAngleUp']
-                        : general_icons['faAngleDown']
-                    "
-                    (click)="accordionItem.toggle()"
-                    [color]="accordionItem.expanded ? 'active' : 'default'"
-                  >
-                    <div
-                      class="grid items-center justify-center w-full grid-cols-2 gap-1 mx-2 ml-5 text-sm font-semibold lg:flex lg:justify-end"
-                    >
-                      <div
-                        class="flex items-center justify-center w-full h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
-                      >
-                        <p class="">
-                          {{ activity.goal.period | titlecase }}
-                        </p>
-                      </div>
-
-                      <div
-                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
-                      >
-                        <p class="">
-                          {{ activity.time }}
-                        </p>
-                      </div>
-
-                      <div
-                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
-                      >
-                        <p class="">
-                          {{ activity.goal.value }}
-                        </p>
-                      </div>
-                      <div
-                        class="flex items-center justify-center h-6 px-2 border lg:px-3 rounded-xl md:min-w-3/12"
-                      >
-                        <p class="">
-                          {{ activity.goal.unit | titlecase }}
-                        </p>
-                      </div>
-                    </div>
-                  </btn-display-list>
-                  @if (accordionItem.expanded) {
-                  <div class="flex flex-col gap-4 p-4">
-                    <div
-                      class="flex flex-col items-center justify-between gap-2 md:flex md:flex-row"
-                    >
-                      <p
-                        class="order-2 px-4 font-semibold border w-fit md:order-1 rounded-xl border-primary"
-                      >
-                        Description
-                      </p>
-                      <p
-                        class="order-1 px-4 font-semibold border w-fit md:order-2 rounded-xl border-primary"
-                      >
-                        Activity:
-                        <span class="font-normal">{{ activity.title }}</span>
-                      </p>
-                    </div>
-                    <p class="order-3 pl-1 font-light md:order-3">
-                      {{ activity.description }}
-                    </p>
-                  </div>
-                  }
-                </cdk-accordion-item>
-              </li>
-              }
-            </cdk-accordion>
-          </ul>
-        </div>
-      </div>
-      } @else {
-        <app-form-error-message>Yo have not created a Routine</app-form-error-message>
-      <a
-        [routerLink]="'/create-routine'"
-        [ngClass]="colorBtn['active']"
-        class="flex justify-center my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-      >Create a Routine</a>
-      }
-
-
+    } @else {
+    <app-form-error-message>
+      Yo have not created a Routine
+    </app-form-error-message>
+    <a
+      [routerLink]="'/create-routine'"
+      [ngClass]="colorBtn['active']"
+      class="flex justify-center my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+      >Create a Routine</a
+    >
+    }
   </div>
 </div>
