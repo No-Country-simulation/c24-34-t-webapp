@@ -1,26 +1,62 @@
-<div class="flex items-center justify-center w-screen h-screen">
+<div class="py-4 box-border flex items-center justify-center w-screen h-screen">
   <div
-    class="container w-full pt-2 mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-5/12"
+    class="flex flex-col justify-around py-2 box-border h-full md:h-fit lg:h-full overflow-auto container w-full pt-2 mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-6/12"
   >
-    <div class="w-full">
-      <h1 class="text-center">Find a Routine</h1>
 
-      <!--Filter-->
-      <app-filter
-        (sendActivitiesFiltered)="setActivitiesFiltered($event)"
-      ></app-filter>
-
-      <h2 class="w-full my-4 text-center">Mi Routine</h2>
-
-      <!--user routine activities-->
+<!--filter and title find a routine-->
+<div class="mb-4">
+  <h1 class="font-serif font-semibold text-lg text-center">
+    Find a Routine
+  </h1>
+  <!--Filter-->
+  <app-filter (sendActivitiesFiltered)="setActivitiesFiltered($event)">
+  </app-filter>
+</div>
+@if (activities.length == 0) {
+<!-- user routines-->
+<ul class="py-2 bg-secondary flex flex-col w-full gap-2 rounded-xl">
+  <div class="px-1 gap-1 flex justify-center items-center">
+    <h1 class="text-center px-5">
+      Hi <span class="font-bold">{{ userInformation.username }}!</span>
+      <span class="font-serif text-sm md:text-lg">
+        here you can see your routines,
+        <span class="font-semibold"
+          >click a routine to see more details.</span
+        ></span
+      >
+    </h1>
+  </div>
+  @if (userInformation.id != ''){ @for (routine of userInformation.routines;
+  track routine.id; let i = $index) {
+  <li class="shadow-xl mx-4 rounded-xl bg-text-bg">
+    <button
+    (click)="showRoutineActivities(routine)"
+      type="button"
+      class="shadow-xl rounded-xl w-full cursor-pointer flex flex-col gap-4 p-4"
+    >
+      <div class="rounded-lg shadow-sm shadow-primary flex flex-col">
+        <p class="shadow-sm p-4 text-left">
+          <span class="font-semibold">Name:</span> {{ routine.title }}
+        </p>
+        <p class="shadow-sm p-4 text-left">
+          <span class="font-semibold">Description:</span>
+          {{ routine.description }}
+        </p>
+      </div>
+    </button>
+  </li>
+  } }
+</ul>
+  }
+    <!--user routine activities-->
       @if (activities.length > 0) {
       <div
         class="flex flex-col items-center justify-center gap-2 p-4 mb-0 min-h-56 bg-secondary rounded-xl"
       >
         <div class="flex flex-col w-full md:max-h-96">
           <ul>
-            <!--the accordion allows the user to see more information about the routine-->
-            <cdk-accordion
+      <!--the accordion allows the user to see more information about the routine-->
+      <cdk-accordion
               class="flex flex-col w-full gap-2 overflow-auto rounded-xl"
             >
               @for (activity of activities; track activity; let i = $index) {
@@ -109,6 +145,7 @@
         class="flex justify-center my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
       >Create a Routine</a>
       }
-    </div>
+
+
   </div>
 </div>
