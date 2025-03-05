@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: CreateRoutineComponent,
   },
   {//TODO esta ruta es hija de la ruta login
-    path: 'home/:email',
+    path: 'home',
     component: HomeComponent,
   },
   {

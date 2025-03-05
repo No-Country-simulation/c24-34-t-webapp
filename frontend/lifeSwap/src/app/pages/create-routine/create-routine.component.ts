@@ -116,15 +116,15 @@ export class CreateRoutineComponent implements OnInit {
     //set status to loading while waiting for the backend response
     this.status = "loading";
     //TODO create design to manage title and description routine
-    this.routine.userId = this.usersService.userID;
     this.routine.title = 'routine title';
     this.routine.description = 'routine description';
+    this.routine.userId = this.usersService.getUserID();
     //TODO cambiar por si form es valido
     if (this.routine.title != '') {
       this.routineService.create(this.routine).subscribe({
-        next:(routineCreated) => {
+        next:() => {
           this.status = 'success'
-          this.router.navigate(['home/',routineCreated.id])
+          this.router.navigate(['home/'])
         },
         error:(err) => {
           if (err.status === 404){

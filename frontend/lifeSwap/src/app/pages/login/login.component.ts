@@ -12,6 +12,7 @@ import {FormErrorMessageComponent} from '../../components/form-error-message/for
 import { ModelMessagesComponent } from '../../components/model-messages/model-messages.component';
 import {Dialog} from '@angular/cdk/dialog';
 import {UsersService} from '../../services/users.service';
+import {TokenService} from '../../services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginComponent {
   constructor(private authService: AuthService,
               private routes:Router,
               private dialog: Dialog,
-              private usersService: UsersService) {
+              private usersService: UsersService,
+              private tokenService: TokenService) {
   }
 
   onSubmit(f: NgForm) {
@@ -51,11 +53,12 @@ export class LoginComponent {
       next: (dataUser) => {
         this.status = 'success';
 
-        //save userID in the user service to be used in other components.
-        this.usersService.userID = dataUser.id;
-
+        //save the user's token in cookies
+        this.tokenService.saveToken(dataUser.accessToken);
+        //save the user's id in cookies
+        this.usersService.saveUserID(dataUser.id);
         //navigate to the home component with the user's email to display their routines
-        this.routes.navigate(['home/',dataUser.email]);
+        this.routes.navigate(['home/']);
       },
       error:(err) => {
         if (err.status === 400){

@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment.development';
-import {User} from '../models/User';
-
+import {getCookie, removeCookie, setCookie} from 'typescript-cookie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  userID: string = '';
+  saveUserID(userID:string){
+    setCookie('userID', userID,{
+      //configure when the cookie expired
+      expires:365,
+      //available for everything project paths
+      path:'/'
+    });
+  }
 
-  constructor(private http:HttpClient) {}
+  removeUserID(){
+    removeCookie('userID');
+  }
 
-  gerUserByEmail(email:string) {
-    return this.http.get<User>(`${environment.url}users/email/${email}`);
+  getUserID(){
+    const userID = getCookie('userID');
+    return userID || '';
   }
 }
