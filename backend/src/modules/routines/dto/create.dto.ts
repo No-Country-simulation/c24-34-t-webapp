@@ -36,7 +36,7 @@ class FindAllActivitiesDto extends OmitType(ActivityDto, [
   subcategory!: string;
 }
 
-class CreateRoutineDto extends OmitType(RoutineDto, ["id"] as const) {
+class CreateRoutineDto extends OmitType(RoutineDto, ["id", "userId"] as const) {
   @ApiProperty({ type: () => [FindAllActivitiesDto] })
   @ValidateNested({ each: true })
   @Type(() => FindAllActivitiesDto)
