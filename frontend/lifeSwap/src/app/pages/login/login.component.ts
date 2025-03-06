@@ -59,6 +59,7 @@ export class LoginComponent {
         this.routes.navigate(['home/']);
       },
       error:(err) => {
+        this.dialog.closeAll();
         if (err.status === 400){
           //set status to badRequest when there is an error with credentials
           this.status = 'badRequest';
