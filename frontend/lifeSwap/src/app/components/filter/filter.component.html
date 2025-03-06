@@ -1,6 +1,4 @@
-<div
-  class="w-11/12 p-2 m-auto mt-4 rounded-lg  bg-secondary"
->
+<div class="w-11/12 p-2 m-auto mt-4 rounded-lg bg-secondary">
   <h1 class="pb-1 font-serif font-semibold text-lg text-center">
     Find a random routine.
   </h1>
@@ -54,6 +52,7 @@
           @for (category of categories; track category.id; let i = $index) {
           <cdk-accordion-item #accordionItem="cdkAccordionItem">
             <button
+              type="button"
               [ngClass]="
                 accordionItem.expanded
                   ? colorBtn['active']
@@ -119,6 +118,7 @@
             subcategoriesFiltered.length > 0 ? subcategoriesFiltered :
             category.subcategories; track subcategory.id; let i = $index) {
             <button
+              type="button"
               class="flex justify-center w-full gap-1 p-1 mt-2 mb-2 font-normal border rounded-md cursor-pointer border-text-bg"
               (click)="
                 getRoutineRandom(subcategory.name, '', ''); isOpen = !isOpen

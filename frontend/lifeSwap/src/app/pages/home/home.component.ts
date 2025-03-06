@@ -38,7 +38,7 @@ export class HomeComponent {
     email: '',
     routines: [],
     accessToken: '',
-    assignedRoutine:''
+    assignedRoutine: '',
   };
 
   constructor(
@@ -91,11 +91,11 @@ export class HomeComponent {
   }
   isARoutineAssigned() {
     if (this.userInformation.assignedRoutine !== '') {
-      this.userInformation.routines.forEach(routine => {
-        routine.id === this.userInformation.assignedRoutine ?
-          routine.isRoutineAssigned = true :
-          routine.isRoutineAssigned = false;
-      })
+      this.userInformation.routines.forEach((routine) => {
+        routine.id === this.userInformation.assignedRoutine
+          ? (routine.isRoutineAssigned = true)
+          : (routine.isRoutineAssigned = false);
+      });
     }
   }
 
@@ -108,6 +108,9 @@ export class HomeComponent {
   setActivities(activities: Activity[]) {
     this.isFilter = false;
     this.activities = activities;
+  }
+  updateRoutines(activities: Activity[]) {
+    this.setActivities(activities);
     //get update routines
     this.getUserInformation();
   }

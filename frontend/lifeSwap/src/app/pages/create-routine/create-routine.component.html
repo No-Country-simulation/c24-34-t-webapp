@@ -1,64 +1,109 @@
-<div class="flex items-center justify-center w-screen h-screen">
+<div class="py-1 box-border flex items-center justify-center w-screen h-screen">
   <div
-    class="container mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-6/12 xl:w-4/12"
+    class="overflow-auto container max-h-[95%] mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-6/12 xl:w-4/12"
   >
     <div class="w-full">
-      <h1 class="mt-4 text-center">Create new routine</h1>
+      <h1 class="my-4 text-center font-serif font-semibold text-lg">
+        Create new routine
+      </h1>
 
-      <!--type of categories -->
-      <div class="overflow-auto">
-        <ul class="flex justify-center w-full gap-10 py-4">
-          @for (category of categories; track category.name; let i = $index) {
-          <li>
-            <button
-              (click)="storeValues(category)"
-              [ngClass]="
-                category.isActive
-                  ? colorBtn['active']
-                  : colorBtn['inActive']
-              "
-              class="w-10 h-10 border border-primary rounded-3xl"
-            >
-              <fa-icon
-                class="text-xl"
-                tabindex="0"
-                [icon]="icon_categories[category.name]"
-              ></fa-icon>
-            </button>
-          </li>
-          }
-        </ul>
-      </div>
-
-      <h2 class="w-full text-center">{{ categoryName }}</h2>
-
-      <!--subcategories of the category selected-->
-      @if (subcategories.length > 0) {
-      <app-sub-categories
-        [subCategories]="subcategories"
-        (sendActivity)="addActivities($event)"
-      ></app-sub-categories>
-      }
-      <div
-        class="flex flex-col justify-center w-full p-2 -mt-2 bg-secondary rounded-b-xl"
-      >
-        <button
-          (click)="saveRoutine()"
-          class="px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-          [disabled]="routine.activities.length == 0"
-          [ngClass]="
-            routine.activities.length > 0
-              ? colorBtn['active']
-              : colorBtn['disabled']
-          "
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div
+          class="flex flex-col justify-between my-2 gap-2 py-4 rounded-lg lg:h-fit xl:h-fit bg-secondary"
         >
-          Save
-        </button>
-        <!--TODO esto va a cambiar el campo requerido sera title que debo agregar-->
-        @if(routine.activities.length == 0) {
-        <app-form-error-message> Add at least one activity </app-form-error-message>
-        }
-      </div>
+          <div class="flex justify-center">
+            <input
+              class="w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+              name="titleRoutine"
+              ngModel
+              #titleRoutine="ngModel"
+              type="text"
+              minlength="2"
+              maxlength="50"
+              required
+              placeholder="routine name"
+            />
+          </div>
+          @if(titleRoutine.invalid && (titleRoutine.dirty ||
+          titleRoutine.touched)) {
+          <app-form-error-message>Required</app-form-error-message>
+          }
+          <div class="flex justify-center">
+            <textarea
+              class="resize-none w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+              name="descriptionRoutine"
+              ngModel
+              #descriptionRoutine="ngModel"
+              type="text"
+              minlength="2"
+              maxlength="50"
+              required
+              placeholder="routine description"
+            ></textarea>
+          </div>
+          @if(descriptionRoutine.invalid && (descriptionRoutine.dirty ||
+          descriptionRoutine.touched)) {
+          <app-form-error-message>Required</app-form-error-message>
+          }
+        </div>
+
+        <!--type of categories -->
+        <div class="">
+          <ul class="flex justify-center w-full gap-10 py-4">
+            @for (category of categories; track category.name; let i = $index) {
+            <li>
+              <button
+                type="button"
+                (click)="storeValues(category)"
+                [ngClass]="
+                  category.isActive ? colorBtn['active'] : colorBtn['inActive']
+                "
+                class="w-10 h-10 border border-primary rounded-3xl"
+              >
+                <fa-icon
+                  class="text-xl"
+                  tabindex="0"
+                  [icon]="icon_categories[category.name]"
+                ></fa-icon>
+              </button>
+            </li>
+            }
+          </ul>
+        </div>
+        <h2 class="w-full text-center">{{ categoryName }}</h2>
+
+        <div class="mt-2">
+          <!--subcategories of the category selected-->
+          @if (subcategories.length > 0) {
+          <app-sub-categories
+            [subCategories]="subcategories"
+            (sendActivity)="addActivities($event)"
+          ></app-sub-categories>
+          }
+          <div
+            class="flex flex-col justify-center w-full p-2 -mt-2 bg-secondary rounded-b-xl"
+          >
+            <button
+              type="submit"
+              class="px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+              [disabled]="f.invalid || routine.activities.length == 0"
+              [ngClass]="
+                f.valid && routine.activities.length > 0
+                  ? colorBtn['active']
+                  : colorBtn['disabled']
+              "
+            >
+              Save routine
+            </button>
+
+            @if(f.invalid || routine.activities.length == 0) {
+            <app-form-error-message>
+              all fields are required, add at least one activity
+            </app-form-error-message>
+            }
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
