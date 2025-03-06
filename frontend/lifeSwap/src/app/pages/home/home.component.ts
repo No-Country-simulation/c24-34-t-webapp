@@ -108,5 +108,7 @@ export class HomeComponent {
   setActivities(activities: Activity[]) {
     this.isFilter = false;
     this.activities = activities;
+    //get update routines
+    this.getUserInformation();
   }
 }
