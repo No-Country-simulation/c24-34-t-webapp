@@ -6,15 +6,8 @@
   <div class="md:max-h-56 lg:max-h-fit gap-3 flex flex-col w-full">
     @if(isFilter && activities.length > 0){
       <h2 class="order-1 font-serif font-semibold text-lg text-center pb-2">
-        Routine random selected by filter
+        Assigned routine activities
       </h2>
-      <button
-        type="button"
-        class="order-3 my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-        [ngClass]="colorBtn['active']"
-      >
-        Start this routine
-      </button>
     }
       <button class="cursor-pointer text-blue-600 underline font-semibold m-auto px-8 order-4 w-fit"
          (click)="displayUserRoutines()">Go to my routines</button>
