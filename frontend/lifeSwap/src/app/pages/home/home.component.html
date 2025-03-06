@@ -1,7 +1,6 @@
 <div class="py-1 box-border flex items-center justify-center w-screen h-screen">
   <div
-    class="gap-3 flex flex-col justify-around pt-2 box-border lg:h-140 container w-full mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-6/12"
-    [ngClass]="isFilter ? 'h-fit' : 'h-full'"
+    class="max-h-[90%] gap-3 flex flex-col justify-center pt-2 box-border container w-full mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-7/12 xl:w-6/12"
   >
     <!--Filter-->
     <app-filter (sendActivitiesFiltered)="setActivitiesFiltered($event)">
@@ -10,7 +9,7 @@
     <!-- user routines-->
     @if (activities.length === 0) {
     <app-routines-list
-      class="grow overflow-auto"
+      class="overflow-auto"
       [isFilter]="isFilter"
       [userInformation]="userInformation"
       (activitiesRoutine)="setActivities($event)"
@@ -21,10 +20,11 @@
     <app-activities-list
       [isFilter]="isFilter"
       [activities]="activities"
-      (activitiesEmpty)="setActivities($event)"
+      (activitiesEmpty)="updateRoutines($event)"
     ></app-activities-list>
 
-    } @else {
+    } @if (!isFilter && status==='success' && userInformation.routines.length
+    === 0) {
     <app-form-error-message>
       Yo have not created a Routine
     </app-form-error-message>

@@ -5,7 +5,8 @@ export interface User {
   username: string,
   email: string,
   routines: Routine[],
-  accessToken: string
+  accessToken: string,
+  assignedRoutine:string
 }
 export interface SignIn {
   email: string,

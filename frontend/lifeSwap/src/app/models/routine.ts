@@ -4,10 +4,11 @@ export interface Routine {
   description: string;
   userId: string,
   activities: Activity[];
+  isRoutineAssigned: boolean
 }
 
 //Omit allows using the same interface routine without the id attributed
-export interface CreateRoutineDTO extends Omit<Routine, 'id' | 'activities'> {
+export interface CreateRoutineDTO extends Omit<Routine, 'id' | 'isRoutineAssigned' | 'activities'> {
   activities: CreateActivityDTO[];
 }
 

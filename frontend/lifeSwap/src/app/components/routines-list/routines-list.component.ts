@@ -18,6 +18,7 @@ export class RoutinesListComponent {
     email: '',
     routines: [],
     accessToken: '',
+    assignedRoutine: ''
   };
 
   //send activities to the home component

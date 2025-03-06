@@ -12,13 +12,19 @@
   </div>
   @if (userInformation.id != ''){ @for (routine of userInformation.routines;
   track routine.id; let i = $index) {
-  <li class="shadow-xl mx-4 rounded-xl bg-text-bg">
+  <li
+    class="shadow-xl mx-4 rounded-xl bg-text-bg"
+    [ngClass]="routine.isRoutineAssigned ? 'animate-pulse' : ''"
+  >
     <button
       (click)="sendActivitiesRoutineHandler(routine.activities)"
       type="button"
       class="shadow-xl rounded-xl w-full cursor-pointer flex flex-col gap-4 p-4"
     >
       <div class="rounded-lg shadow-sm shadow-primary flex flex-col">
+        @if (routine.isRoutineAssigned){
+        <span class="font-bold mt-2 text-primary">Assigned Routine</span>
+        }
         <p class="shadow-sm p-4 text-left">
           <span class="font-semibold">Name:</span> {{ routine.title }}
         </p>

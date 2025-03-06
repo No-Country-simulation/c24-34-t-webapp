@@ -38,6 +38,7 @@ export class HomeComponent {
     email: '',
     routines: [],
     accessToken: '',
+    assignedRoutine: '',
   };
 
   constructor(
@@ -61,6 +62,8 @@ export class HomeComponent {
         this.status = 'success';
         this.dialog.closeAll();
         this.userInformation = result;
+        //identify routine as assigned routine to allow managing the styles
+        this.isARoutineAssigned();
       },
       error: (err) => {
         this.dialog.closeAll();
@@ -86,15 +89,29 @@ export class HomeComponent {
       disableClose: true,
     });
   }
+  isARoutineAssigned() {
+    if (this.userInformation.assignedRoutine !== '') {
+      this.userInformation.routines.forEach((routine) => {
+        routine.id === this.userInformation.assignedRoutine
+          ? (routine.isRoutineAssigned = true)
+          : (routine.isRoutineAssigned = false);
+      });
+    }
+  }
 
   //activities when the user use the filter
   setActivitiesFiltered(activities: Activity[]) {
     this.isFilter = true;
     this.activities = activities;
   }
-  //activities when the user use the filter
+  //activities when the user select a routine
   setActivities(activities: Activity[]) {
     this.isFilter = false;
     this.activities = activities;
+  }
+  updateRoutines(activities: Activity[]) {
+    this.setActivities(activities);
+    //get update routines
+    this.getUserInformation();
   }
 }

@@ -11,9 +11,9 @@ import { Color_btn } from '../../models/color_btn';
 import { FormErrorMessageComponent } from '../../components/form-error-message/form-error-message.component';
 import { Router } from '@angular/router';
 import { RequestStatus } from '../../models/request-status.model';
-import {ModelMessagesComponent} from '../../components/model-messages/model-messages.component';
-import {Dialog} from '@angular/cdk/dialog';
-import {UsersService} from '../../services/users.service';
+import { ModelMessagesComponent } from '../../components/model-messages/model-messages.component';
+import { Dialog } from '@angular/cdk/dialog';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-routine',
@@ -22,6 +22,7 @@ import {UsersService} from '../../services/users.service';
     CommonModule,
     SubCategoriesComponent,
     FormErrorMessageComponent,
+    FormsModule,
   ],
   templateUrl: './create-routine.component.html',
   standalone: true,
@@ -33,7 +34,7 @@ export class CreateRoutineComponent implements OnInit {
   categoryName: string = 'Sports';
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
-  status:RequestStatus='init';
+  status: RequestStatus = 'init';
   routine: CreateRoutineDTO = {
     userId: '',
     title: '',
@@ -44,8 +45,7 @@ export class CreateRoutineComponent implements OnInit {
     private categoriesService: CategoriesService,
     private routineService: RoutinesService,
     private router: Router,
-    private dialog: Dialog,
-    private usersService: UsersService,
+    private dialog: Dialog
   ) {}
 
   ngOnInit() {
@@ -59,9 +59,9 @@ export class CreateRoutineComponent implements OnInit {
     this.openDialog();
 
     this.categoriesService.getAllCategories().subscribe({
-      next:(result) => {
+      next: (result) => {
         if (result.length > 0) {
-          this.status = "success"
+          this.status = 'success';
           //close the dialog when the backend request is successful
           this.dialog.closeAll();
 
@@ -70,20 +70,20 @@ export class CreateRoutineComponent implements OnInit {
           this.categories[0].isActive = true;
           this.addSubCategories(this.categories[0].subcategories);
         }
-    },
-      error:(err) => {
+      },
+      error: (err) => {
         //close the pending dialog when the backend request fails
         this.dialog.closeAll();
-        if (err.status === 404){
+        if (err.status === 404) {
           //set status to notFound when a 404 error occurs
-          this.status = "notFound";
+          this.status = 'notFound';
           //open a dialog with a message about the 404 error
           this.openDialog();
           //navigate to the login component when there is a 404 error
           this.router.navigate(['/login']);
         }
-      }
-    })
+      },
+    });
   }
 
   addSubCategories(subcategories: Subcategory[]): void {
@@ -110,45 +110,42 @@ export class CreateRoutineComponent implements OnInit {
       }
     });
   }
-
-  saveRoutine(): void {
-
+  onSubmit(f: NgForm) {
+    //send the title and description to save the routine
+    this.saveRoutine(f.value.titleRoutine, f.value.descriptionRoutine);
+  }
+  saveRoutine(nameRoutine: string, descriptionRoutine: string): void {
     //set status to loading while waiting for the backend response
-    this.status = "loading";
-    //TODO create design to manage title and description routine
-    this.routine.title = 'routine title';
-    this.routine.description = 'routine description';
-    this.routine.userId = this.usersService.getUserID();
-    //TODO cambiar por si form es valido
-    if (this.routine.title != '') {
-      this.routineService.create(this.routine).subscribe({
-        next:() => {
-          this.status = 'success'
-          this.router.navigate(['home/'])
-        },
-        error:(err) => {
-          if (err.status === 404){
-            //set status to notFound when a 404 error occurs
-            this.status = "notFound"
-            //open a dialog with a message about the 404 error
-            this.openDialog();
-            //navigate to the login component when there is a 404 error
-            this.router.navigate(['/login']);
-          }
+    this.status = 'loading';
+    this.routine.title = nameRoutine;
+    this.routine.description = descriptionRoutine;
+
+    this.routineService.create(this.routine).subscribe({
+      next: () => {
+        this.status = 'success';
+        this.router.navigate(['home/']);
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          //set status to notFound when a 404 error occurs
+          this.status = 'notFound';
+          //open a dialog with a message about the 404 error
+          this.openDialog();
+          //navigate to the login component when there is a 404 error
+          this.router.navigate(['/login']);
         }
-      })
-    }
+      },
+    });
   }
   openDialog() {
-    this.dialog.open(ModelMessagesComponent,{
+    this.dialog.open(ModelMessagesComponent, {
       //send status to the Model Messages component
       data: {
-        status: this.status
+        status: this.status,
       },
       minWidth: '320px',
       backdropClass: 'bg-gray-50/90',
-      disableClose: true
-    })
+      disableClose: true,
+    });
   }
-
 }
