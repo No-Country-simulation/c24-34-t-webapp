@@ -16,6 +16,7 @@ import {
 } from "@nestjs/swagger";
 
 import { AuthGuard } from "@/common/guards/guards";
+import { routinesToSet } from "@/common/helpers/helpers";
 import { type AuthTokenRequest } from "@/common/types/types";
 import { RoutineService } from "@/modules/routines/routine.service";
 import { UserRoutinesDto } from "@/modules/users/dto/dto";
@@ -40,12 +41,15 @@ class AuthController {
     const user = req.user;
     let routines = await this.routineService.findByUserId(user.id);
     if (user.assignedRoutine) {
-      routines = [
-        ...routines,
-        await this.routineService.findById(user.assignedRoutine),
-      ];
+      const assignedRoutine = await this.routineService.findById(
+        user.assignedRoutine,
+      );
+      if (assignedRoutine) {
+        routines = [...routines, assignedRoutine];
+      }
+      routines = [...routines];
     }
-    return { ...user, routines };
+    return { ...user, routines: routinesToSet(routines) };
   }
 
   @Post("sign-up")
@@ -58,12 +62,15 @@ class AuthController {
     });
     let routines = await this.routineService.findByUserId(user.id);
     if (user.assignedRoutine) {
-      routines = [
-        ...routines,
-        await this.routineService.findById(user.assignedRoutine),
-      ];
+      const assignedRoutine = await this.routineService.findById(
+        user.assignedRoutine,
+      );
+      if (assignedRoutine) {
+        routines = [...routines, assignedRoutine];
+      }
+      routines = [...routines];
     }
-    return { ...user, routines };
+    return { ...user, routines: routinesToSet(routines) };
   }
 
   @Post("sign-in")
@@ -74,12 +81,15 @@ class AuthController {
     const user = await this.authService.signIn({ userData });
     let routines = await this.routineService.findByUserId(user.id);
     if (user.assignedRoutine) {
-      routines = [
-        ...routines,
-        await this.routineService.findById(user.assignedRoutine),
-      ];
+      const assignedRoutine = await this.routineService.findById(
+        user.assignedRoutine,
+      );
+      if (assignedRoutine) {
+        routines = [...routines, assignedRoutine];
+      }
+      routines = [...routines];
     }
-    return { ...user, routines };
+    return { ...user, routines: routinesToSet(routines) };
   }
 }
 

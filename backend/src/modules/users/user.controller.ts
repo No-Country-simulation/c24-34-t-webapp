@@ -1,6 +1,7 @@
 import { BadRequestException, Controller, Get, Param } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
+import { routinesToSet } from "@/common/helpers/helpers";
 import { RoutineService } from "@/modules/routines/routine.service";
 
 import { UserRoutinesDto } from "./dto/dto";
@@ -24,12 +25,15 @@ export class UserController {
     const user = await this.userService.findByEmail(email);
     let routines = await this.routineService.findByUserId(user.id);
     if (user.assignedRoutine) {
-      routines = [
-        ...routines,
-        await this.routineService.findById(user.assignedRoutine),
-      ];
+      const assignedRoutine = await this.routineService.findById(
+        user.assignedRoutine,
+      );
+      if (assignedRoutine) {
+        routines = [...routines, assignedRoutine];
+      }
+      routines = [...routines];
     }
-    return { ...user, routines };
+    return { ...user, routines: routinesToSet(routines) };
   }
 
   @Get(":id")
@@ -42,11 +46,14 @@ export class UserController {
     const user = await this.userService.findById(id);
     let routines = await this.routineService.findByUserId(user.id);
     if (user.assignedRoutine) {
-      routines = [
-        ...routines,
-        await this.routineService.findById(user.assignedRoutine),
-      ];
+      const assignedRoutine = await this.routineService.findById(
+        user.assignedRoutine,
+      );
+      if (assignedRoutine) {
+        routines = [...routines, assignedRoutine];
+      }
+      routines = [...routines];
     }
-    return { ...user, routines };
+    return { ...user, routines: routinesToSet(routines) };
   }
 }

@@ -29,13 +29,13 @@ class RoutineService {
     return routinesDto;
   }
 
-  async findById(id: string): Promise<FindAllRoutinesDto> {
+  async findById(id: string): Promise<FindAllRoutinesDto | undefined> {
     const routine = await this.dbService.routine.findUnique({
       where: { id: id },
       select: ROUTINE_SELECT,
     });
     if (!routine) {
-      throw new NotFoundException("Routine not found");
+      return undefined;
     }
 
     return mapToRoutineDto(routine);
