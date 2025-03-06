@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { RequestStatus } from '../../models/request-status.model';
 import {ModelMessagesComponent} from '../../components/model-messages/model-messages.component';
 import {Dialog} from '@angular/cdk/dialog';
-import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-create-routine',
@@ -45,7 +44,6 @@ export class CreateRoutineComponent implements OnInit {
     private routineService: RoutinesService,
     private router: Router,
     private dialog: Dialog,
-    private usersService: UsersService,
   ) {}
 
   ngOnInit() {
@@ -118,7 +116,7 @@ export class CreateRoutineComponent implements OnInit {
     //TODO create design to manage title and description routine
     this.routine.title = 'routine title';
     this.routine.description = 'routine description';
-    this.routine.userId = this.usersService.getUserID();
+
     //TODO cambiar por si form es valido
     if (this.routine.title != '') {
       this.routineService.create(this.routine).subscribe({

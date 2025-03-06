@@ -55,8 +55,6 @@ export class LoginComponent {
         this.dialog.closeAll();
         //save the user's token in cookies
         this.tokenService.saveToken(dataUser.accessToken);
-        //save the user's id in cookies
-        this.usersService.saveUserID(dataUser.id);
         //navigate to the home component with the user's email to display their routines
         this.routes.navigate(['home/']);
       },
