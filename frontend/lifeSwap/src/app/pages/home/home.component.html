@@ -24,7 +24,8 @@
       (activitiesEmpty)="setActivities($event)"
     ></app-activities-list>
 
-    } @else {
+    }
+    @if (!isFilter && status==='success' && userInformation.routines.length === 0) {
     <app-form-error-message>
       Yo have not created a Routine
     </app-form-error-message>
