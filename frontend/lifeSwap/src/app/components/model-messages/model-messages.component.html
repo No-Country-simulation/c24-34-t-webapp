@@ -7,7 +7,7 @@
   <div class="px-4 grow justify-center flex flex-col gap-2 items-center">
     @if (data.status === "loading") {
       <fa-icon class="text-4xl" [icon]="get_icons['faSpinner']"></fa-icon>
-      <p>Wait response...</p>
+      <p>Waiting for response...</p>
     }
     @if (data.status === 'notFound' && data.customMessage !== ''){
       <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>

@@ -26,13 +26,13 @@
     } @if (!isFilter && status==='success' && userInformation.routines.length
     === 0) {
     <app-form-error-message>
-      Yo have not created a Routine
+      You have not created a routine yet
     </app-form-error-message>
     <a
       [routerLink]="'/create-routine'"
       [ngClass]="colorBtn['active']"
       class="flex justify-center my-2 px-8 py-1 m-auto font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-      >Create a Routine</a
+      >Create a routine</a
     >
     }
   </div>

@@ -4,7 +4,7 @@
   >
     <div class="w-full">
       <h1 class="my-4 text-center font-serif font-semibold text-lg">
-        Create new routine
+        Create a new routine
       </h1>
 
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
@@ -13,7 +13,7 @@
         >
           <div class="flex justify-center">
             <input
-              class="w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+              class="bg-text-bg w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
               name="titleRoutine"
               ngModel
               #titleRoutine="ngModel"
@@ -30,7 +30,7 @@
           }
           <div class="flex justify-center">
             <textarea
-              class="resize-none w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+              class="bg-text-bg resize-none w-10/12 p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
               name="descriptionRoutine"
               ngModel
               #descriptionRoutine="ngModel"

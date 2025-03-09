@@ -7,7 +7,7 @@
       <div class="flex items-center justify-between">
         <input
           id="ativityInput"
-          class="p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
+          class="bg-text-bg p-2 border-2 rounded-sm focus:border-primary focus:outline-0 border-text-bg"
           name="title"
           [(ngModel)] = "data.name_subcategory"
           #title=ngModel
@@ -20,7 +20,7 @@
           class="bg-[#D9D9D9] w-7 h-7 cursor-pointer flex justify-center items-center"
           (click)="close()"
         >
-          <fa-icon class="mt-2 px-2 py-1 text-xl" [icon]="general_icons['faXmark']"></fa-icon>
+          <fa-icon class="px-2 py-1 text-xl" [icon]="general_icons['faXmark']"></fa-icon>
         </button>
       </div>
       <!-- manage error input-->
@@ -31,7 +31,7 @@
       }
       <!--container configuration activity except activity name, close button and save button-->
       <div class="flex flex-col p-2 rounded-lg gap-y-4 lg:p-4 bg-text-bg">
-        <div class="flex flex-col rounded-xl bg-secondary">
+        <div class="flex flex-col rounded-xl bg-text-bg border border-secondary">
           <label class="p-2 font-semibold text-center" for="descriptionInput"
             >Description</label
           >
@@ -57,7 +57,7 @@
         <div class="md:flex lg:block">
           <div class="flex items-center justify-between mr-0">
             <label class="font-semibold" for="goalPeriodInput"
-              >Goal Period</label
+              >Frequency</label
             >
             <select
               id="goalPeriodInput"
@@ -78,7 +78,7 @@
             <label
               class="font-semibold md:ml-2 lg:ml-0 lg:mr-20"
               for="goalValueInput"
-              >Goal Value</label
+              >Duration</label
             >
             <select
               id="goalValueInput"
@@ -94,7 +94,7 @@
             </select>
 
             <input
-              placeholder="ex:10000"
+              placeholder="e.g 10000"
               class="rounded-sm focus:border-primary focus:outline-0 border-2 border-secondary min-w-[6rem] md:max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] order-1"
               type="number"
               name="value"
@@ -131,7 +131,7 @@
         </div>
 
         <div class="flex gap-3">
-          <label class="font-semibold" for="timeNowInput">Time</label>
+          <label class="font-semibold" for="timeNowInput">Start at</label>
           <input
             id="timeNowInput"
             type="time"
