@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment.development';
-import {SignIn, User} from '../models/User';
+import {SignIn, SignUp, User} from '../models/User';
 import {TokenService} from './token.service';
 
 @Injectable({
@@ -14,6 +14,9 @@ export class AuthService {
   }
   signIn(signInData: SignIn) {
     return this.http.post<User>(`${environment.url}auth/sign-in`, signInData);
+  }
+  signUp(signUpData: SignUp) {
+    return this.http.post<User>(`${environment.url}auth/sign-up`,signUpData);
   }
   verifyToken(){
     const token = this.tokenService.getToken();

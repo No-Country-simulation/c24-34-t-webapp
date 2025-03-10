@@ -1,48 +1,59 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import { Router } from '@angular/router';
 import {SignIn} from '../../models/User';
 import { get_icons } from '../../models/get_icons';
-import { CommonModule } from '@angular/common';
-import { Color_btn } from '../../models/color_btn';
-import { FormsModule, NgForm } from '@angular/forms';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import { Validators } from '@angular/forms';
 import { RequestStatus } from '../../models/request-status.model';
 import {FormErrorMessageComponent} from '../../components/form-error-message/form-error-message.component';
 import { ModelMessagesComponent } from '../../components/model-messages/model-messages.component';
 import {Dialog} from '@angular/cdk/dialog';
-import {UsersService} from '../../services/users.service';
 import {TokenService} from '../../services/token.service';
+import {AuthFormComponent} from '../../components/auth-form/auth-form.component';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, FaIconComponent, FormErrorMessageComponent],
+  imports: [AuthFormComponent, FormErrorMessageComponent],
   standalone: true,
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
+  isValidForm:boolean = false;
   get_icons = get_icons;
-  color_btn = Color_btn
   status: RequestStatus = 'init';
-  isVisible:boolean = false;
-
+  formFields = [
+    {
+      name:'email',
+      type:'email',
+      validators:[Validators.required, Validators.email],
+      placeholder:'Enter your email',
+      iconRight:'faEnvelope',
+      eyeIcon:false,
+    },
+    {
+      name:'password',
+      type:'password',
+      validators:[Validators.required],
+      placeholder:'Enter your password',
+      iconRight:'faLock',
+      eyeIcon:true,
+    },
+    ]
 
   constructor(private authService: AuthService,
               private routes:Router,
               private dialog: Dialog,
-              private usersService: UsersService,
               private tokenService: TokenService) {
   }
 
-  onSubmit(f: NgForm) {
-    if (f.valid){
-      const { email, password } = f.value;
-      const signInData:SignIn = {
-        email:email.toLowerCase(),
-        password:password
-      }
-      this.logIn(signInData)
+  setDataLogin(formData: SignIn) {
+    const { email, password } = formData;
+    this.isValidForm = true;
+    const signInData:SignIn = {
+      email:email.toLowerCase(),
+      password:password
     }
+    this.logIn(signInData)
   }
 
   logIn(signInData: SignIn){

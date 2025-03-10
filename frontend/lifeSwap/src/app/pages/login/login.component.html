@@ -1,100 +1,12 @@
-<div class="flex items-center justify-center w-screen h-screen">
-  <div
-    class="flex flex-col items-center m-2 overflow-auto border-2 lg:min-h-80 lg:w-4/12 xl:w-4/12 rounded-xl bg-text-bg border-primary"
-  >
-    <div class="mb-16 md:mb-9">
-      <img
-        class="lg:-mt-[3rem] -mt-20"
-        [src]="get_icons['userSignInBg']"
-        alt="sign in background icon"
-      />
-      <img
-        class="w-14 md:w-20 md:-mt-[5rem] -mt-[3.5rem] m-auto"
-        [src]="get_icons['userSignIn']"
-        alt="sign in icon"
-      />
-    </div>
+<app-auth-form
+  [isLoginForm]="true"
+[formFields]="formFields"
+(formData)="setDataLogin($event)"
+(isInitStatus)="setStatus()"
+>
+  @if (isValidForm && (status === "unauthorized" || status === "badRequest")) {
+    <app-form-error-message>Credentials are invalid</app-form-error-message>
+  }
+</app-auth-form>
 
 
-
-    <!--container form an section sing up-->
-    <div class="my-4 flex flex-col justify-between gap-4 ">
-      <form
-        class="flex justify-end flex-col gap-2 grow text-text-bg"
-        (ngSubmit)="onSubmit(f)"
-        #f="ngForm"
-      >
-        <div class="flex gap-2 p-2 rounded-md bg-primary">
-          <fa-icon [icon]="get_icons['faEnvelope']"></fa-icon>
-          <input
-            placeholder="Enter your email"
-            class="focus:outline-0 w-full"
-            type="email"
-            name="email"
-            ngModel
-            (keydown)="setStatus()"
-            #email="ngModel"
-            required
-          />
-        </div>
-
-        <div class="flex gap-2 p-2 rounded-md bg-primary">
-          <fa-icon [icon]="get_icons['faLock']"></fa-icon>
-          <input
-            placeholder="Enter your password"
-            class="focus:outline-0 w-full"
-            [type]="isVisible ? 'text' : 'password'"
-            name="password"
-            ngModel
-            (keydown)="setStatus()"
-            #password="ngModel"
-            required
-          />
-          <button
-            type="button"
-            class="h-6 w-6 cursor-pointer" (click)="isVisible = !isVisible">
-            <fa-icon [icon]="isVisible ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
-          </button>
-        </div>
-
-        <button
-          class="lg:mt-6 self-center px-8 py-1  font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
-          [ngClass]="f.valid ? color_btn['active'] : color_btn['disabled']"
-          [disabled]="f.invalid"
-        >
-          Sign In
-        </button>
-        @if (f.invalid) {
-          <app-form-error-message>all fields are required</app-form-error-message>
-        }
-        @if (f.valid && (status === "unauthorized" || status === "badRequest")) {
-          <app-form-error-message>Credentials are invalid</app-form-error-message>
-        }
-      </form>
-
-     <!--<div class="py-6 hidden lg:block">
-        <div class="flex gap-2">
-          <img src="/icons/svg/line-sign-in.svg" alt="" />
-          <div>or</div>
-          <img src="/icons/svg/line-sign-in.svg" alt="" />
-        </div>
-
-        <div class="flex justify-center gap-2">
-          <p class="font-semibold">Don't have an account?</p>
-          <a class="text-blue-600">Sign Up</a>
-        </div>
-      </div>-->
-
-    </div>
-
-    <!--<div class="lg:hidden flex justify-end w-full mb-4 font-medium full text-text-bg">
-      <div class="flex gap-4 p-2 pr-10 rounded-l-full text-primary border border-primary bg-text-bg">
-
-        <fa-icon class="px-2 border-2 rounded-full text-text-bg bg-primary border-primary" [icon]="get_icons['faAngleRight']"></fa-icon>
-        <p>Sign Up</p>
-      </div>
-    </div>-->
-
-  </div>
-
-</div>

@@ -1,0 +1,9 @@
+<app-auth-form
+  [isLoginForm]="false"
+  [formFields]="formFields"
+  (formData)="setDataSignUp($event)"
+>
+  @if (isValidForm && status === "conflict") {
+    <app-form-error-message>An user with this email already exists</app-form-error-message>
+  }
+</app-auth-form>
