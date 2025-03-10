@@ -110,24 +110,6 @@
               Must be 1 or higher
             </app-form-error-message>
           }
-
-          <div class="flex items-center justify-between">
-            <label for="timeRangeInput" class="font-semibold md:ml-2 lg:ml-0"
-              >Time Range</label
-            >
-            <select
-              id="timeRangeInput"
-              class="order-2 focus:border-primary focus:outline-0 min-w-[6rem] max-w-[6rem] lg:min-w-[8rem] lg:max-w-[8rem] rounded-sm border-2 border-secondary"
-              name="timeRange"
-              ngModel
-              #timeRange="ngModel"
-              required
-            >
-              @for (item of time_ranges; track item; let i = $index) {
-              <option>{{ item | uppercase }}</option>
-              }
-            </select>
-          </div>
         </div>
 
         <div class="flex gap-3">

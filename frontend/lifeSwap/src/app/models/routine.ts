@@ -17,7 +17,6 @@ export interface Activity {
   title: string;
   description: string;
   time: string;
-  timeRange: string;
   category: string;
   subcategory: string;
   goal: Goal;

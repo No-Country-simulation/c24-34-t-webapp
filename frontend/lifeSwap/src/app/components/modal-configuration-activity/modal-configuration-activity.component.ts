@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import {
   GOAL_PERIOD,
   GOAL_UNITS,
-  TIME_RANGE,
 } from '../../models/TIME_RANGE_ENUM';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateActivityDTO } from '../../models/routine';
@@ -27,7 +26,6 @@ import {get_icons} from '../../models/get_icons';
 export class ModalConfigurationActivityComponent {
   colorBtn = Color_btn;
   general_icons = get_icons;
-  time_ranges: TIME_RANGE[] = [];
   goal_periods: GOAL_PERIOD[] = [];
   goal_unites: GOAL_UNITS[] = [];
   //show the user the current time
@@ -39,7 +37,6 @@ export class ModalConfigurationActivityComponent {
   activity: CreateActivityDTO = {
     title: '',
     description: '',
-    timeRange: '',
     time: '',
     category: '',
     subcategory: '',
@@ -58,7 +55,6 @@ export class ModalConfigurationActivityComponent {
   ngOnInit() {
     //set values to display in the select inputs
     this.addEnumDynamically(GOAL_UNITS, this.goal_unites);
-    this.addEnumDynamically(TIME_RANGE, this.time_ranges);
     this.addEnumDynamically(GOAL_PERIOD, this.goal_periods);
   }
 
@@ -92,7 +88,6 @@ export class ModalConfigurationActivityComponent {
         period: value.period,
         value: value.value,
       },
-      timeRange: value.timeRange,
       time: value.time,
       //this value are set in the subcategory component
       category: '',
