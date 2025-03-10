@@ -1,0 +1,112 @@
+<div class="flex items-center justify-center w-screen h-screen">
+  <div
+    class="pb-2  container flex flex-col items-center m-2 overflow-auto border-2 md:min-w-[20%] md:max-w-[60%] lg:min-w-[35%] 2xl:min-w-[25%] 2xl:max-w-[15%] max-h-[95%] lg:w-4/12 xl:w-4/12 rounded-xl bg-text-bg border-primary"
+  >
+    <div class="lg:mb-10">
+      <img
+        class="lg:-mt-[3rem] -mt-20 sm:-mt-28 md:-mt-20"
+        [src]="get_icons['userSignInBg']"
+        alt="sign in background icon"
+      />
+      <img
+        class="w-14 md:w-20 md:-mt-[5rem] -mt-[3.5rem] m-auto"
+        [src]="get_icons[isLoginForm ? 'userSignIn' : 'userSignUp']"
+        [alt]="isLoginForm ? 'sign in icon' : 'sign up icon'"
+      />
+    </div>
+
+    <!--open sign in or sign up-->
+    <button
+      (click)="navigate()"
+      type="button"
+      class="cursor-pointer lg:hidden flex justify-end w-full mb-4 font-medium full text-text-bg"
+    [ngClass]="move ? 'translate-x-40 transition-transform duration-800 ease-in-out' : ''"
+    >
+      <div class="flex items-center gap-2 p-2 pr-2 rounded-l-full text-primary border border-primary bg-text-bg">
+        <fa-icon class="px-2 border-2 rounded-full text-text-bg bg-primary border-primary" [icon]="get_icons['faAngleRight']"></fa-icon>
+        <p class="text-sm">{{isLoginForm ? 'Sign Up':'Sign In'}}</p>
+      </div>
+    </button>
+
+    <!--container form an section sing up-->
+    <div class="w-[80%] sm:w-[60%] flex flex-col justify-between gap-4 ">
+      <form
+        class="flex justify-end flex-col gap-2 grow text-text-bg"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+
+          @for (field of formFields ; track field.name) {
+            <div class="flex gap-2 p-2 rounded-md bg-primary">
+            <fa-icon [icon]="get_icons[field.iconRight]"></fa-icon>
+            <input
+              [placeholder]="field.placeholder"
+              class="focus:outline-0 w-full"
+              [type]="field.eyeIcon ? getType(field.name): field.type"
+              (keydown)="setStatus()"
+              [formControlName]="field.name"
+            />
+            @if(field.eyeIcon){
+              <button
+                type="button"
+                class="h-6 w-6 cursor-pointer" (click)="isVisible(field.name)">
+
+                @if(field.name === 'password') {
+                  <fa-icon [icon]="isVisiblePassword ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
+                }
+                @if(field.name === 'confirmPassword') {
+                  <fa-icon [icon]="isVisibleConfirmPassword ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
+                }
+
+              </button>
+            }
+            </div>
+            @if (form.get(field.name)?.touched && form.get(field.name)?.invalid) {
+              @if(form.get(field.name)?.hasError('required')){
+                <app-form-error-message>This field is required.</app-form-error-message>
+              }
+              @if(form.get(field.name)?.hasError('email')){
+                <app-form-error-message>Please enter a valid email address.</app-form-error-message>
+              }
+              @if(field.name === 'username' && form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength')){
+                <app-form-error-message>The username must be between 6 and 12 characters long.</app-form-error-message>
+              }
+              @if(field.name === 'password' && form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength')){
+                <app-form-error-message>The password must be between 6 and 24 characters long.</app-form-error-message>
+              }
+              @if(field.name === 'password' && form.get(field.name)?.hasError('pattern')){
+                <app-form-error-message>The password must contain at least one special character, one number and one uppercase letter</app-form-error-message>
+              }
+              @if(form.hasError('passwordMisMatch')){
+                <app-form-error-message>Passwords not match</app-form-error-message>
+              }
+            }
+          }
+
+
+        <button
+          class="lg:mt-6 self-center px-8 py-1  font-semibold focus:bg-teal-900 focus:font-semibold w-fit rounded-3xl"
+          [ngClass]="form.valid ? color_btn['active'] : color_btn['disabled']"
+          [disabled]="form.invalid"
+        >
+          {{ isLoginForm ? 'Sign In' : 'Sign Up'}}
+        </button>
+      </form>
+      <ng-content></ng-content>
+    </div>
+    <div class="py-6 hidden lg:block">
+      <div class="flex gap-2">
+        <img src="/icons/svg/line-sign-in.svg" alt="" />
+        <div>or</div>
+        <img src="/icons/svg/line-sign-in.svg" alt="" />
+      </div>
+
+      <div class="flex justify-center gap-2">
+        <p class="font-semibold">{{isLoginForm ? 'Don\'t have an account?' : 'Already have an account?'}}  </p>
+        <a [routerLink]="isLoginForm?'/signup': '/login'" class="text-blue-600">{{isLoginForm ? 'Sign Up' : 'Sign In'}}  </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
