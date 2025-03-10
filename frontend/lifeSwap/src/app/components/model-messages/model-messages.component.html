@@ -9,7 +9,7 @@
       <fa-icon class="text-4xl" [icon]="get_icons['faSpinner']"></fa-icon>
       <p>Waiting for response...</p>
     }
-    @if (data.status === 'notFound' && data.customMessage !== ''){
+    @if (data.status === 'notFound' && data.customMessage){
       <fa-icon class="text-red-500 text-4xl" [icon]="get_icons['faCircleExclamation']"></fa-icon>
       <p>{{data.customMessage}}</p>
     }@else if(data.status === "notFound") {

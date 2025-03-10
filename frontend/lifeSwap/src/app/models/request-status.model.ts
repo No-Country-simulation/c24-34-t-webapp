@@ -1,1 +1,1 @@
-export type RequestStatus = 'init' | 'loading' | 'success' | 'badRequest' | 'notFound' | 'unauthorized';
+export type RequestStatus = 'init' | 'loading' | 'success' | 'badRequest' | 'notFound' | 'unauthorized' | 'conflict';

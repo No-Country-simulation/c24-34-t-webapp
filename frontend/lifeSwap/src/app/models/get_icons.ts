@@ -61,6 +61,7 @@ export const get_icons: { [key: string]: any } = {
 
   //user
   'userSignIn':`${ICON_PATH}sign-in-icon.svg`,
+  'userSignUp': `${ICON_PATH}sign-up-icon.svg`,
   'userSignInBg':`${ICON_PATH}bg-green-sign-in.svg`,
   faAngleRight:faAngleRight,
   faChevronLeft:faChevronLeft,
