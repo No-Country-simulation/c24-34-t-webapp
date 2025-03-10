@@ -2,7 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 
-import { type Period, type TimeRange } from "@/src/common/types/types";
+import { type Period } from "@/src/common/types/types";
 
 import routines from "./routines-mock-data.json";
 import users from "./users-mock-data.json";
@@ -57,7 +57,6 @@ async function createRoutine({
           title: activity.title,
           description: activity.description,
           time: activity.time,
-          timeRange: activity.timeRange as TimeRange,
           subcategory: {
             connect: { name: activity.subcategory },
           },
@@ -84,7 +83,6 @@ async function createRoutine({
           title: true,
           description: true,
           time: true,
-          timeRange: true,
           goals: {
             select: {
               id: true,
@@ -115,7 +113,6 @@ async function createRoutine({
       title: activity.title,
       description: activity.description,
       time: activity.time,
-      timeRange: activity.timeRange,
       category: activity.subcategory.category.name,
       subcategory: activity.subcategory.name,
       goal:

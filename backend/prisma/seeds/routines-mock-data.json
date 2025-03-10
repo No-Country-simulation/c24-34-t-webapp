@@ -7,7 +7,6 @@
         "title": "Morning Walk",
         "description": "Take a brisk walk to wake up your body and mind.",
         "time": "07:00",
-        "timeRange": "MORNING",
         "category": "Sports",
         "subcategory": "Walking",
         "goal": {
@@ -20,7 +19,6 @@
         "title": "Hydration Boost",
         "description": "Drink enough water to keep your body hydrated.",
         "time": "07:30",
-        "timeRange": "MORNING",
         "category": "Health",
         "subcategory": "Hydration",
         "goal": {
@@ -33,7 +31,6 @@
         "title": "Quick Yoga",
         "description": "Stretch and relax your muscles with a short yoga session.",
         "time": "08:00",
-        "timeRange": "MORNING",
         "category": "Sports",
         "subcategory": "Yoga",
         "goal": {
@@ -52,7 +49,6 @@
         "title": "Kitchen Cleanup",
         "description": "Wash the dishes and wipe down kitchen surfaces.",
         "time": "09:00",
-        "timeRange": "MORNING",
         "category": "Home",
         "subcategory": "Cleaning",
         "goal": {
@@ -65,7 +61,6 @@
         "title": "Laundry Time",
         "description": "Sort, wash, and hang clothes to dry.",
         "time": "10:00",
-        "timeRange": "MORNING",
         "category": "Home",
         "subcategory": "Laundry",
         "goal": {
@@ -78,7 +73,6 @@
         "title": "Home Decoration",
         "description": "Rearrange or add decorative elements to enhance your living space.",
         "time": "11:00",
-        "timeRange": "MORNING",
         "category": "Home",
         "subcategory": "Decoration",
         "goal": {
@@ -97,7 +91,6 @@
         "title": "Strength Workout",
         "description": "Perform a strength training workout to build muscle.",
         "time": "18:00",
-        "timeRange": "NIGHT",
         "category": "Sports",
         "subcategory": "Workout",
         "goal": {
@@ -110,7 +103,6 @@
         "title": "Healthy Nutrition",
         "description": "Prepare and eat a nutritious meal.",
         "time": "19:00",
-        "timeRange": "NIGHT",
         "category": "Health",
         "subcategory": "Nutrition",
         "goal": {
@@ -123,7 +115,6 @@
         "title": "Evening Meditation",
         "description": "Relax and clear your mind before bedtime.",
         "time": "21:00",
-        "timeRange": "NIGHT",
         "category": "Health",
         "subcategory": "Meditation",
         "goal": {
@@ -142,7 +133,6 @@
         "title": "Reading Session",
         "description": "Read a book or an article to expand your knowledge.",
         "time": "19:30",
-        "timeRange": "NIGHT",
         "category": "Hobbies",
         "subcategory": "Reading",
         "goal": {
@@ -155,7 +145,6 @@
         "title": "Painting Practice",
         "description": "Express yourself creatively through painting.",
         "time": "20:30",
-        "timeRange": "NIGHT",
         "category": "Hobbies",
         "subcategory": "Painting",
         "goal": {
@@ -168,7 +157,6 @@
         "title": "Gaming Fun",
         "description": "Enjoy a relaxing gaming session.",
         "time": "21:30",
-        "timeRange": "NIGHT",
         "category": "Hobbies",
         "subcategory": "Video Games",
         "goal": {
@@ -187,7 +175,6 @@
         "title": "Soccer Practice",
         "description": "Play soccer to improve your skills and stay active.",
         "time": "10:00",
-        "timeRange": "MORNING",
         "category": "Sports",
         "subcategory": "Soccer",
         "goal": {
@@ -200,7 +187,6 @@
         "title": "Stretching & Recovery",
         "description": "Do stretching exercises to improve flexibility.",
         "time": "12:00",
-        "timeRange": "AFTERNOON",
         "category": "Sports",
         "subcategory": "Yoga",
         "goal": {
@@ -213,7 +199,6 @@
         "title": "Healthy Meal",
         "description": "Prepare and eat a nutritious post-workout meal.",
         "time": "13:00",
-        "timeRange": "AFTERNOON",
         "category": "Health",
         "subcategory": "Nutrition",
         "goal": {

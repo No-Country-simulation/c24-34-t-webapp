@@ -1,4 +1,4 @@
-import { Period, TimeRange } from "@/src/common/types/types";
+import { Period } from "@/src/common/types/types";
 
 type Routine = {
   id: string;
@@ -9,7 +9,6 @@ type Routine = {
     id: string;
     title: string;
     description: string;
-    timeRange: TimeRange;
     time: string;
     subcategory: {
       id: string;

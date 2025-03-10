@@ -45,7 +45,6 @@ erDiagram
         string id PK
         string title
         string description
-        string time_range "Enum: MORNING, AFTERNOON, NIGHT"
         string time
         string subcategory_id FK
         string routine_id FK
