@@ -109,7 +109,6 @@ class RoutineService {
               title: activity.title,
               description: activity.description,
               time: activity.time,
-              timeRange: activity.timeRange,
               subcategory: {
                 connect: {
                   name: activity.subcategory,

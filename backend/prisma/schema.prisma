@@ -16,14 +16,6 @@ enum Period {
   @@map("period")
 }
 
-enum TimeRange {
-  MORNING
-  AFTERNOON
-  NIGHT
-
-  @@map("time_range")
-}
-
 // MODELS
 model User {
   id       String @id @default(uuid())
@@ -64,7 +56,6 @@ model Activity {
   id            String    @id @default(uuid())
   title         String
   description   String
-  timeRange     TimeRange @map("time_range")
   time          String
   subcategoryId String    @map("subcategory_id")
   routineId     String    @map("routine_id")

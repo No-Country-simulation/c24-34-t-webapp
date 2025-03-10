@@ -9,7 +9,6 @@ const ROUTINE_SELECT = {
       title: true,
       description: true,
       time: true,
-      timeRange: true,
       goals: {
         select: {
           id: true,

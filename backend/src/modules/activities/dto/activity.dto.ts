@@ -1,8 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsString, IsUUID, Length, Matches } from "class-validator";
-
-import { TimeRange } from "@/common/enums/enums";
-import { type TimeRange as TimeRangeType } from "@/common/types/types";
+import { IsString, IsUUID, Length, Matches } from "class-validator";
 
 class ActivityDto {
   @ApiProperty()
@@ -22,10 +19,6 @@ class ActivityDto {
     message: "The description must be between 2 and 100 characters long",
   })
   description!: string;
-
-  @ApiProperty({ enum: TimeRange })
-  @IsEnum(TimeRange)
-  timeRange!: TimeRangeType;
 
   @ApiProperty()
   @IsString()

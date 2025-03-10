@@ -8,7 +8,6 @@ const mapToRoutineDto = (routine: Routine): FindAllRoutinesDto => {
       title: activity.title,
       description: activity.description,
       time: activity.time,
-      timeRange: activity.timeRange,
       category: activity.subcategory.category.name,
       subcategory: activity.subcategory.name,
       goal: {
