@@ -8,6 +8,7 @@ import {ModelMessagesComponent} from '../../components/model-messages/model-mess
 import {Dialog} from '@angular/cdk/dialog';
 import {Router} from '@angular/router';
 import {FormErrorMessageComponent} from '../../components/form-error-message/form-error-message.component';
+import {TokenService} from '../../services/token.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -68,7 +69,7 @@ export class SignUpComponent {
   status:RequestStatus = 'init'
 
 
-  constructor(private authService:AuthService, private dialog: Dialog, private router: Router) {
+  constructor(private authService:AuthService, private dialog: Dialog, private router: Router, private  tokenService:TokenService) {
   }
 
   setDataSignUp(formData: SignUp) {
@@ -89,9 +90,11 @@ export class SignUpComponent {
      this.status='loading';
      this.openDialog();
     this.authService.signUp(signUpData).subscribe ({
-      next: () => {
+      next: (response) => {
         this.status = 'success';
         this.dialog.closeAll();
+        //save the user's token in cookies
+        this.tokenService.saveToken(response.accessToken);
         //navigate to the home component with the user's email to display their routines
         this.router.navigate(['/create-routine']);
       }, error:(err)=>{
