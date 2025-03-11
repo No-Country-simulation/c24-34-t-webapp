@@ -57,10 +57,12 @@
                 @if(field.name === 'confirmPassword') {
                   <fa-icon [icon]="isVisibleConfirmPassword ? get_icons['faEye'] : get_icons['faEyeSlash']"></fa-icon>
                 }
-
               </button>
             }
             </div>
+            @if(field.name === 'confirmPassword' && form.hasError('passwordMisMatch')){
+              <app-form-error-message>Passwords not match</app-form-error-message>
+            }
             @if (form.get(field.name)?.touched && form.get(field.name)?.invalid) {
               @if(form.get(field.name)?.hasError('required')){
                 <app-form-error-message>This field is required.</app-form-error-message>
@@ -79,9 +81,6 @@
               }
               @if(field.name === 'password' && form.get(field.name)?.hasError('pattern')){
                 <app-form-error-message>The password must contain at least one special character, one number and one uppercase letter</app-form-error-message>
-              }
-              @if(form.hasError('passwordMisMatch')){
-                <app-form-error-message>Passwords not match</app-form-error-message>
               }
             }
           }
