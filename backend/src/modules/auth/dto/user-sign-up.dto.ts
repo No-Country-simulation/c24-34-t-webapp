@@ -10,6 +10,9 @@ class UserSignUpDto {
   @Matches(/^\S+$/, {
     message: "The username must be a single word without spaces",
   })
+  @Matches(/^[a-zA-Z0-9.]+$/, {
+    message: "The name can only contain letters, numbers, and dots",
+  })
   username!: string;
 
   @ApiProperty()
