@@ -23,7 +23,11 @@ export class SignUpComponent {
     {
       name:'username',
       type:'text',
-      validators:[Validators.required, Validators.minLength(6), Validators.maxLength(12)],
+      validators:[Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(12),
+        Validators.pattern(/^[a-zA-Z0-9.]*$/),
+      ],
       placeholder:'Enter your username',
       iconRight:'faUser',
       eyeIcon:false,
