@@ -68,10 +68,10 @@
               @if(form.get(field.name)?.hasError('email')){
                 <app-form-error-message>Please enter a valid email address.</app-form-error-message>
               }
-              @if(field.name === 'username' && form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength')){
+              @if(field.name === 'username' && (form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength'))){
                 <app-form-error-message>The username must be between 6 and 12 characters long.</app-form-error-message>
               }
-              @if(field.name === 'password' && form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength')){
+              @if(field.name === 'password' && (form.get(field.name)?.hasError('minlength') || form.get(field.name)?.hasError('maxlength'))){
                 <app-form-error-message>The password must be between 6 and 24 characters long.</app-form-error-message>
               }
               @if(field.name === 'password' && form.get(field.name)?.hasError('pattern')){
