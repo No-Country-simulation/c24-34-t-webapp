@@ -4,6 +4,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { FilterComponent } from './components/filter/filter.component';
 import {LoginComponent} from './pages/login/login.component';
 import {SignUpComponent} from './pages/sign-up/sign-up.component';
+import {authGuard} from './guards/auth.guard';
+
 
 export const routes: Routes = [
   {
@@ -15,9 +17,16 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'filter',
-    component: FilterComponent,
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [authGuard]
   },
+  {
+    path: 'create-routine',
+    component: CreateRoutineComponent,
+    canActivate: [authGuard]
+  },
+
   {
     path: 'login',
     component: LoginComponent
