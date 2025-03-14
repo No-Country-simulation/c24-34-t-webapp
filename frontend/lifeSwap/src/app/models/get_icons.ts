@@ -16,7 +16,8 @@ import {
   faEnvelope,
   faLock,
   faEyeSlash,
-  faEye
+  faEye,
+  faArrowRightFromBracket
 
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -58,6 +59,7 @@ export const get_icons: { [key: string]: any } = {
   faXmark: faXmark,
   faMagnifyingGlass: faMagnifyingGlass,
   faSpinner: faSpinner,
+  faArrowRightFromBracket,
 
   //user
   'userSignIn':`${ICON_PATH}sign-in-icon.svg`,
