@@ -1,15 +1,15 @@
-<div class="py-1 box-border flex items-center justify-center w-screen h-screen">
+<div class="h-full py-1 box-border flex items-center justify-center">
   <div
-    class="overflow-auto container max-h-[95%] mx-2 border-2 rounded-xl bg-text-bg border-primary md:w-8/12 lg:w-6/12 xl:w-4/12"
+    class="max-h-[98%] w-full md:w-[70%] lg:w-[50%] xl:w-[40%] overflow-auto mx-2 border-2 rounded-xl bg-text-bg border-primary "
   >
-    <div class="w-full">
+    <div class="h-full w-full">
       <h1 class="my-4 text-center font-serif font-semibold text-lg">
         Create a new routine
       </h1>
 
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <div
-          class="flex flex-col justify-between my-2 gap-2 py-4 rounded-lg lg:h-fit xl:h-fit bg-secondary"
+          class="h-full flex flex-col justify-between my-2 gap-2 py-4 rounded-lg lg:h-fit xl:h-fit bg-secondary"
         >
           <div class="flex justify-center">
             <input
@@ -72,7 +72,7 @@
         </div>
         <h2 class="w-full text-center">{{ categoryName }}</h2>
 
-        <div class="mt-2">
+        <div class="h-full mt-2">
           <!--subcategories of the category selected-->
           @if (subcategories.length > 0) {
           <app-sub-categories
