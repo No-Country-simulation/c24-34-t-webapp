@@ -4,6 +4,13 @@
 
 LifeSwap is a web app that allows users to upload their daily routine and randomly receive someone else's routine to follow for a day. The goal is to foster empathy, explore different habits, and step out of the comfort zone through unexpected experiences.
 
+##  Equipo
+### C24-24t-webapp
+Integrantes: 
+* Rosanne Celeste Lopez - Frontend y UX/UI
+* Wilson Bernardo Bravo Ceballos - Backend
+* Maria Angelica Castillo Sanchez - Qa tester
+
 ## 💻 Technologies
 ### FrontEnd
 
