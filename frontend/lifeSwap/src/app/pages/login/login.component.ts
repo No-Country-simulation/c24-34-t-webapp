@@ -61,11 +61,9 @@ export class LoginComponent {
     this.status='loading';
     this.openDialog();
     this.authService.signIn(signInData).subscribe({
-      next: (dataUser) => {
+      next: () => {
         this.status = 'success';
         this.dialog.closeAll();
-        //save the user's token in cookies
-        this.tokenService.saveToken(dataUser.accessToken);
         //navigate to the home component with the user's email to display their routines
         this.routes.navigate(['home/']);
       },

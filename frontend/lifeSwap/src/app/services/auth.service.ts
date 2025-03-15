@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment.development';
 import {SignIn, SignUp, User} from '../models/User';
 import {TokenService} from './token.service';
+import {tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,18 @@ export class AuthService {
               private tokenService: TokenService) {
   }
   signIn(signInData: SignIn) {
-    return this.http.post<User>(`${environment.url}auth/sign-in`, signInData);
+    return this.http.post<User>(`${environment.url}auth/sign-in`, signInData).
+      pipe(
+      tap(response  => this.tokenService.saveToken(response.accessToken))
+    );
   }
   signUp(signUpData: SignUp) {
-    return this.http.post<User>(`${environment.url}auth/sign-up`,signUpData);
+    return this.http.post<User>(`${environment.url}auth/sign-up`,signUpData).
+      pipe(
+        tap(response => this.tokenService.saveToken(response.accessToken))
+        );
   }
   verifyToken(){
-    const token = this.tokenService.getToken();
-    return this.http.get<User>(`${environment.url}auth/verify-token`, {
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return this.http.get<User>(`${environment.url}auth/verify-token`);
   }
 }

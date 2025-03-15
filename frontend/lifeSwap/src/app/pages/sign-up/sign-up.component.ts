@@ -93,8 +93,6 @@ export class SignUpComponent {
       next: (response) => {
         this.status = 'success';
         this.dialog.closeAll();
-        //save the user's token in cookies
-        this.tokenService.saveToken(response.accessToken);
         //navigate to the home component with the user's email to display their routines
         this.router.navigate(['/create-routine']);
       }, error:(err)=>{
