@@ -1,11 +1,11 @@
 # **LifeSwap**
 
-## Live Demo
-You can check out the live demo of the app here: [Live Demo](https://c24-34-t-webapp-f6pz.vercel.app/login)
-
 > Swap routines with strangers and experience new ways of living.
 
 LifeSwap is a web app that allows users to upload their daily routine and randomly receive someone else's routine to follow for a day. The goal is to foster empathy, explore different habits, and step out of the comfort zone through unexpected experiences.
+
+## Live Demo
+You can check out the live demo of the app here: [Live Demo](https://c24-34-t-webapp-f6pz.vercel.app/login)
 
 ##  Equipo
 ### C24-24t-webapp
