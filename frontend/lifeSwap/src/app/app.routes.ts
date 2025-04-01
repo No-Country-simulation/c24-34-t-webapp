@@ -10,6 +10,11 @@ import {LayoutComponent} from './shared/components/layout/layout.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: LayoutComponent,
     children: [
       {
